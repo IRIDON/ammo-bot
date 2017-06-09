@@ -17,4 +17,4 @@ CALIBERS = {
 DISCONT = [0, 5, 10, 15, 20, 25]
 CURRENCY = "UAH"
 URL_TMP = "https://ibis.net.ua/products/%s/search/offset/?param_51[]=%s&isort=cheap&show_all=yes"
-EMPTY_MESSAGE = "Простите, но я не умею отвечать, запустите /help что бы узнать доступные команды."
+EMPTY_MESSAGE = "Sorry, but I don't know how to answer, plese run /help to find out the available commands."
