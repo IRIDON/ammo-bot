@@ -1,3 +1,3 @@
 *.pyc
-config/KEY.py
+config/key.py
 .DS_Store

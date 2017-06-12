@@ -1,4 +1,4 @@
-from KEY import *
+from key import *
 
 API_TOKEN = BOT_API_TOKEN
 BOTAN_API = METRICA_KEY
