@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
-from __init__ import *
+
+"""
+Parse data from websile ibis.net.ua
+create JSON data and save it in file
+"""
+
+from config import *
 from lxml import html
 import requests
 import json
@@ -54,13 +60,18 @@ class IbisParseData(object):
         return URL_TMP % (AMMO_TYPE[category[1]], category[0])
 
     def parse(self):
-        data = {}
+        try:
+            data = {}
 
-        for categoryName in self.categories.keys():
-            url = self.getUrl(categoryName)
-            data[categoryName] = self.getData(url)
+            for categoryName in self.categories.keys():
+                url = self.getUrl(categoryName)
+                data[categoryName] = self.getData(url)
 
-        self.saveData(json.dumps(data))
+            self.saveData(json.dumps(data))
+        except Exception as e:
+            print e
+        finally:
+            print "Parse successful"
 
     def getData(self, url):
         page = requests.get(url)
@@ -74,6 +85,3 @@ class IbisParseData(object):
         with open(self.dataFileUrl, "w") as file:
             file.truncate() #clean file data
             file.write(str(dataJson))
-
-ibisParseData = IbisParseData()
-ibisParseData.parse()

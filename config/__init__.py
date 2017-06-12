@@ -1,4 +1,7 @@
-API_TOKEN = '371231072:AAFwclvE5J0UflPOqu2pLoI6lLa5SjTIbac'
+from KEY import *
+
+API_TOKEN = BOT_API_TOKEN
+BOTAN_API = METRICA_KEY
 BOT_HELP_FILE = "data/help.md"
 DATA_FILE = "data/data.json"
 AMMO_TYPE = {

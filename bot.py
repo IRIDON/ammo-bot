@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from __init__ import *
+from config import *
 import telebot
 from telebot import types
-from botConstructor import BotConstructor
+from lib.botConstructor import BotConstructor
 
 bot = telebot.TeleBot(API_TOKEN)
 botConstructor = BotConstructor(bot)
@@ -14,10 +14,17 @@ def sendWelcome(message):
 @bot.message_handler(commands=['discount'])
 def sendDiscont(message):
     botConstructor.botComandDiscount(message)
+    botConstructor.botan(message.chat.id, message, "Discount")
 
 @bot.message_handler(commands=['top'])
 def sendTop(message):
     botConstructor.botComandTop(message)
+    botConstructor.botan(message.chat.id, message, "Top")
+
+@bot.message_handler(commands=['median'])
+def sendTop(message):
+    botConstructor.botComandMedian(message)
+    botConstructor.botan(message.chat.id, message, "Median")
 
 
 @bot.callback_query_handler(func=lambda call: call.data.find("top") != -1)
@@ -27,6 +34,10 @@ def callTop(call):
 @bot.callback_query_handler(func=lambda call: call.data.find("discount") != -1)
 def callDiscount(call):
     botConstructor.botCallDiscount(call)
+
+@bot.callback_query_handler(func=lambda call: call.data.find("median") != -1)
+def callTop(call):
+    botConstructor.botCallMedian(call)
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def echo_message(message):
