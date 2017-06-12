@@ -1,4 +1,5 @@
 API_TOKEN = '371231072:AAFwclvE5J0UflPOqu2pLoI6lLa5SjTIbac'
+BOT_HELP_FILE = "data/help.md"
 DATA_FILE = "data/data.json"
 AMMO_TYPE = {
 	"rifle": "patrony-nareznye86",
@@ -23,4 +24,8 @@ CALIBERS = {
 DISCONT = [0, 5, 10, 15, 20, 25]
 CURRENCY = "UAH"
 URL_TMP = "https://ibis.net.ua/products/%s/search/offset/?param_51[]=%s&isort=cheap&show_all=yes"
-EMPTY_MESSAGE = "Sorry, but I don't know how to answer, plese run /help to find out the available commands."
+MESSAGE = {
+	"empy": "Sorry, but I don't know how to answer, plese run /help to find out the available commands.",
+	"choose_caliber": "Choose your caliber:",
+	"choose_discount": "Choose your discount:"
+}

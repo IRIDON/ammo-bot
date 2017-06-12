@@ -31,7 +31,7 @@ def callDiscount(call):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def echo_message(message):
     try:
-        botConstructor.botSendMessage(message.chat.id, EMPTY_MESSAGE)
+        botConstructor.botSendMessage(message.chat.id, MESSAGE["empy"])
     except Exception as e:
         botConstructor.botSendMessage(message.chat.id, 'Opppsss!')
         print e

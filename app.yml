@@ -1,2 +1,12 @@
-git pull
-./launcher python bot.py
+sudo: false
+language: python
+services:
+
+branches:
+  only:
+  - master
+install:
+- pip install pyTelegramBotAPI --upgrade
+- pip install lxml --upgrade
+script:
+- ./scripts/travis.sh

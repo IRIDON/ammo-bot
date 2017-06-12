@@ -6,12 +6,14 @@ from telebot import types
 class BotConstructor(object):
     def __init__(self, bot):
         self.bot = bot
+        self.botHelpFile = BOT_HELP_FILE
         self.dataFileUrl = DATA_FILE
         self.currency = CURRENCY
-        self.discount = 0
         self.availableDiscount = DISCONT
-        self.visibleTopItems = 5
         self.categories = CALIBERS
+        self.message = MESSAGE
+        self.discount = 0
+        self.visibleTopItems = 5
         self.categoriesKeys = self.categories.keys()
 
     def getData(self):
@@ -79,7 +81,7 @@ class BotConstructor(object):
         self.bot.answer_callback_query(id)
 
     def botComandStart(self, message):
-        with open("data/help.md", "r") as helpFile:
+        with open(self.botHelpFile, "r") as helpFile:
             helpText = helpFile.read()
 
             self.botSendMessage(message.chat.id, helpText)
@@ -88,7 +90,7 @@ class BotConstructor(object):
         self.discount = 0
         keyboard = self.getBotInlineKeyboards(self.categoriesKeys, 'top')
 
-        self.botSendMessage(message.chat.id, "Choose your caliber:", keyboard)
+        self.botSendMessage(message.chat.id, self.message["choose_caliber"], keyboard)
 
     def botCallTop(self, callData):
         data = callData.data.split('_')
@@ -100,9 +102,9 @@ class BotConstructor(object):
         self.botSendMessage(callData.message.chat.id, result)
 
     def botComandDiscount(self, message):
-        keyboard = self.getBotInlineKeyboards(DISCONT, 'discount')
+        keyboard = self.getBotInlineKeyboards(self.availableDiscount, 'discount')
 
-        self.botSendMessage(message.chat.id, "Choose your discount:", keyboard)
+        self.botSendMessage(message.chat.id, self.message["choose_discount"], keyboard)
     
     def botCallDiscount(self, callData):
         data = callData.data.split('_')
@@ -110,5 +112,5 @@ class BotConstructor(object):
         keyboard = self.getBotInlineKeyboards(self.categoriesKeys, 'top')
 
         self.botAnswerCallback(callData.id)
-        self.botSendMessage(callData.message.chat.id, "Choose your caliber:", keyboard)
+        self.botSendMessage(callData.message.chat.id, self.message["choose_caliber"], keyboard)
 
