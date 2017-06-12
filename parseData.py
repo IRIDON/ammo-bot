@@ -1,95 +1,79 @@
+# -*- coding: utf-8 -*-
 from __init__ import *
 from lxml import html
 import requests
-import statistics
-import sys
+import json
 
 def getKey(item):
-	return item["price"]
+    return item["price"]
 
 class IbisParseData(object):
-	def __init__(self):
-		self.categories = CALIBERS
+    def __init__(self):
+        self.categories = CALIBERS
+        self.dataFileUrl = DATA_FILE
 
-	def setCategoryId(self, categoryId):
-		self.categoryId = categoryId
-		self.getAll()
+    def coder(self, text):
+        return text.encode('utf-8')
 
-	def getPage(self):
-		page = requests.get(self.url)
-		tree = html.fromstring(page.content)
+    def getPrices(self, tree):
+        price = tree.xpath('//div[@class="pb_price "]')
+        result = []
 
-		self.tree = tree
+        for item in price:
+            pr = item.xpath('./text()')
 
-		return True
+            if pr:
+                result.append(float(pr[0]))
+            else:
+                pn = item.xpath('*/text()')
 
-	def getPrices(self):
-		price = self.tree.xpath('//div[@class="pb_price "]')
-		result = []
+                result.append(float(pn[0] + pn[1]))
 
-		for item in price:
-			pr = item.xpath('./text()')
+        return result
 
-			if pr:
-				result.append(float(pr[0]))
-			else:
-				pn = item.xpath('*/text()')
+    def getStructure(self, tree, price):
+        title = tree.xpath('//a[@class="pb_product_name"]/text()')
+        stock = tree.xpath('//div[@class="pb_stock"]')
+        result = []
 
-				result.append(float(pn[0] + pn[1]))
+        for index, item in enumerate(price):
+            dic = {}
+            dic["title"] = self.coder(title[index])
+            dic["price"] = float(price[index])
 
-		return result
+            if not stock[index].xpath('*/text()'):
+                result.append(dict(dic))
+            else:
+                break
 
-	def getStructure(self, price):
-		title = self.tree.xpath('//a[@class="pb_product_name"]/text()')
-		stock = self.tree.xpath('//div[@class="pb_stock"]')
-		result = []
+        return result
 
-		for index, item in enumerate(price):
-			dic = {}
-			dic["title"] = title[index]
-			dic["price"] = price[index]
+    def getUrl(self, categoryName):
+        category = self.categories[categoryName]
 
-			if not stock[index].xpath('*/text()'):
-				result.append(dic)
-			else:
-				break
+        return URL_TMP % (AMMO_TYPE[category[1]], category[0])
 
-		return sorted(result, key=getKey)
+    def parse(self):
+        data = {}
 
-	def getAll(self):
-		category = self.categories[self.categoryId]
+        for categoryName in self.categories.keys():
+            url = self.getUrl(categoryName)
+            data[categoryName] = self.getData(url)
 
-		self.url = URL_TMP % (AMMM_TYPE[category[1]], category[0])
-		self.getPage()
-		price = self.getPrices()
-		self.data = self.getStructure(price)
-		self.price = price
+        self.saveData(json.dumps(data))
 
-	def getDiscount(self, price, discount):
-		factor = (100 - float(discount)) / 100
+    def getData(self, url):
+        page = requests.get(url)
+        tree = html.fromstring(page.content)
+        price = self.getPrices(tree)
+        data = self.getStructure(tree, price)
 
-		return format(price * factor, '.2f')
+        return data
 
-	def getMedian(self):
-		return statistics.median(self.price)
+    def saveData(self, dataJson):
+        with open(self.dataFileUrl, "w") as file:
+            file.truncate() #clean file data
+            file.write(str(dataJson))
 
-	def topPrices(self, num=3, discount=0):
-		result = []
-		dataLen = len(self.data)
-
-		if dataLen < num:
-			num = dataLen
-
-		for index in range(0,num):
-			title = self.data[index]["title"]
-			price = self.data[index]["price"]
-
-			if discount == 0:
-				result.append("*%s %s* - %s" % (price, CURRENCY, title))
-			else:
-				result.append( "*%s %s* _(%s)_ - %s" % (self.getDiscount(price, discount), CURRENCY, price, title))
-		
-		result.append("\n[Visit to site](%s)" % (self.url))
-
-		return "\n".join(result)
-
+ibisParseData = IbisParseData()
+ibisParseData.parse()
