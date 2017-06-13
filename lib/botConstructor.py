@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from config import *
+from config import default_settings as settings
 import json
 from telebot import types
 import statistics
@@ -8,12 +8,15 @@ import botan
 class BotConstructor(object):
     def __init__(self, bot):
         self.bot = bot
-        self.botHelpFile = BOT_HELP_FILE
-        self.dataFileUrl = DATA_FILE
-        self.currency = CURRENCY
-        self.availableDiscount = DISCONT
-        self.categories = CALIBERS
-        self.message = MESSAGE
+        self.botHelpFile = settings["BOT_HELP_FILE"]
+        self.dataFileUrl = settings["DATA_FILE"]
+        self.currency = settings["CURRENCY"]
+        self.availableDiscount = settings["DISCONT"]
+        self.categories = settings["CALIBERS"]
+        self.message = settings["MESSAGE"]
+        self.availableAmmo = settings["AMMO_TYPE"]
+        self.botanApiKey = settings["BOTAN_API"]
+        self.urlTmp = settings["URL_TMP"]
         self.discount = 0
         self.visibleTopItems = 5
         self.categoriesKeys = self.categories.keys()
@@ -30,7 +33,7 @@ class BotConstructor(object):
     def getUrl(self, categoryName):
         category = self.categories[categoryName]
 
-        return URL_TMP % (AMMO_TYPE[category[1]], category[0])
+        return self.urlTmp % (self.availableAmmo[category[1]], category[0])
 
     def topPrices(self, num=3, category='', discount=0):
         result = []
@@ -87,8 +90,13 @@ class BotConstructor(object):
 
         return markup
 
-    def botan(self, id, call, message):
-        botan.track(BOTAN_API, id, call, message)
+    def botan(self, id, data, name):
+        botan.track(
+            token=self.botanApiKey,
+            uid=id,
+            message=data,
+            name=name
+        )
 
     def botSendMessage(self, id, message, markup=''):
         self.bot.send_message(id, message, parse_mode="Markdown", reply_markup=markup)

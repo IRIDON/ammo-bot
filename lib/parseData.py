@@ -5,7 +5,7 @@ Parse data from websile ibis.net.ua
 create JSON data and save it in file
 """
 
-from config import *
+from config import default_settings as settings
 from lxml import html
 import requests
 import json
@@ -15,8 +15,10 @@ def getKey(item):
 
 class IbisParseData(object):
     def __init__(self):
-        self.categories = CALIBERS
-        self.dataFileUrl = DATA_FILE
+        self.categories = settings["CALIBERS"]
+        self.dataFileUrl = settings["DATA_FILE"]
+        self.availableAmmo = settings["AMMO_TYPE"]
+        self.urlTmp = settings["URL_TMP"]
 
     def coder(self, text):
         return text.encode('utf-8')
@@ -57,7 +59,7 @@ class IbisParseData(object):
     def getUrl(self, categoryName):
         category = self.categories[categoryName]
 
-        return URL_TMP % (AMMO_TYPE[category[1]], category[0])
+        return self.urlTmp % (self.availableAmmo[category[1]], category[0])
 
     def parse(self):
         try:

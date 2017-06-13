@@ -1,5 +1,4 @@
-from config import *
-from lib.parseData import ParseData
+from lib.parseData import IbisParseData
 
-parseData = ParseData()
+parseData = IbisParseData()
 parseData.parse()
