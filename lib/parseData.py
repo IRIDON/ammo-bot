@@ -9,6 +9,7 @@ from config import default_settings as settings
 from lxml import html
 import requests
 import json
+import time
 
 def getKey(item):
     return item["price"]
@@ -69,6 +70,7 @@ class IbisParseData(object):
                 url = self.getUrl(categoryName)
                 data[categoryName] = self.getData(url)
 
+            data["time"] = self.getCurrentTime()
             self.saveData(json.dumps(data))
         except Exception as e:
             print e
@@ -87,3 +89,9 @@ class IbisParseData(object):
         with open(self.dataFileUrl, "w") as file:
             file.truncate() #clean file data
             file.write(str(dataJson))
+
+    def getCurrentTime(self):
+        timetup = time.gmtime(time.time() + 3 * 60 * 60)
+        currentTime = time.strftime('%Y-%m-%d %H:%M:%S', timetup)
+
+        return currentTime

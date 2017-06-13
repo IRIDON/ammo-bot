@@ -34,6 +34,8 @@ default_settings = {
     "MESSAGE": {
         "empy": "Sorry, but I don't know how to answer, plese run /help to find out the available commands.",
         "choose_caliber": "Choose your caliber:",
-        "choose_discount": "Choose your discount:"
+        "choose_discount": "Choose your discount:",
+        "base_date": "Database update date",
+        "link_text": "Visit to site"
     }
 }

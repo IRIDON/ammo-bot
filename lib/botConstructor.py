@@ -37,8 +37,8 @@ class BotConstructor(object):
 
     def topPrices(self, num=3, category='', discount=0):
         result = []
-        data = self.getData()
-        data = data[category]
+        allData = self.getData()
+        data = allData[category]
         dataLen = len(data)
 
         if dataLen < num:
@@ -53,7 +53,8 @@ class BotConstructor(object):
             else:
                 result.append("*%s %s* _(%s)_ - %s" % (self.getDiscount(price, discount), self.currency, price, title))
         
-        result.append("\n[Visit to site](%s)" % (self.getUrl(category) + "?utm_source=ammoBot"))
+        result.append("\n_%s: %s_" % (self.message["base_date"], allData["time"]))
+        result.append("\n[%s](%s)" % (self.message["link_text"], self.getUrl(category) + "?utm_source=ammoBot"))
         
         return "\n".join(result)
 
