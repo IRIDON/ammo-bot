@@ -36,6 +36,14 @@ default_settings = {
         "choose_caliber": "Choose your caliber:",
         "choose_discount": "Choose your discount:",
         "base_date": "Database update date",
-        "link_text": "Visit to site"
+        "link_text": "Visit to site",
+        "base_error": "Database error, please try again."
     }
 }
+
+class Settings:
+    def __init__(self):
+        for key, value in default_settings.items():
+            setattr(self, key, value)
+
+settings = Settings()

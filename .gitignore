@@ -1,4 +1,4 @@
 *.pyc
 config/key.py
-data/*.json
+data/data.json
 .DS_Store

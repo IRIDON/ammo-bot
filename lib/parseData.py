@@ -4,22 +4,18 @@
 Parse data from websile ibis.net.ua
 create JSON data and save it in file
 """
-
-from config import default_settings as settings
 from lxml import html
 import requests
 import json
 import time
 
-def getKey(item):
-    return item["price"]
-
 class IbisParseData(object):
-    def __init__(self):
-        self.categories = settings["CALIBERS"]
-        self.dataFileUrl = settings["DATA_FILE"]
-        self.availableAmmo = settings["AMMO_TYPE"]
-        self.urlTmp = settings["URL_TMP"]
+    __slots__ = ["categories", "dataFileUrl", "availableAmmo", "urlTmp"]
+    def __init__(self, categories, dataFileUrl, availableAmmo, urlTmp):
+        self.categories = categories
+        self.dataFileUrl = dataFileUrl
+        self.availableAmmo = availableAmmo
+        self.urlTmp = urlTmp
 
     def coder(self, text):
         return text.encode('utf-8')

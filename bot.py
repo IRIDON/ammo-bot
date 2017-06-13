@@ -1,12 +1,22 @@
 # -*- coding: utf-8 -*-
-from config import default_settings as settings
+from config import settings
 import telebot
 from telebot import types
 from lib.botConstructor import BotConstructor
 
-bot = telebot.TeleBot(settings["API_TOKEN"])
-botConstructor = BotConstructor(bot)
-
+bot = telebot.TeleBot(settings.API_TOKEN)
+botConstructor = BotConstructor(
+    bot,
+    helpFile=settings.BOT_HELP_FILE,
+    fileUrl=settings.DATA_FILE,
+    currency=settings.CURRENCY,
+    discount=settings.DISCONT,
+    categories=settings.CALIBERS,
+    message=settings.MESSAGE,
+    ammo=settings.AMMO_TYPE,
+    apiKey=settings.BOTAN_API,
+    url=settings.URL_TMP
+)
 @bot.message_handler(commands=['start', 'help'])
 def sendWelcome(message):
     botConstructor.botComandStart(message)
@@ -39,7 +49,7 @@ def callTop(call):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def echo_message(message):
     try:
-        botConstructor.botSendMessage(message.chat.id, settings["MESSAGE"]["empy"])
+        botConstructor.botSendMessage(message.chat.id, settings.MESSAGE["empy"])
     except Exception as e:
         botConstructor.botSendMessage(message.chat.id, 'Opppsss!')
         print e

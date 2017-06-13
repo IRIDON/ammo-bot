@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
-from config import default_settings as settings
 import json
 from telebot import types
 import statistics
 import botan
 
 class BotConstructor(object):
-    def __init__(self, bot):
+    __slots__ = ["bot", "botHelpFile", "dataFileUrl", "currency", "availableDiscount", "categories", "message", "availableAmmo", "botanApiKey", "urlTmp", "discount", "visibleTopItems", "categoriesKeys"]
+    def __init__(self, bot, **kwargs):
         self.bot = bot
-        self.botHelpFile = settings["BOT_HELP_FILE"]
-        self.dataFileUrl = settings["DATA_FILE"]
-        self.currency = settings["CURRENCY"]
-        self.availableDiscount = settings["DISCONT"]
-        self.categories = settings["CALIBERS"]
-        self.message = settings["MESSAGE"]
-        self.availableAmmo = settings["AMMO_TYPE"]
-        self.botanApiKey = settings["BOTAN_API"]
-        self.urlTmp = settings["URL_TMP"]
+        self.botHelpFile = kwargs["helpFile"]
+        self.dataFileUrl = kwargs["fileUrl"]
+        self.currency = kwargs["currency"]
+        self.availableDiscount = kwargs["discount"]
+        self.categories = kwargs["categories"]
+        self.message = kwargs["message"]
+        self.availableAmmo = kwargs["ammo"]
+        self.botanApiKey = kwargs["apiKey"]
+        self.urlTmp = kwargs["url"]
         self.discount = 0
         self.visibleTopItems = 5
         self.categoriesKeys = self.categories.keys()
@@ -38,6 +38,10 @@ class BotConstructor(object):
     def topPrices(self, num=3, category='', discount=0):
         result = []
         allData = self.getData()
+
+        if not allData:
+            return self.message["base_error"]
+
         data = allData[category]
         dataLen = len(data)
 
