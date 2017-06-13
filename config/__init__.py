@@ -1,10 +1,11 @@
+import os
 from key import default_api_key as apiKey
 
 default_settings = {
     "API_TOKEN": apiKey["BOT_API_TOKEN"],
     "BOTAN_API": apiKey["METRICA_KEY"],
-    "BOT_HELP_FILE": "data/help.md",
-    "DATA_FILE": "data/data.json",
+    "BOT_HELP_FILE": os.path.abspath("ammoBot/data/help.md"),
+    "DATA_FILE": os.path.abspath("ammoBot/data/data.json"),
     "AMMO_TYPE": {
         "rifle": "patrony-nareznye86",
         "pistol": "patrony-travmaticheskie",
