@@ -8,6 +8,55 @@ default_settings = {
     "BOTAN_API": apiKey["METRICA_KEY"],
     "BOT_HELP_FILE": path + "/data/help.md",
     "DATA_FILE": path + "/data/data.json",
+    "SHOPS": {
+        "ibis": {
+            "url": "https://ibis.net.ua/",
+            "url_tmp": "https://ibis.net.ua/products/%s/search/offset/?param_51[]=%s&isort=cheap&show_all=yes",
+            "data_file": path + "/data/ibis.json",
+            "ammo_type": {
+                "rifle": "patrony-nareznye86",
+                "pistol": "patrony-travmaticheskie",
+                "bore_bulet": "puli-gladkostvolnie",
+                "bore_buckshot": "kartechy",
+                "bore_fraction": "droby"
+            },
+            "category": {
+                "223": ["198", "rifle"],
+                "308": ["196", "rifle"],
+                "338_Lapua_Mag": ["275", "rifle"],
+                "300_Win_Mag": ["189", "rifle"],
+                "30-06": ["177", "rifle"],
+                "7.62x39": ["6476", "rifle"],
+                "22LR": ["348", "rifle"],
+                "9PA": ["8959", "pistol"],
+                "12/70_bulet": ["364", "bore_bulet"],
+                "12/70_buckshot": ["364", "bore_buckshot"],
+                "12/70_fraction": ["364", "bore_fraction"]
+            }
+        },
+        "stvol": {
+            "url": "http://stvol.ua/",
+            "url_tmp": "http://stvol.ua/catalog/%s",
+            "data_file": path + "/data/stvol.json",
+            "category": [
+                "patrony_nareznye",
+                "patrony_gladkostvolnye",
+                "patrony_travmaticheskogo_deystviya"
+            ],
+            "ammo": {
+                "223Rem": ["rifle"],
+                "308Win": ["rifle"],
+                "338_Lapua_Mag": ["rifle"],
+                "300WM": ["rifle"],
+                "30-06": ["rifle"],
+
+                "22LR": ["rifle"],
+
+                "12": ["bore_bulet"],
+                "12/70": ["bore_buckshot"]
+            }
+        }
+    },
     "AMMO_TYPE": {
         "rifle": "patrony-nareznye86",
         "pistol": "patrony-travmaticheskie",

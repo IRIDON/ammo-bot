@@ -4,74 +4,27 @@
 Parse data from websile ibis.net.ua
 create JSON data and save it in file
 """
-from lxml import html
 import requests
+from lxml import html
 import json
 import time
 
-class IbisParseData(object):
-    __slots__ = ["categories", "dataFileUrl", "availableAmmo", "urlTmp"]
-    def __init__(self, categories, dataFileUrl, availableAmmo, urlTmp):
-        self.categories = categories
+class ParseData(object):
+    __slots__ = ["dataFileUrl"]
+    def __init__(self, dataFileUrl):
+        self.shopName = ""
         self.dataFileUrl = dataFileUrl
-        self.availableAmmo = availableAmmo
-        self.urlTmp = urlTmp
 
     def coder(self, text):
         return text.encode('utf-8')
 
-    def getPrices(self, tree):
-        price = tree.xpath('//div[@class="pb_price "]')
-        result = []
+    def decoder(self, text):
+        return text.decoder('utf-8')
 
-        for item in price:
-            pr = item.xpath('./text()')
+    def requestsPage(self, url):
+        page = requests.get(url)
 
-            if pr:
-                result.append(float(pr[0]))
-            else:
-                pn = item.xpath('*/text()')
-
-                result.append(float(pn[0] + pn[1]))
-
-        return result
-
-    def getStructure(self, tree, price):
-        title = tree.xpath('//a[@class="pb_product_name"]/text()')
-        stock = tree.xpath('//div[@class="pb_stock"]')
-        result = []
-
-        for index, item in enumerate(price):
-            dic = {}
-            dic["title"] = self.coder(title[index])
-            dic["price"] = float(price[index])
-
-            if not stock[index].xpath('*/text()'):
-                result.append(dict(dic))
-            else:
-                break
-
-        return result
-
-    def getUrl(self, categoryName):
-        category = self.categories[categoryName]
-
-        return self.urlTmp % (self.availableAmmo[category[1]], category[0])
-
-    def parse(self):
-        try:
-            data = {}
-
-            for categoryName in self.categories.keys():
-                url = self.getUrl(categoryName)
-                data[categoryName] = self.getData(url)
-
-            data["time"] = self.getCurrentTime()
-            self.saveData(json.dumps(data))
-        except Exception as e:
-            print e
-        finally:
-            print "Parse successful"
+        return html.fromstring(page.content)
 
     def getData(self, url):
         page = requests.get(url)
@@ -81,8 +34,8 @@ class IbisParseData(object):
 
         return data
 
-    def saveData(self, dataJson):
-        with open(self.dataFileUrl, "w") as file:
+    def saveData(self, dataFileUrl, dataJson):
+        with open(dataFileUrl, "w") as file:
             file.truncate() #clean file data
             file.write(str(dataJson))
 
