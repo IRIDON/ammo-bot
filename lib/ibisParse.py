@@ -3,13 +3,13 @@ from lxml import html
 import json
 
 class IbisParseData(ParseData):
-	__slots__ = ["categories", "dataFileUrl", "availableAmmo", "urlTmp"]
-    def __init__(self, categories, dataFileUrl, availableAmmo, urlTmp):
-    	self.shopName = "ibis"
-        self.categories = categories
-        self.dataFileUrl = dataFileUrl
-        self.availableAmmo = availableAmmo
-        self.urlTmp = urlTmp
+    __slots__ = ["categories", "dataFileUrl", "availableAmmo", "urlTmp", "shopName"]
+    def __init__(self, settings):
+        self.shopName = settings["shop_name"]
+        self.categories = settings["category"]
+        self.dataFileUrl = settings["data_file"]
+        self.availableAmmo = settings["ammo_type"]
+        self.urlTmp = settings["url_tmp"]
 
     def getUrl(self, categoryName):
         category = self.categories[categoryName]
@@ -25,13 +25,13 @@ class IbisParseData(ParseData):
                 data[categoryName] = self.getData(url)
 
             data["time"] = self.getCurrentTime()
-            self.saveData(json.dumps(data))
+            self.saveData(self.dataFileUrl, json.dumps(data))
         except Exception as e:
             print e
         finally:
             print "%s %s" % ("Parse successful", self.shopName)
 
-	def getPrices(self, tree):
+    def getPrices(self, tree):
         price = tree.xpath('//div[@class="pb_price "]')
         result = []
 

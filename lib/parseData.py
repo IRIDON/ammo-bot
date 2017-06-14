@@ -10,10 +10,8 @@ import json
 import time
 
 class ParseData(object):
-    __slots__ = ["dataFileUrl"]
-    def __init__(self, dataFileUrl):
+    def __init__(self):
         self.shopName = ""
-        self.dataFileUrl = dataFileUrl
 
     def coder(self, text):
         return text.encode('utf-8')

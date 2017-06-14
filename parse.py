@@ -1,16 +1,13 @@
 from config import settings
-# from lib.ibisParse import IbisParse
+from lib.ibisParse import IbisParseData
 from lib.stvolParse import StvolParseData
 
-# parseData = IbisParseData(
-# 	settings.CALIBERS,
-# 	settings.DATA_FILE,
-# 	settings.AMMO_TYPE,
-# 	settings.URL_TMP,
-# )
-# parseData.parse()
+parseData = IbisParseData(
+    settings.SHOPS["ibis"]
+)
+parseData.parse()
 
 parseStvol = StvolParseData(
-	settings.SHOPS["stvol"]
+    settings.SHOPS["stvol"]
 )
 parseStvol.parse()

@@ -7,9 +7,9 @@ default_settings = {
     "API_TOKEN": apiKey["BOT_API_TOKEN"],
     "BOTAN_API": apiKey["METRICA_KEY"],
     "BOT_HELP_FILE": path + "/data/help.md",
-    "DATA_FILE": path + "/data/data.json",
     "SHOPS": {
         "ibis": {
+            "shop_name": "ibis",
             "url": "https://ibis.net.ua/",
             "url_tmp": "https://ibis.net.ua/products/%s/search/offset/?param_51[]=%s&isort=cheap&show_all=yes",
             "data_file": path + "/data/ibis.json",
@@ -35,6 +35,7 @@ default_settings = {
             }
         },
         "stvol": {
+            "shop_name": "stvol",
             "url": "http://stvol.ua/",
             "url_tmp": "http://stvol.ua/catalog/%s",
             "data_file": path + "/data/stvol.json",

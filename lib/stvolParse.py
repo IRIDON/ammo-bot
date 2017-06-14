@@ -6,8 +6,9 @@ import requests
 import json
 
 class StvolParseData(ParseData):
-    __slots__ = ["categories", "ammo", "availableAmmo", "url", "urlTmp", "dataFile"]
+    __slots__ = ["categories", "ammo", "availableAmmo", "url", "urlTmp", "dataFile", "shopName"]
     def __init__(self, settings):
+        self.shopName = settings["shop_name"]
         self.categories = settings["category"]
         self.ammo = settings["ammo"]
         self.availableAmmo = settings["ammo"]
@@ -56,9 +57,9 @@ class StvolParseData(ParseData):
         for item in blocks:
             dic = {}
             name = item.xpath('.//div[@class="tov-name"]/a/text()')
-            price_1 = item.xpath('.//div[@class="price"]/b/text()').replace(' ', '')
-            price_2 = item.xpath('.//div[@class="price"]/text()')
-            price = price_1[0] + price_2[0]
+            price_1 = item.xpath('.//div[@class="price"]/b/text()')[0].replace(' ', '')
+            price_2 = item.xpath('.//div[@class="price"]/text()')[0]
+            price = price_1 + price_2
             dic["name"] = name[0]
             dic["price"] = price.split(" ")[0]
 
@@ -67,14 +68,19 @@ class StvolParseData(ParseData):
         return result
 
     def parse(self):
-        categories = self.getCategory()
-        result = {}
+        try:
+            categories = self.getCategory()
+            result = {}
 
-        for ammo in self.availableAmmo:
-            url = categories[ammo]
-            data = self.getStructure(url)
+            for ammo in self.availableAmmo:
+                url = categories[ammo]
+                data = self.getStructure(url)
 
-            result[ammo] = data
+                result[ammo] = data
 
-        self.saveData(self.dataFile, json.dumps(result))
+            self.saveData(self.dataFile, json.dumps(result))
+        except Exception as e:
+            print e
+        finally:
+            print "%s %s" % ("Parse successful", self.shopName)
     
