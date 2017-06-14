@@ -28,7 +28,7 @@ default_settings = {
         "12/70_buckshot": ["364", "bore_buckshot"],
         "12/70_fraction": ["364", "bore_fraction"]
     },
-    "DISCONT": [0, 5, 10, 15, 20, 25],
+    "DISCONT": [0, 3, 5, 10, 15, 20, 25],
     "CURRENCY": "UAH",
     "URL_TMP": "https://ibis.net.ua/products/%s/search/offset/?param_51[]=%s&isort=cheap&show_all=yes",
     "MESSAGE": {
