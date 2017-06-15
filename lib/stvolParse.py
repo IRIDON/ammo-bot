@@ -77,15 +77,23 @@ class StvolParseData(ParseData):
 
         return sorted(result, key=self.sortArrayByPrice)
 
+    def getUrl(self, id):
+        category = self.availableAmmo[id][1]
+        key = self.availableAmmo[id][0]
+        part = self.categories[category]
+
+        return self.urlTmp % (part, key)
+
     def parse(self):
         try:
-            categories = self.getCategory()
+            # categories = self.getCategory()
             result = {
                 "url": {}
             }
 
             for ammo in self.availableAmmo:
-                url = categories[ammo]
+                # url = categories[ammo]
+                url = self.getUrl(ammo)
                 data = self.getStructure(url)
 
                 result[ammo] = data
