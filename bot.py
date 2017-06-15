@@ -5,17 +5,16 @@ from telebot import types
 from lib.botConstructor import BotConstructor
 
 bot = telebot.TeleBot(settings.API_TOKEN)
+commands = ''
 botConstructor = BotConstructor(
     bot,
     helpFile=settings.BOT_HELP_FILE,
-    fileUrl=settings.DATA_FILE,
     currency=settings.CURRENCY,
     discount=settings.DISCONT,
-    categories=settings.CALIBERS,
     message=settings.MESSAGE,
-    ammo=settings.AMMO_TYPE,
     apiKey=settings.BOTAN_API,
-    url=settings.URL_TMP
+    availableShops=settings.AVAILABLE_SHOPS,
+    shopData=settings.SHOPS
 )
 @bot.message_handler(commands=['start', 'help'])
 def sendWelcome(message):
@@ -27,12 +26,18 @@ def sendDiscont(message):
 
 @bot.message_handler(commands=['top'])
 def sendTop(message):
-    botConstructor.botComandTop(message)
+    botConstructor.botSelectStore(message)
+    # botConstructor.botComandTop(message)
 
 @bot.message_handler(commands=['median'])
 def sendTop(message):
     botConstructor.botComandMedian(message)
 
+
+@bot.callback_query_handler(func=lambda call: call.data.find("shop") != -1)
+def callTop(call):
+    botConstructor.botSwitchShop(call)
+    botConstructor.botComandTop(call.message)
 
 @bot.callback_query_handler(func=lambda call: call.data.find("top") != -1)
 def callTop(call):

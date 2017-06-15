@@ -7,6 +7,10 @@ default_settings = {
     "API_TOKEN": apiKey["BOT_API_TOKEN"],
     "BOTAN_API": apiKey["METRICA_KEY"],
     "BOT_HELP_FILE": path + "/data/help.md",
+    "AVAILABLE_SHOPS": [
+        "ibis",
+        "stvol"
+    ],
     "SHOPS": {
         "ibis": {
             "shop_name": "ibis",
@@ -39,12 +43,12 @@ default_settings = {
             "url": "http://stvol.ua/",
             "url_tmp": "http://stvol.ua/catalog/%s",
             "data_file": path + "/data/stvol.json",
-            "category": [
+            "ammo_type": [
                 "patrony_nareznye",
                 "patrony_gladkostvolnye",
                 "patrony_travmaticheskogo_deystviya"
             ],
-            "ammo": {
+            "category": {
                 "223Rem": ["rifle"],
                 "308Win": ["rifle"],
                 "338_Lapua_Mag": ["rifle"],

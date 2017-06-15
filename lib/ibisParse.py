@@ -18,18 +18,21 @@ class IbisParseData(ParseData):
 
     def parse(self):
         try:
-            data = {}
+            data = {
+                "url": {}
+            }
 
             for categoryName in self.categories.keys():
                 url = self.getUrl(categoryName)
                 data[categoryName] = self.getData(url)
+                data["url"][categoryName] = url
 
             data["time"] = self.getCurrentTime()
             self.saveData(self.dataFileUrl, json.dumps(data))
         except Exception as e:
             print e
         finally:
-            print "%s %s" % ("Parse successful", self.shopName)
+            print "Parse %s successful" % (self.shopName)
 
     def getPrices(self, tree):
         price = tree.xpath('//div[@class="pb_price "]')

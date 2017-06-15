@@ -5,21 +5,48 @@ import statistics
 import botan
 
 class BotConstructor(object):
-    __slots__ = ["bot", "botHelpFile", "dataFileUrl", "currency", "availableDiscount", "categories", "message", "availableAmmo", "botanApiKey", "urlTmp", "discount", "visibleTopItems", "categoriesKeys"]
+    __slots__ = [
+        "bot",
+        "botHelpFile",
+        "currency",
+        "availableDiscount",
+        "categories",
+        "message",
+        "availableAmmo",
+        "botanApiKey",
+        "urlTmp",
+        "discount",
+        "visibleTopItems",
+        "categoriesKeys",
+        "availableShops",
+        "shopData",
+        "dataFileUrl"
+    ]
     def __init__(self, bot, **kwargs):
         self.bot = bot
         self.botHelpFile = kwargs["helpFile"]
-        self.dataFileUrl = kwargs["fileUrl"]
         self.currency = kwargs["currency"]
         self.availableDiscount = kwargs["discount"]
-        self.categories = kwargs["categories"]
-        self.message = kwargs["message"]
-        self.availableAmmo = kwargs["ammo"]
         self.botanApiKey = kwargs["apiKey"]
-        self.urlTmp = kwargs["url"]
+        self.message = kwargs["message"]
+        self.availableShops = kwargs["availableShops"]
+        self.shopData = kwargs["shopData"]
+        # self.urlTmp = kwargs["url"]
         self.discount = 0
         self.visibleTopItems = 5
+        self.initShopData(self.availableShops[0])
+
+    def initShopData(self, shopName):
+        shopData = self.shopData[shopName]
+
+        self.categories = shopData["category"]
         self.categoriesKeys = self.categories.keys()
+        self.availableAmmo = shopData["ammo_type"]
+        self.dataFileUrl = shopData["data_file"]
+        # if any(shopName in s for s in self.shopData):
+            
+        # else:
+        #     return False
 
     def getData(self):
         with open(self.dataFileUrl, "r") as file:
@@ -29,11 +56,6 @@ class BotConstructor(object):
         factor = (100 - float(discount)) / 100
 
         return format(price * factor, '.2f')
-
-    def getUrl(self, categoryName):
-        category = self.categories[categoryName]
-
-        return self.urlTmp % (self.availableAmmo[category[1]], category[0])
 
     def topPrices(self, num=3, category='', discount=0):
         result = []
@@ -58,7 +80,7 @@ class BotConstructor(object):
                 result.append("*%s %s* _(%s)_ - %s" % (self.getDiscount(price, discount), self.currency, price, title))
         
         result.append("\n_%s: %s_" % (self.message["base_date"], allData["time"]))
-        result.append("\n[%s](%s)" % (self.message["link_text"], self.getUrl(category) + "?utm_source=ammoBot"))
+        result.append("\n[%s](%s)" % (self.message["link_text"], allData["url"][category] + "?utm_source=ammoBot"))
         
         return "\n".join(result)
 
@@ -109,6 +131,15 @@ class BotConstructor(object):
     def botAnswerCallback(self, id):
         self.bot.answer_callback_query(id)
 
+    def botSelectStore(self, message):
+        try:
+            keyboard = self.getBotInlineKeyboards(self.availableShops, 'shop')
+
+            self.botSendMessage(message.chat.id, "Choose shop", keyboard)
+            self.botan(message.chat.id, message, "Choose shop")
+        except Exception as e:
+            print e
+
     def botComandStart(self, message):
         try:
             with open(self.botHelpFile, "r") as helpFile:
@@ -125,6 +156,16 @@ class BotConstructor(object):
 
             self.botSendMessage(message.chat.id, self.message["choose_caliber"], keyboard)
             self.botan(message.chat.id, message, "Choose caliber")
+        except Exception as e:
+            print e
+
+    def botSwitchShop(self, callData):
+        try:
+            data = callData.data.split('_')
+            currentShop = self.availableShops[int(data[1])]
+
+            self.botAnswerCallback(callData.id)
+            self.initShopData(currentShop)
         except Exception as e:
             print e
 

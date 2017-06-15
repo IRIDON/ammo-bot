@@ -4,17 +4,21 @@ from lib.parseData import ParseData
 from lxml import html
 import requests
 import json
+import re
 
 class StvolParseData(ParseData):
     __slots__ = ["categories", "ammo", "availableAmmo", "url", "urlTmp", "dataFile", "shopName"]
     def __init__(self, settings):
         self.shopName = settings["shop_name"]
-        self.categories = settings["category"]
-        self.ammo = settings["ammo"]
-        self.availableAmmo = settings["ammo"]
+        self.categories = settings["ammo_type"]
+        self.ammo = settings["ammo_type"]
+        self.availableAmmo = settings["category"]
         self.url = settings["url"]
         self.urlTmp = settings["url_tmp"]
         self.dataFile = settings["data_file"]
+
+    def sortArrayByPrice(self, x):
+        return x["price"]
 
     def getCategoryUrl(self, category):
         result = {}
@@ -36,7 +40,7 @@ class StvolParseData(ParseData):
 
         for index, link in enumerate(links):
             name = calibersName[index].replace(" ", "_")
-            result[name] = link
+            result[name] = self.url + link + "?per_page=96"
 
         return result
 
@@ -51,7 +55,7 @@ class StvolParseData(ParseData):
 
     def getStructure(self, url):
         result = []
-        page = self.requestsPage(self.url + url)
+        page = self.requestsPage(url)
         blocks = page.xpath('.//div[@class="tov-cover"]')
 
         for item in blocks:
@@ -60,27 +64,38 @@ class StvolParseData(ParseData):
             price_1 = item.xpath('.//div[@class="price"]/b/text()')[0].replace(' ', '')
             price_2 = item.xpath('.//div[@class="price"]/text()')[0]
             price = price_1 + price_2
-            dic["name"] = name[0]
-            dic["price"] = price.split(" ")[0]
+            price = price.split(" ")[0]
+            price = re.sub('[^0-9a-zA-Z]+', '.', price)
+
+            if price[len(price) - 1] == '.':
+                price = price[:-1]
+
+            dic["title"] = name[0]
+            dic["price"] = float(price)
 
             result.append(dict(dic))
 
-        return result
+        return sorted(result, key=self.sortArrayByPrice)
 
     def parse(self):
         try:
             categories = self.getCategory()
-            result = {}
+            result = {
+                "url": {}
+            }
 
             for ammo in self.availableAmmo:
                 url = categories[ammo]
                 data = self.getStructure(url)
 
                 result[ammo] = data
+                result["url"][ammo] = url
+
+            result["time"] = self.getCurrentTime()
 
             self.saveData(self.dataFile, json.dumps(result))
         except Exception as e:
             print e
         finally:
-            print "%s %s" % ("Parse successful", self.shopName)
+            print "Parse %s successful" % (self.shopName)
     
