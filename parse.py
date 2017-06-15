@@ -2,12 +2,12 @@ from config import settings
 from lib.ibisParse import IbisParseData
 from lib.stvolParse import StvolParseData
 
-parseData = IbisParseData(
+parseIbis = IbisParseData(
     settings.SHOPS["ibis"]
 )
-parseData.parse()
-
 parseStvol = StvolParseData(
     settings.SHOPS["stvol"]
 )
+
+parseIbis.parse()
 parseStvol.parse()

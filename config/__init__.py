@@ -40,13 +40,12 @@ default_settings = {
         },
         "stvol": {
             "shop_name": "stvol",
-            "url": "http://stvol.ua/",
+            "url": "http://stvol.ua",
             "url_tmp": "http://stvol.ua/catalog/%s",
             "data_file": path + "/data/stvol.json",
             "ammo_type": [
                 "patrony_nareznye",
-                "patrony_gladkostvolnye",
-                "patrony_travmaticheskogo_deystviya"
+                "patrony_gladkostvolnye"
             ],
             "category": {
                 "223Rem": ["rifle"],
@@ -54,10 +53,7 @@ default_settings = {
                 "338_Lapua_Mag": ["rifle"],
                 "300WM": ["rifle"],
                 "30-06": ["rifle"],
-
                 "22LR": ["rifle"],
-
-                "12": ["bore_bulet"],
                 "12/70": ["bore_buckshot"]
             }
         }

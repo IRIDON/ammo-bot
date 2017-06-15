@@ -133,7 +133,12 @@ class BotConstructor(object):
 
     def botSelectStore(self, message):
         try:
-            keyboard = self.getBotInlineKeyboards(self.availableShops, 'shop')
+            shopName = []
+
+            for shop in self.availableShops:
+                shopName.append(shop.upper())
+                
+            keyboard = self.getBotInlineKeyboards(shopName, 'shop')
 
             self.botSendMessage(message.chat.id, "Choose shop", keyboard)
             self.botan(message.chat.id, message, "Choose shop")
