@@ -14,7 +14,6 @@ class BotConstructor(object):
         "message",
         "availableAmmo",
         "botanApiKey",
-        "urlTmp",
         "discount",
         "visibleTopItems",
         "categoriesKeys",
@@ -31,22 +30,20 @@ class BotConstructor(object):
         self.message = kwargs["message"]
         self.availableShops = kwargs["availableShops"]
         self.shopData = kwargs["shopData"]
-        # self.urlTmp = kwargs["url"]
         self.discount = 0
-        self.visibleTopItems = 5
+        self.visibleTopItems = kwargs["resultItemCount"]
         self.initShopData(self.availableShops[0])
 
     def initShopData(self, shopName):
-        shopData = self.shopData[shopName]
+        if self.shopData[shopName]:
+            shopData = self.shopData[shopName]
 
-        self.categories = shopData["category"]
-        self.categoriesKeys = self.categories.keys()
-        self.availableAmmo = shopData["ammo_type"]
-        self.dataFileUrl = shopData["data_file"]
-        # if any(shopName in s for s in self.shopData):
-            
-        # else:
-        #     return False
+            self.categories = shopData["category"]
+            self.categoriesKeys = self.categories.keys()
+            self.availableAmmo = shopData["ammo_type"]
+            self.dataFileUrl = shopData["data_file"]
+        else:
+            return False
 
     def getData(self):
         with open(self.dataFileUrl, "r") as file:
@@ -75,12 +72,12 @@ class BotConstructor(object):
             price = data[index]["price"]
 
             if discount == 0:
-                result.append("*%s %s* - %s" % (price, self.currency, title))
+                result.append("<b>%s %s</b> - %s" % (price, self.currency, title))
             else:
-                result.append("*%s %s* _(%s)_ - %s" % (self.getDiscount(price, discount), self.currency, price, title))
+                result.append("<b>%s %s</b> <i>(%s)</i> - %s" % (self.getDiscount(price, discount), self.currency, price, title))
         
-        result.append("\n_%s: %s_" % (self.message["base_date"], allData["time"]))
-        result.append("\n[%s](%s)" % (self.message["link_text"], allData["url"][category] + "?utm_source=ammoBot"))
+        result.append("\n<i>%s: %s</i>" % (self.message["base_date"], allData["time"]))
+        result.append("\n<a href='%s'>%s</a>" % (allData["url"][category] + "?utm_source=ammoBot", self.message["link_text"]))
         
         return "\n".join(result)
 
@@ -126,10 +123,17 @@ class BotConstructor(object):
         )
 
     def botSendMessage(self, id, message, markup=''):
-        self.bot.send_message(id, message, parse_mode="Markdown", reply_markup=markup)
+        self.bot.send_message(id, message, parse_mode="HTML", reply_markup=markup)
 
     def botAnswerCallback(self, id):
         self.bot.answer_callback_query(id)
+
+    def botChooseKeyboard(self, chat, message, name, keyboard):
+        analyticMessage = name.replace("_", " ")
+        analyticMessage = analyticMessage[:1].upper() + analyticMessage[1:]
+
+        self.botSendMessage(chat.id, self.message[name], keyboard)
+        self.botan(chat.id, message, analyticMessage)
 
     def botSelectStore(self, message):
         try:
@@ -140,8 +144,8 @@ class BotConstructor(object):
                 
             keyboard = self.getBotInlineKeyboards(shopName, 'shop')
 
-            self.botSendMessage(message.chat.id, "Choose shop", keyboard)
-            self.botan(message.chat.id, message, "Choose shop")
+            self.botSendMessage(message.chat.id, self.message["choose_shop"], keyboard)
+            self.botan(message.chat.id, message, self.message["choose_shop"])
         except Exception as e:
             print e
 
@@ -159,8 +163,7 @@ class BotConstructor(object):
             self.discount = 0
             keyboard = self.getBotInlineKeyboards(self.categoriesKeys, 'top')
 
-            self.botSendMessage(message.chat.id, self.message["choose_caliber"], keyboard)
-            self.botan(message.chat.id, message, "Choose caliber")
+            self.botChooseKeyboard(message.chat, message, "choose_caliber", keyboard)
         except Exception as e:
             print e
 
@@ -190,8 +193,7 @@ class BotConstructor(object):
         try:
             keyboard = self.getBotInlineKeyboards(self.availableDiscount, 'discount')
 
-            self.botSendMessage(message.chat.id, self.message["choose_discount"], keyboard)
-            self.botan(message.chat.id, message, "Choose discount")
+            self.botChooseKeyboard(message.chat, message, "choose_discount", keyboard)
         except Exception as e:
             print e
     
@@ -202,8 +204,7 @@ class BotConstructor(object):
             keyboard = self.getBotInlineKeyboards(self.categoriesKeys, 'top')
 
             self.botAnswerCallback(callData.id)
-            self.botSendMessage(callData.message.chat.id, self.message["choose_caliber"], keyboard)
-            self.botan(callData.message.chat.id, callData.message, "Choose caliber")
+            self.botChooseKeyboard(callData.message.chat, callData.message, "choose_caliber", keyboard)
         except Exception as e:
             print e
 
@@ -212,8 +213,7 @@ class BotConstructor(object):
             self.discount = 0
             keyboard = self.getBotInlineKeyboards(self.categoriesKeys, 'median')
 
-            self.botSendMessage(message.chat.id, self.message["choose_caliber"], keyboard)
-            self.botan(message.chat.id, message, "Choose caliber")
+            self.botChooseKeyboard(message.chat, message, "choose_caliber", keyboard)
         except Exception as e:
             print e
 

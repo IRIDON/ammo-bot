@@ -7,6 +7,7 @@ default_settings = {
     "API_TOKEN": apiKey["BOT_API_TOKEN"],
     "BOTAN_API": apiKey["METRICA_KEY"],
     "BOT_HELP_FILE": path + "/data/help.md",
+    "RESULT_ITEMS_COUNT": 7,
     "AVAILABLE_SHOPS": [
         "ibis",
         "stvol",
@@ -135,6 +136,7 @@ default_settings = {
         "empy": "Sorry, but I don't know how to answer, plese run /help to find out the available commands.",
         "choose_caliber": "Choose your caliber:",
         "choose_discount": "Choose your discount:",
+        "choose_shop": "Choose shop:",
         "base_date": "Database update date",
         "link_text": "Visit to site",
         "base_error": "Database error, please try again."

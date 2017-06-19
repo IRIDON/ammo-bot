@@ -1,38 +1,16 @@
+# -*- coding: utf-8 -*-
+
 from lib.parseData import ParseData
 from lxml import html
-import json
 
 class IbisParseData(ParseData):
-    __slots__ = ["categories", "dataFileUrl", "availableAmmo", "urlTmp", "shopName"]
+    __slots__ = ["ammo_type", "dataFile", "availableAmmo", "urlTmp", "shopName"]
     def __init__(self, settings):
         self.shopName = settings["shop_name"]
-        self.categories = settings["category"]
-        self.dataFileUrl = settings["data_file"]
-        self.availableAmmo = settings["ammo_type"]
+        self.categories = settings["ammo_type"]
+        self.dataFile = settings["data_file"]
+        self.availableAmmo = settings["category"]
         self.urlTmp = settings["url_tmp"]
-
-    def getUrl(self, categoryName):
-        category = self.categories[categoryName]
-
-        return self.urlTmp % (self.availableAmmo[category[1]], category[0])
-
-    def parse(self):
-        try:
-            data = {
-                "url": {}
-            }
-
-            for categoryName in self.categories.keys():
-                url = self.getUrl(categoryName)
-                data[categoryName] = self.getData(url)
-                data["url"][categoryName] = url
-
-            data["time"] = self.getCurrentTime()
-            self.saveData(self.dataFileUrl, json.dumps(data))
-        except Exception as e:
-            print e
-        finally:
-            print "Parse %s successful" % (self.shopName)
 
     def getPrices(self, tree):
         price = tree.xpath('//div[@class="pb_price "]')
@@ -50,16 +28,18 @@ class IbisParseData(ParseData):
 
         return result
 
-    def getStructure(self, tree, price):
-        title = tree.xpath('//a[@class="pb_product_name"]/text()')
-        stock = tree.xpath('//div[@class="pb_stock"]')
+    def getStructure(self, url):
         result = []
-
+        page = self.requestsPage(url)
+        price = self.getPrices(page)
+        title = page.xpath('//a[@class="pb_product_name"]/text()')
+        stock = page.xpath('//div[@class="pb_stock"]')
+        
         for index, item in enumerate(price):
             dic = {}
             dic["title"] = self.coder(title[index])
             dic["price"] = float(price[index])
-
+            
             if not stock[index].xpath('*/text()'):
                 result.append(dict(dic))
             else:

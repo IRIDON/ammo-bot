@@ -14,7 +14,8 @@ botConstructor = BotConstructor(
     message=settings.MESSAGE,
     apiKey=settings.BOTAN_API,
     availableShops=settings.AVAILABLE_SHOPS,
-    shopData=settings.SHOPS
+    shopData=settings.SHOPS,
+    resultItemCount=settings.RESULT_ITEMS_COUNT,
 )
 @bot.message_handler(commands=['start', 'help'])
 def sendWelcome(message):

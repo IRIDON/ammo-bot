@@ -13,6 +13,6 @@ parseSafari = SafariParseData(
     settings.SHOPS["safari"]
 )
 
-# parseIbis.parse()
-# parseStvol.parse()
+parseIbis.parse()
+parseStvol.parse()
 parseSafari.parse()

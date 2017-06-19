@@ -19,18 +19,24 @@ class ParseData(object):
     def decoder(self, text):
         return text.decoder('utf-8')
 
+    def sortArrayByPrice(self, x):
+        return x["price"]
+
     def requestsPage(self, url):
         page = requests.get(url)
 
         return html.fromstring(page.content)
 
-    def getData(self, url):
-        page = requests.get(url)
-        tree = html.fromstring(page.content)
-        price = self.getPrices(tree)
-        data = self.getStructure(tree, price)
+    def getHourInSeconds(self, hour):
+        return hour * 60 * 60
 
-        return data
+    def getUrl(self, id):
+        ammo = self.availableAmmo[id]
+        category = ammo[1]
+        key = ammo[0]
+        part = self.categories[category]
+
+        return self.urlTmp % (part, key)
 
     def saveData(self, dataFileUrl, dataJson):
         with open(dataFileUrl, "w") as file:
@@ -38,7 +44,28 @@ class ParseData(object):
             file.write(str(dataJson))
 
     def getCurrentTime(self):
-        timetup = time.gmtime(time.time() + 3 * 60 * 60)
+        timetup = time.gmtime(time.time() + self.getHourInSeconds(3))
         currentTime = time.strftime('%Y-%m-%d %H:%M:%S', timetup)
 
         return currentTime
+
+    def parse(self):
+        try:
+            result = {
+                "url": {}
+            }
+
+            for ammo in self.availableAmmo:
+                url = self.getUrl(ammo)
+                data = self.getStructure(url)
+
+                result[ammo] = data
+                result["url"][ammo] = url
+
+            result["time"] = self.getCurrentTime()
+
+            self.saveData(self.dataFile, json.dumps(result))
+        except Exception as e:
+            print e
+        finally:
+            print "Parse %s successful" % (self.shopName)
