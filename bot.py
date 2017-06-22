@@ -54,4 +54,4 @@ def echo_message(message):
         botConstructor.botSendMessage(message.chat.id, 'Opppsss!')
         print e
 
-bot.polling()
+bot.polling(none_stop=True)
