@@ -8,11 +8,17 @@ default_settings = {
     "BOTAN_API": apiKey["METRICA_KEY"],
     "BOT_HELP_FILE": path + "/data/help.md",
     "RESULT_ITEMS_COUNT": 7,
-    "AVAILABLE_SHOPS": [
-        "ibis",
-        "stvol",
-        "safari"
-    ],
+    "DISCONT": [0, 3, 5, 10, 15, 20, 25],
+    "CURRENCY": "UAH",
+    "MESSAGE": {
+        "empy": "Sorry, but I don't know how to answer, plese run /help to find out the available commands.",
+        "choose_caliber": "Choose your caliber:",
+        "choose_discount": "Choose your discount:",
+        "choose_shop": "Choose shop:",
+        "base_date": "Database update date",
+        "link_text": "Visit to site",
+        "base_error": "Database error, please try again."
+    },
     "SHOPS": {
         "ibis": {
             "shop_name": "ibis",
@@ -108,38 +114,6 @@ default_settings = {
                 "20/70": ["5377", "bore"]
             }
         }
-    },
-    "AMMO_TYPE": {
-        "rifle": "patrony-nareznye86",
-        "pistol": "patrony-travmaticheskie",
-        "bore_bulet": "puli-gladkostvolnie",
-        "bore_buckshot": "kartechy",
-        "bore_fraction": "droby"
-    },
-    "CALIBERS": {
-        "223": ["198", "rifle"],
-        "308": ["196", "rifle"],
-        "338_Lapua_Mag": ["275", "rifle"],
-        "300_Win_Mag": ["189", "rifle"],
-        "30-06": ["177", "rifle"],
-        "7.62x39": ["6476", "rifle"],
-        "22LR": ["348", "rifle"],
-        "9PA": ["8959", "pistol"],
-        "12/70_bulet": ["364", "bore_bulet"],
-        "12/70_buckshot": ["364", "bore_buckshot"],
-        "12/70_fraction": ["364", "bore_fraction"]
-    },
-    "DISCONT": [0, 3, 5, 10, 15, 20, 25],
-    "CURRENCY": "UAH",
-    "URL_TMP": "https://ibis.net.ua/products/%s/search/offset/?param_51[]=%s&isort=cheap&show_all=yes",
-    "MESSAGE": {
-        "empy": "Sorry, but I don't know how to answer, plese run /help to find out the available commands.",
-        "choose_caliber": "Choose your caliber:",
-        "choose_discount": "Choose your discount:",
-        "choose_shop": "Choose shop:",
-        "base_date": "Database update date",
-        "link_text": "Visit to site",
-        "base_error": "Database error, please try again."
     }
 }
 

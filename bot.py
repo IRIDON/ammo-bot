@@ -13,7 +13,6 @@ botConstructor = BotConstructor(
     discount=settings.DISCONT,
     message=settings.MESSAGE,
     apiKey=settings.BOTAN_API,
-    availableShops=settings.AVAILABLE_SHOPS,
     shopData=settings.SHOPS,
     resultItemCount=settings.RESULT_ITEMS_COUNT,
 )

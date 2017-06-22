@@ -17,8 +17,8 @@ class BotConstructor(object):
         "discount",
         "visibleTopItems",
         "categoriesKeys",
-        "availableShops",
         "shopData",
+        "availableShops",
         "dataFileUrl"
     ]
     def __init__(self, bot, **kwargs):
@@ -28,8 +28,8 @@ class BotConstructor(object):
         self.availableDiscount = kwargs["discount"]
         self.botanApiKey = kwargs["apiKey"]
         self.message = kwargs["message"]
-        self.availableShops = kwargs["availableShops"]
         self.shopData = kwargs["shopData"]
+        self.availableShops = self.shopData.keys()
         self.discount = 0
         self.visibleTopItems = kwargs["resultItemCount"]
         self.initShopData(self.availableShops[0])
