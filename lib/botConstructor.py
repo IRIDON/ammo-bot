@@ -222,7 +222,7 @@ class BotConstructor(object):
             data = callData.data.split('_')
             currentCaliber = self.categoriesKeys[int(data[1])]
 
-            result = "Mediana for %s - *%s %s*" % (currentCaliber, self.median(currentCaliber), self.currency)
+            result = "Mediana for %s - <b>%s %s</b>" % (currentCaliber, self.median(currentCaliber), self.currency)
 
             self.botAnswerCallback(callData.id)
             self.botSendMessage(callData.message.chat.id, result)

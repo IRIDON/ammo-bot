@@ -20,24 +20,24 @@ botConstructor = BotConstructor(
 def sendWelcome(message):
     botConstructor.botComandStart(message)
 
-@bot.message_handler(commands=['discount'])
-def sendDiscont(message):
-    botConstructor.botComandDiscount(message)
-
-@bot.message_handler(commands=['top'])
+@bot.message_handler(commands=['top', 'discount', 'median'])
 def sendTop(message):
+    global commands
+    commands = message.text.replace("/", "")
+
     botConstructor.botSelectStore(message)
-    # botConstructor.botComandTop(message)
-
-@bot.message_handler(commands=['median'])
-def sendTop(message):
-    botConstructor.botComandMedian(message)
-
 
 @bot.callback_query_handler(func=lambda call: call.data.find("shop") != -1)
 def callTop(call):
+    global commands
     botConstructor.botSwitchShop(call)
-    botConstructor.botComandTop(call.message)
+
+    if commands == 'top':
+        botConstructor.botComandTop(call.message)
+    elif commands == 'discount':
+        botConstructor.botComandDiscount(call.message)
+    elif commands == 'median':
+        botConstructor.botComandMedian(call.message)
 
 @bot.callback_query_handler(func=lambda call: call.data.find("top") != -1)
 def callTop(call):
