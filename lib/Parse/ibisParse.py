@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from lib.parseData import ParseData
+from lib.Parse.parseData import ParseData
 from lxml import html
 
 class IbisParseData(ParseData):

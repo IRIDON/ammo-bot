@@ -2,11 +2,11 @@
 from config import settings
 import telebot
 from telebot import types
-from lib.botConstructor import BotConstructor
+from lib.Constructor.telegramConstructor import TelegramConstructor
 
 bot = telebot.TeleBot(settings.API_TOKEN)
 commands = ''
-botConstructor = BotConstructor(
+botConstructor = TelegramConstructor(
     bot,
     helpFile=settings.BOT_HELP_FILE,
     currency=settings.CURRENCY,

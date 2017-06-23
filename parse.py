@@ -1,7 +1,7 @@
 from config import settings
-from lib.ibisParse import IbisParseData
-from lib.stvolParse import StvolParseData
-from lib.safariParse import SafariParseData
+from lib.Parse.ibisParse import IbisParseData
+from lib.Parse.stvolParse import StvolParseData
+from lib.Parse.safariParse import SafariParseData
 
 parseIbis = IbisParseData(
     settings.SHOPS["ibis"]
