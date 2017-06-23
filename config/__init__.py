@@ -27,7 +27,7 @@ default_settings = {
             "data_file": path + "/data/ibis.json",
             "ammo_type": {
                 "rifle": "patrony-nareznye86",
-                "pistol": "patrony-travmaticheskie",
+                "traumatic": "patrony-travmaticheskie",
                 "bore_bulet": "puli-gladkostvolnie",
                 "bore_buckshot": "kartechy",
                 "bore_fraction": "droby"
@@ -47,7 +47,7 @@ default_settings = {
                 "7.62x39": ["6476", "rifle"],
                 "8x57_JS": ["6324", "rifle"],
                 "9.3x62": ["944", "rifle"],
-                "9PA": ["8959", "pistol"],
+                "9PA": ["8959", "traumatic"],
                 "12/70_bulet": ["364", "bore_bulet"],
                 "12/70_buckshot": ["364", "bore_buckshot"],
                 "12/70_fraction": ["364", "bore_fraction"]
@@ -60,7 +60,8 @@ default_settings = {
             "data_file": path + "/data/stvol.json",
             "ammo_type": {
                 "rifle": "patrony_nareznye",
-                "bore": "patrony_gladkostvolnye"
+                "bore": "patrony_gladkostvolnye",
+                "traumatic": "patrony_travmaticheskogo_deystviya"
             },
             "category": {
                 "222Rem": ["kalibr-is-619213a1-f397-11e2-bd5e-1cc1de282c58", "rifle"],
@@ -78,7 +79,8 @@ default_settings = {
                 "12/70": ["kalibr-is-a45bde61-d219-11e4-8e15-1cc1de282c58", "bore"],
                 "12/76": ["kalibr-is-5998ccc0-d90e-11e4-8e15-1cc1de282c58", "bore"],
                 "16/70": ["kalibr-is-114c2f3e-d210-11e4-8e15-1cc1de282c58", "bore"],
-                "20/70": ["kalibr-is-d44ea6b4-d204-11e4-8e15-1cc1de282c58", "bore"]
+                "20/70": ["kalibr-is-d44ea6b4-d204-11e4-8e15-1cc1de282c58", "bore"],
+                "9RA": ["kalibr-is-f5f0d571-640b-11e4-9e41-1cc1de282c58", "traumatic"]
             }
         },
         "safari": {
@@ -88,7 +90,8 @@ default_settings = {
             "data_file": path + "/data/safari.json",
             "ammo_type": {
                 "rifle": "nareznye-patrony/c269/kalibr-nareznoy",
-                "bore": "gladkie-patrony/c281/kalibr-gladk1"
+                "bore": "gladkie-patrony/c281/kalibr-gladk1",
+                "traumatic": "travmaticheskie-patrony/c176999/detail_11301"
             },
             "category": {
                 "22_LR": ["5451", "rifle"],
@@ -111,7 +114,36 @@ default_settings = {
                 "12/70": ["5371", "bore"],
                 "12/76": ["5372", "bore"],
                 "16/70": ["5375", "bore"],
-                "20/70": ["5377", "bore"]
+                "20/70": ["5377", "bore"],
+                "9RA": ["5384", "traumatic"]
+            }
+        },
+        "kulya": {
+            "shop_name": "kulya",
+            "url": "http://kulya.com.ua",
+            "url_tmp": "http://kulya.com.ua/sortirovka/%s/%s&limit=72",
+            "data_file": path + "/data/kulya.json",
+            "ammo_type": {
+                "rifle": "nareznye-patroni",
+                "traumatic": "patrony-travmaticheskie",
+                "bore_bulet": "pulya",
+                "bore_buckshot": "kartech",
+                "bore_fraction": "drob-dlya-ohoti"
+            },
+            "category": {
+                "308 Win": ["?custom_f_88[0]=2e3330382057696e", "rifle"],
+                "7.62x39": ["?custom_f_88[0]=372e3632783339", "rifle"],
+                "22_WMR": ["?custom_f_88[0]=2e323220574d52", "rifle"],
+                "223_Rem": ["?custom_f_88[0]=2e3232332052656d", "rifle"],
+                "7.62x54_R": ["?custom_f_88[0]=372e36327835342052", "rifle"],
+                "22_LR": ["?custom_f_88[0]=2e32324c52", "rifle"],
+                "243_Win": ["?custom_f_88[0]=2e3234332057696e", "rifle"],
+                "30-06": ["?custom_f_88[0]=2e33302d3036", "rifle"],
+                "300_Win": ["?custom_f_88[0]=2e3330302057696e", "rifle"],
+                "12/70_buckshot": ["?custom_f_71[0]=31322f3730", "bore_buckshot"],
+                "12/70_fraction": ["?custom_f_71[0]=31322f3730", "bore_fraction"],
+                "12/70_bulet": ["?custom_f_71[0]=31322f3730", "bore_bulet"],
+                "9RA": ["", "traumatic"]
             }
         }
     }
