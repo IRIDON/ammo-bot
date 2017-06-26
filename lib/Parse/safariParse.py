@@ -5,7 +5,14 @@ from lxml import html
 import re
 
 class SafariParseData(ParseData):
-    __slots__ = ["categories", "availableAmmo", "url", "urlTmp", "dataFile", "shopName"]
+    __slots__ = [
+        "categories",
+        "availableAmmo",
+        "url",
+        "urlTmp",
+        "dataFile",
+        "shopName"
+    ]
     def __init__(self, settings):
         self.shopName = settings["shop_name"]
         self.categories = settings["ammo_type"]

@@ -4,7 +4,13 @@ from lib.Parse.parseData import ParseData
 from lxml import html
 
 class IbisParseData(ParseData):
-    __slots__ = ["ammo_type", "dataFile", "availableAmmo", "urlTmp", "shopName"]
+    __slots__ = [
+        "ammo_type",
+        "dataFile",
+        "availableAmmo",
+        "urlTmp",
+        "shopName"
+    ]
     def __init__(self, settings):
         self.shopName = settings["shop_name"]
         self.categories = settings["ammo_type"]
