@@ -46,6 +46,8 @@ class BotConstructor(object):
         if dataLen < num:
             num = dataLen
 
+        result.append("<b>%s</b>\n" % (self.getKeyName(category)))
+
         for index in range(0,num):
             title = data[index]["title"]
             price = data[index]["price"]
@@ -53,10 +55,21 @@ class BotConstructor(object):
             if discount == 0:
                 result.append("<b>%s %s</b> - %s" % (price, self.currency, title))
             else:
-                result.append("<b>%s %s</b> <i>(%s)</i> - %s" % (self.getDiscount(price, discount), self.currency, price, title))
+                result.append("<b>%s %s</b> <i>(%s)</i> - %s" % (
+                    self.getDiscount(price, discount),
+                    self.currency,
+                    price,
+                    title)
+                )
         
-        result.append("\n<i>%s: %s</i>" % (self.message["base_date"], allData["time"]))
-        result.append("\n<a href='%s'>%s</a>" % (allData["url"][category] + "?utm_source=ammoBot", self.message["link_text"]))
+        result.append("\n<i>%s: %s</i>" % (
+            self.message["base_date"],
+            allData["time"]
+        ))
+        result.append("\n<a href='%s'>%s</a>" % (
+            allData["url"][category] + "?utm_source=ammoBot",
+            self.message["link_text"]
+        ))
         
         return "\n".join(result)
 
@@ -69,6 +82,9 @@ class BotConstructor(object):
             prices.append(item["price"])
 
         return statistics.median_low(prices)
+
+    def getKeyName(self, name):
+        return name.replace("_", " ")
 
     def toSeconds(day):
         return day * 24 * 60 * 60
