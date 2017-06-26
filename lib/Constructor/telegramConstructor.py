@@ -18,6 +18,7 @@ class TelegramConstructor(BotConstructor):
         "visibleTopItems",
         "categoriesKeys",
         "shopData",
+        "currentShop",
         "availableShops",
         "dataFileUrl"
     ]
@@ -32,7 +33,8 @@ class TelegramConstructor(BotConstructor):
         self.availableShops = self.shopData.keys()
         self.discount = 0
         self.visibleTopItems = kwargs["resultItemCount"]
-        self.initShopData(self.availableShops[0])
+        self.currentShop = self.availableShops[0]
+        self.initShopData(self.currentShop)
 
     def getBotKeyboards(self, array):
         markup = types.ReplyKeyboardMarkup(row_width=1)
@@ -76,13 +78,13 @@ class TelegramConstructor(BotConstructor):
     def botAnswerCallback(self, id):
         self.bot.answer_callback_query(id)
 
-    def botChooseKeyboard(self, chat, message, name, keyboard):
+    def botChooseKeyboard(self, chat, message, name, keyboard, text):
         analyticMessage = self.getKeyName(name)
         analyticMessage = analyticMessage[:1].upper() + analyticMessage[1:]
 
         self.botSendMessage(
             chat.id,
-            self.message[name],
+            text,
             keyboard
         )
         self.botan(
@@ -127,11 +129,13 @@ class TelegramConstructor(BotConstructor):
             self.discount = 0
             keyboard = self.getBotInlineKeyboards(self.categoriesKeys, 'top')
 
+
             self.botChooseKeyboard(
                 message.chat,
                 message,
                 "choose_caliber",
-                keyboard
+                keyboard,
+                self.message["choose_caliber_with_shop"] % (self.currentShop.upper())
             )
         except Exception as e:
             print e
@@ -139,10 +143,10 @@ class TelegramConstructor(BotConstructor):
     def botSwitchShop(self, callData):
         try:
             data = callData.data.split('_')
-            currentShop = self.availableShops[int(data[1])]
+            self.currentShop = self.availableShops[int(data[1])]
 
             self.botAnswerCallback(callData.id)
-            self.initShopData(currentShop)
+            self.initShopData(self.currentShop)
         except Exception as e:
             print e
 
@@ -170,7 +174,8 @@ class TelegramConstructor(BotConstructor):
                 message.chat,
                 message,
                 "choose_discount",
-                keyboard
+                keyboard,
+                self.message["choose_discount"]
             )
         except Exception as e:
             print e
@@ -186,7 +191,8 @@ class TelegramConstructor(BotConstructor):
                 callData.message.chat,
                 callData.message,
                 "choose_caliber",
-                keyboard
+                keyboard,
+                self.message["choose_caliber_with_shop"] % (self.currentShop.upper())
             )
         except Exception as e:
             print e
@@ -200,7 +206,8 @@ class TelegramConstructor(BotConstructor):
                 message.chat,
                 message,
                 "choose_caliber",
-                keyboard
+                keyboard,
+                self.message["choose_caliber_with_shop"] % (self.currentShop.upper())
             )
         except Exception as e:
             print e

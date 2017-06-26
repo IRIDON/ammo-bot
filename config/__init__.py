@@ -13,6 +13,7 @@ default_settings = {
     "MESSAGE": {
         "empy": "Sorry, but I don't know how to answer, plese run /help to find out the available commands.",
         "choose_caliber": "Choose your caliber:",
+        "choose_caliber_with_shop": "Choose your caliber in the %s shop:",
         "choose_discount": "Choose your discount:",
         "choose_shop": "Choose shop:",
         "base_date": "Database update date",
