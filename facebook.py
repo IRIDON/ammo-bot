@@ -28,16 +28,15 @@ def verify():
 def webhook():
     data = request.get_json()
     recipient_id, message = botConstructor.getMessage(data)
-    keyboard = botConstructor.botSelectStore()
 
-    for itemKeyboard in keyboard:
-        bot.send_button_message(
+    if recipient_id and message:
+        template = botConstructor.botSelectStore()
+        
+        bot.send_generic_message(
             recipient_id,
-            message,
-            itemKeyboard
+            template
         )
-
-
+    
     return "ok", 200
 
 if __name__ == "__main__":

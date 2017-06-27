@@ -21,11 +21,17 @@ class FacebookConstructor(BotConstructor):
                 recipient_id = item['sender']['id']
 
                 if item.get('message'):
-                    message = item['message']['text']
+                    message = item['message']
+
+                    if message.get('text'):
+                        message = message['text']
+                    else:
+                        return False, False
+
                 elif item.get('postback'):
                     message = item['postback']['payload']
                 else:
-                    return False
+                    return False, False
 
                 return recipient_id, message
 
@@ -34,7 +40,20 @@ class FacebookConstructor(BotConstructor):
         for i in range(0, len(l), n):
             yield l[i:i + n]
 
-    def botCreateButtons(self, arr, dataId):
+    def botCreateButtons(self, title, arr, dataId):
+        result = []
+        buttons = self.createButtonGroup(arr, dataId)
+
+        for item in buttons:
+            dic = {}
+            dic["title"] = title
+            dic["buttons"] = item
+
+            result.append(dic)
+
+        return result
+
+    def createButtonGroup(self, arr, dataId):
         result = []
 
         for name in arr:
@@ -53,7 +72,11 @@ class FacebookConstructor(BotConstructor):
         for shop in self.availableShops:
             shopName.append(shop.upper())
             
-        return self.botCreateButtons(shopName, 'shop')
+        return self.botCreateButtons(
+            "Swipe left/right for more options.",
+            shopName,
+            "shop"
+        )
 
     def botInitTop(self, message):
         try:
