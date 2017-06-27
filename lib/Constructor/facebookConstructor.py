@@ -71,6 +71,9 @@ class FacebookConstructor(BotConstructor):
         for i in range(0, len(l), n):
             yield l[i:i + n]
 
+    def separateText(self, text):
+        return "\n".join(text)
+
     def botCreateButtons(self, title, arr, dataId):
         result = []
         buttons = self.createButtonGroup(arr, dataId)
@@ -96,6 +99,18 @@ class FacebookConstructor(BotConstructor):
             result.append(dic)
         
         return list(self.chunks(result, 3))
+
+    def createButtonLink(self, title, link):
+        result = []
+
+        dic = {}
+        dic["type"] = "web_url"
+        dic["title"] = title
+        dic["url"] = link
+
+        result.append(dic)
+        
+        return result
     
     def botSelectStore(self):
         shopName = []
@@ -125,4 +140,4 @@ class FacebookConstructor(BotConstructor):
             self.discount
         )
 
-        return "\n".join(text[:-1]), text[-1]
+        return text[:-1], text[-1]

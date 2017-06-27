@@ -1,3 +1,4 @@
-tx = [0, 1, 2, 3]
+tx = [0, 1, 2, 3, 4]
 
-print tx[:-1]
+print tx[:len(tx) / 2]
+print tx[len(tx) / 2:]

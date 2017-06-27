@@ -42,28 +42,28 @@ def webhook():
                 botConstructor.botInitTop()
             )
         elif dataCategory == "TOP":
-            textFormated, link = botConstructor.botPrintTop(dataId)
-            textForButton = textFormated
+            textArray, link = botConstructor.botPrintTop(dataId)
+            textFormated = botConstructor.separateText(textArray)
 
             if len(textFormated) >= 640:
-                textForButton = "----------"
+                lenArr = len(textArray)
 
-                for text in textFormated.split("\n"):
-                    bot.send_text_message(
-                        recipient_id,
-                        text
-                    )
+                textPartFirst = botConstructor.separateText(textArray[:lenArr / 2])
+                textPartSecond = botConstructor.separateText(textArray[lenArr / 2:])
 
+                bot.send_text_message(
+                    recipient_id,
+                    textPartFirst
+                )
+                textFormated = textPartSecond
+                    
             bot.send_button_message(
                 recipient_id,
-                textForButton,
-                [
-                    {
-                        "type": "web_url",
-                        "url": link,
-                        "title": settings.MESSAGE["link_text"]
-                    }
-                ]
+                textFormated,
+                botConstructor.createButtonLink(
+                    settings.MESSAGE["link_text"],
+                    link
+                )
             )
         elif dataCategory == "DISCOUNT":
             pass
