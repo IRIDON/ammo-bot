@@ -35,6 +35,37 @@ class FacebookConstructor(BotConstructor):
 
                 return recipient_id, message
 
+    def topPrices(self, num=3, category='', discount=0):
+        result = []
+        allData = self.getData()
+
+        if not allData:
+            return self.message["base_error"]
+
+        data = allData[category]
+        dataLen = len(data)
+
+        if dataLen < num:
+            num = dataLen
+
+        for index in range(0,num):
+            title = data[index]["title"]
+            price = data[index]["price"]
+
+            if discount == 0:
+                result.append("%s %s - %s" % (price, self.currency, title))
+            else:
+                result.append("%s %s(%s) - %s" % (
+                    self.getDiscount(price, discount),
+                    self.currency,
+                    price,
+                    title
+                ))
+        
+        result.append(allData["url"][category])
+        
+        return result
+
     def chunks(self, l, n):
         """Yield successive n-sized chunks from l."""
         for i in range(0, len(l), n):
@@ -60,7 +91,7 @@ class FacebookConstructor(BotConstructor):
             dic = {}
             dic["type"] = "postback"
             dic["title"] = self.getKeyName(name)
-            dic["payload"] = "%s-%s" % (dataId.upper(), name.upper())
+            dic["payload"] = "%s__%s" % (dataId.upper(), name)
 
             result.append(dic)
         
@@ -78,45 +109,20 @@ class FacebookConstructor(BotConstructor):
             "shop"
         )
 
-    def botInitTop(self, message):
-        try:
-            self.discount = 0
-            recipient_id, message = self.getMessage(message)
-            keyboard = self.botCreateButtons(self.categoriesKeys, 'top')
+    def botInitTop(self):
+        self.discount = 0
 
-            self.botSendMessage(
-                recipient_id,
-                self.message["choose_caliber_with_shop"] % (self.currentShop.upper()),
-                keyboard,
-            )
-        except Exception as error:
-            print error
+        return self.botCreateButtons(
+            "Swipe left/right for more options.",
+            self.categoriesKeys,
+            "top"
+        )
 
-    # def botInitDiscount(self, message):
-    #     try:
-    #         recipient_id, message = self.getMessage(message)
-    #         keyboard = self.botCreateButtons(self.availableDiscount, 'discount')
+    def botPrintTop(self, currentCaliber):
+        text = self.topPrices(
+            self.visibleTopItems,
+            str(currentCaliber),
+            self.discount
+        )
 
-    #         self.botSendMessage(
-    #             recipient_id,
-    #             self.message["choose_discount"],
-    #             keyboard
-    #         )
-    #     except Exception as error:
-    #         print error
-
-    def botPrintTop(self, callData):
-        try:
-            recipient_id, message = self.getMessage(message)
-            data = message.split("-")
-            currentCaliber = self.categoriesKeys[int(data[1])]
-
-            result = self.topPrices(
-                self.visibleTopItems,
-                currentCaliber,
-                self.discount
-            )
-
-            self.botSendMessage(recipient_id, result)
-        except Exception as error:
-            print error
+        return "\n".join(text[:-1]), text[-1]

@@ -73,16 +73,6 @@ class BotConstructor(object):
         
         return "\n".join(result)
 
-    def median(self, category):
-        data = self.getData()
-        data = data[category]
-        prices = []
-
-        for item in data:
-            prices.append(item["price"])
-
-        return statistics.median_low(prices)
-
     def getKeyName(self, name):
         return name.replace("_", " ")
 

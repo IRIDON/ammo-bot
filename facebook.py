@@ -30,12 +30,48 @@ def webhook():
     recipient_id, message = botConstructor.getMessage(data)
 
     if recipient_id and message:
-        template = botConstructor.botSelectStore()
-        
-        bot.send_generic_message(
-            recipient_id,
-            template
-        )
+        dataCategory = ''
+
+        if message.find("__") != -1:
+            dataCategory = message.split("__")[0]
+            dataId = message.split("__")[1]
+
+        if dataCategory == "SHOP":
+            bot.send_generic_message(
+                recipient_id,
+                botConstructor.botInitTop()
+            )
+        elif dataCategory == "TOP":
+            textFormated, link = botConstructor.botPrintTop(dataId)
+            textForButton = textFormated
+
+            if len(textFormated) >= 640:
+                textForButton = "----------"
+
+                for text in textFormated.split("\n"):
+                    bot.send_text_message(
+                        recipient_id,
+                        text
+                    )
+
+            bot.send_button_message(
+                recipient_id,
+                textForButton,
+                [
+                    {
+                        "type": "web_url",
+                        "url": link,
+                        "title": settings.MESSAGE["link_text"]
+                    }
+                ]
+            )
+        elif dataCategory == "DISCOUNT":
+            pass
+        else:
+            bot.send_generic_message(
+                recipient_id,
+                botConstructor.botSelectStore()
+            )
     
     return "ok", 200
 
