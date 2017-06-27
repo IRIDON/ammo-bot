@@ -6,6 +6,8 @@ path = os.path.abspath(os.path.split(sys.argv[0])[0])
 default_settings = {
     "API_TOKEN": apiKey["BOT_API_TOKEN"],
     "BOTAN_API": apiKey["METRICA_KEY"],
+    "FACEBOOK_ACCESS_TOKEN": apiKey["FACEBOOK_ACCESS_TOKEN"],
+    "FACEBOOK_VERIFY_TOKEN": apiKey["FACEBOOK_VERIFY_TOKEN"],
     "BOT_HELP_FILE": path + "/data/help.md",
     "RESULT_ITEMS_COUNT": 7,
     "DISCONT": [0, 3, 5, 10, 15, 20, 25],

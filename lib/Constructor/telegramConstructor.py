@@ -196,34 +196,3 @@ class TelegramConstructor(BotConstructor):
             )
         except Exception as e:
             print e
-
-    def botComandMedian(self, message):
-        try:
-            self.discount = 0
-            keyboard = self.getBotInlineKeyboards(self.categoriesKeys, 'median')
-
-            self.botChooseKeyboard(
-                message.chat,
-                message,
-                "choose_caliber",
-                keyboard,
-                self.message["choose_caliber_with_shop"] % (self.currentShop.upper())
-            )
-        except Exception as e:
-            print e
-
-    def botCallMedian(self, callData):
-        try:
-            data = callData.data.split('_')
-            currentCaliber = self.categoriesKeys[int(data[1])]
-
-            result = "Mediana for %s - <b>%s %s</b>" % (
-                self.getKeyName(currentCaliber),
-                self.median(currentCaliber),
-                self.currency
-            )
-
-            self.botAnswerCallback(callData.id)
-            self.botSendMessage(callData.message.chat.id, result)
-        except Exception as e:
-            print e

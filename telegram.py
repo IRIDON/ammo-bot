@@ -20,7 +20,7 @@ botConstructor = TelegramConstructor(
 def sendWelcome(message):
     botConstructor.botComandStart(message)
 
-@bot.message_handler(commands=['top', 'discount', 'median'])
+@bot.message_handler(commands=['top', 'discount'])
 def sendTop(message):
     global commands
     commands = message.text.replace("/", "")
@@ -36,8 +36,6 @@ def callTop(call):
         botConstructor.botComandTop(call.message)
     elif commands == 'discount':
         botConstructor.botComandDiscount(call.message)
-    elif commands == 'median':
-        botConstructor.botComandMedian(call.message)
 
 @bot.callback_query_handler(func=lambda call: call.data.find("top") != -1)
 def callTop(call):
@@ -46,10 +44,6 @@ def callTop(call):
 @bot.callback_query_handler(func=lambda call: call.data.find("discount") != -1)
 def callDiscount(call):
     botConstructor.botCallDiscount(call)
-
-@bot.callback_query_handler(func=lambda call: call.data.find("median") != -1)
-def callTop(call):
-    botConstructor.botCallMedian(call)
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def echo_message(message):
