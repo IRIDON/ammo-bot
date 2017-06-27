@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from config import settings
-import telebot
+import telebot, time
 from telebot import types
 from lib.Constructor.telegramConstructor import TelegramConstructor
 
@@ -49,8 +49,14 @@ def callDiscount(call):
 def echo_message(message):
     try:
         botConstructor.botSendMessage(message.chat.id, settings.MESSAGE["empy"])
-    except Exception as e:
+    except Exception as error:
         botConstructor.botSendMessage(message.chat.id, 'Opppsss!')
-        print e
+        print error
 
-bot.polling(none_stop=True)
+while True:
+    try:
+        bot.polling(none_stop=True)
+    except Exception as error:
+        logger.error(error)
+
+        time.sleep(15)
