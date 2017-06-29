@@ -58,7 +58,7 @@ class FacebookConstructor(BotConstructor):
             if discount == 0:
                 result.append("%s %s - %s" % (price, self.currency, title))
             else:
-                result.append("%s %s(%s) - %s" % (
+                result.append("%s %s \"%s\" - %s" % (
                     self.getDiscount(price, discount),
                     self.currency,
                     price,
@@ -77,14 +77,21 @@ class FacebookConstructor(BotConstructor):
     def separateText(self, text):
         return "\n\n".join(text)
 
+    def separateMesageToTwo(self, textArray):
+        lenArr = len(textArray) / 2
+        first = self.separateText(textArray[:lenArr])
+        second = self.separateText(textArray[lenArr:])
+
+        return first, second
+
     def setDiscount(self, discount):
         try:
             discount = discount.replace("%", "")
             discount = int(discount)
 
             self.discount = discount
-        except Exception as e:
-            raise
+        except Exception as error:
+            print error
         
     """ Create slide button group """
     def createButtonGroup(self, arr, dataId):

@@ -35,51 +35,54 @@ def verify():
 
 @app.route("/", methods=['POST'])
 def webhook():
+    """
+    1) select command - all message or post COMMAND
+    2) select store - SHOP
+        2.1) Select simple top list - TOP
+        2.2) Select list with discount - DISCOUNT
+            2.2.1) User select discout
+    3) select caliber from current shop
+    4) Print top list
+    """
     data = request.get_json()
     recipient_id, message = botConstructor.getMessage(data)
 
     if recipient_id and message:
         dataCategory = ''
 
+        """ Test if it post data """
         if message.find("__") != -1:
             dataCategory = message.split("__")[0]
             dataId = message.split("__")[1]
 
-            # print dataCategory
-            # print dataId
-
-        if dataCategory == "SHOP":
-            if dataId == "DISCOUNT":
+        if dataCategory == "SHOP": # (2)
+            if dataId == "DISCOUNT": # (2.2.1)
                 bot.send_generic_message(
                     recipient_id,
                     botConstructor.printListDiscount()
                 )
-            else:
+            else: # (2.1)
                 bot.send_generic_message(
                     recipient_id,
                     botConstructor.botSelectStore()
                 )
-        elif dataCategory == "DISCOUNT":
+        elif dataCategory == "DISCOUNT":  # (2.2)
             botConstructor.setDiscount(dataId)
             bot.send_generic_message(
                 recipient_id,
                 botConstructor.botSelectStore()
             )
-
-        elif dataCategory == "CHOICE":
+        elif dataCategory == "CHOICE": # (3)
             bot.send_generic_message(
                 recipient_id,
                 botConstructor.botCaliberChoice()
             )
-        elif dataCategory == "TOP":
+        elif dataCategory == "TOP": # (4)
             textArray, link = botConstructor.botPrintTop(dataId)
             textFormated = botConstructor.separateText(textArray)
 
-            if len(textFormated) >= 640:
-                lenArr = len(textArray)
-
-                textPartFirst = botConstructor.separateText(textArray[:lenArr / 2])
-                textPartSecond = botConstructor.separateText(textArray[lenArr / 2:])
+            if len(textFormated) >= 640: # test message for chars limit - for facebook it's 640 chars
+                textPartFirst, textPartSecond = botConstructor.separateMesageToTwo(textArray)
 
                 bot.send_text_message(
                     recipient_id,
@@ -95,7 +98,7 @@ def webhook():
                     link
                 )
             )
-        else:
+        else: # (1)
             bot.send_button_message(
                 recipient_id,
                 dataMessage["select_commad"],
