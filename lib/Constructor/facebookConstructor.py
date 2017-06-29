@@ -4,10 +4,10 @@ from lib.Constructor.botConstructor import BotConstructor
 
 class FacebookConstructor(BotConstructor):
     def __init__(self, **kwargs):
-        self.helpFile = kwargs["helpFile"],
         self.currency = kwargs["currency"]
         self.availableDiscount = kwargs["discount"]
         self.message = kwargs["message"]
+        self.commands = kwargs["commands"]
         self.shopData = kwargs["shopData"]
         self.visibleTopItems = kwargs["resultItemCount"]
         self.availableShops = self.shopData.keys()
@@ -15,6 +15,7 @@ class FacebookConstructor(BotConstructor):
         self.discount = 0
         self.initShopData(self.currentShop)
 
+    """ Parse facebook data and return message """
     def getMessage(self, data):
         for event in data['entry']:
 
@@ -36,6 +37,7 @@ class FacebookConstructor(BotConstructor):
 
                 return recipient_id, message
 
+    """ find and structure offer results for choise shop and caliber """
     def topPrices(self, num=3, category='', discount=0):
         result = []
         allData = self.getData()
@@ -75,19 +77,16 @@ class FacebookConstructor(BotConstructor):
     def separateText(self, text):
         return "\n\n".join(text)
 
-    def botCreateButtons(self, title, arr, dataId):
-        result = []
-        buttons = self.createButtonGroup(arr, dataId)
+    def setDiscount(self, discount):
+        try:
+            discount = discount.replace("%", "")
+            discount = int(discount)
 
-        for item in buttons:
-            dic = {}
-            dic["title"] = title
-            dic["buttons"] = item
-
-            result.append(dic)
-
-        return result
-
+            self.discount = discount
+        except Exception as e:
+            raise
+        
+    """ Create slide button group """
     def createButtonGroup(self, arr, dataId):
         result = []
 
@@ -101,6 +100,21 @@ class FacebookConstructor(BotConstructor):
         
         return list(self.chunks(result, 3))
 
+    """ Create button pack for button group """
+    def botCreateButtons(self, title, arr, dataId):
+        result = []
+        buttons = self.createButtonGroup(arr, dataId)
+
+        for item in buttons:
+            dic = {}
+            dic["title"] = title
+            dic["buttons"] = item
+
+            result.append(dic)
+
+        return result
+
+    """ Create button link """
     def createButtonLink(self, title, link):
         result = []
 
@@ -113,21 +127,38 @@ class FacebookConstructor(BotConstructor):
         
         return result
 
+    """ Create structure for list main commans """
     def botCommands(self):
-        with open(self.helpFile[0], "r") as helpFile:
-            result = []
-            data = json.loads(helpFile.read())
+        result = []
+        data = self.commands
+        self.discount = 0
 
-            for key in data:
-                dic = {}
-                dic["type"] = "postback"
-                dic["title"] = data[key][1]
-                dic["payload"] = "%s__%s" % (data[key][0], key.upper())
+        for key in data:
+            dic = {}
+            dic["type"] = "postback"
+            dic["title"] = data[key][1]
+            dic["payload"] = "%s__%s" % (data[key][0], key.upper())
 
-                result.append(dic)
+            result.append(dic)
 
-            return result
+        return result
 
+    """ Print aviable discounts """
+    def printListDiscount(self):
+        doscounts = []
+
+        for item in self.availableDiscount:
+            doscounts.append(
+                str(item) + "%"
+            )
+            
+        return self.botCreateButtons(
+            self.message["select_discount"],
+            doscounts,
+            "discount"
+        )
+
+    """ Print aviable shops list """
     def botSelectStore(self):
         shopName = []
 
@@ -135,20 +166,20 @@ class FacebookConstructor(BotConstructor):
             shopName.append(shop.upper())
             
         return self.botCreateButtons(
-            "Swipe left/right for more options.",
+            self.message["select_store"],
             shopName,
             "choice"
         )
 
+    """ Print aviable caliber list for current shop """
     def botCaliberChoice(self):
-        self.discount = 0
-
         return self.botCreateButtons(
-            "Swipe left/right for more options.",
+            self.message["select_caliber"],
             self.categoriesKeys,
             "top"
         )
 
+    """ Print offers """
     def botPrintTop(self, currentCaliber):
         text = self.topPrices(
             self.visibleTopItems,

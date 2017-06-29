@@ -8,10 +8,8 @@ default_settings = {
     "BOTAN_API": apiKey["METRICA_KEY"],
     "FACEBOOK_ACCESS_TOKEN": apiKey["FACEBOOK_ACCESS_TOKEN"],
     "FACEBOOK_VERIFY_TOKEN": apiKey["FACEBOOK_VERIFY_TOKEN"],
-    "BOT_HELP_FILE": {
-        "facebook": path + "/data/facebookCommands.json",
-        "telegram": path + "/data/help.md"
-    },
+    "BOT_HELP_FILE": path + "/data/help.md",
+    "BOT_DATA_FILE": path + "/data/facebookCommands.json",
     "RESULT_ITEMS_COUNT": {
         "facebook": 5,
         "telegram": 7
