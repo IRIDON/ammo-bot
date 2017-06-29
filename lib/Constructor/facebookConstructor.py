@@ -4,6 +4,7 @@ from lib.Constructor.botConstructor import BotConstructor
 
 class FacebookConstructor(BotConstructor):
     def __init__(self, **kwargs):
+        self.helpFile = kwargs["helpFile"],
         self.currency = kwargs["currency"]
         self.availableDiscount = kwargs["discount"]
         self.message = kwargs["message"]
@@ -72,7 +73,7 @@ class FacebookConstructor(BotConstructor):
             yield l[i:i + n]
 
     def separateText(self, text):
-        return "\n".join(text)
+        return "\n\n".join(text)
 
     def botCreateButtons(self, title, arr, dataId):
         result = []
@@ -111,7 +112,22 @@ class FacebookConstructor(BotConstructor):
         result.append(dic)
         
         return result
-    
+
+    def botCommands(self):
+        with open(self.helpFile[0], "r") as helpFile:
+            result = []
+            data = json.loads(helpFile.read())
+
+            for key in data:
+                dic = {}
+                dic["type"] = "postback"
+                dic["title"] = data[key][1]
+                dic["payload"] = "%s__%s" % (data[key][0], key.upper())
+
+                result.append(dic)
+
+            return result
+
     def botSelectStore(self):
         shopName = []
 
@@ -121,10 +137,10 @@ class FacebookConstructor(BotConstructor):
         return self.botCreateButtons(
             "Swipe left/right for more options.",
             shopName,
-            "shop"
+            "choice"
         )
 
-    def botInitTop(self):
+    def botCaliberChoice(self):
         self.discount = 0
 
         return self.botCreateButtons(

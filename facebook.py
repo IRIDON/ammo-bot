@@ -9,11 +9,12 @@ app = Flask(__name__)
 bot = Bot(settings.FACEBOOK_ACCESS_TOKEN)
 
 botConstructor = FacebookConstructor(
+    helpFile=settings.BOT_HELP_FILE["facebook"],
     currency=settings.CURRENCY,
     discount=settings.DISCONT,
     message=settings.MESSAGE,
     shopData=settings.SHOPS,
-    resultItemCount=settings.RESULT_ITEMS_COUNT,
+    resultItemCount=settings.RESULT_ITEMS_COUNT["facebook"],
 )
 
 @app.route("/", methods=['GET'])
@@ -29,6 +30,7 @@ def webhook():
     data = request.get_json()
     recipient_id, message = botConstructor.getMessage(data)
 
+    print data
     if recipient_id and message:
         dataCategory = ''
 
@@ -37,9 +39,15 @@ def webhook():
             dataId = message.split("__")[1]
 
         if dataCategory == "SHOP":
+            print dataId
             bot.send_generic_message(
                 recipient_id,
-                botConstructor.botInitTop()
+                botConstructor.botSelectStore()
+            )
+        elif dataCategory == "CHOICE":
+            bot.send_generic_message(
+                recipient_id,
+                botConstructor.botCaliberChoice()
             )
         elif dataCategory == "TOP":
             textArray, link = botConstructor.botPrintTop(dataId)
@@ -65,12 +73,11 @@ def webhook():
                     link
                 )
             )
-        elif dataCategory == "DISCOUNT":
-            pass
         else:
-            bot.send_generic_message(
+            bot.send_button_message(
                 recipient_id,
-                botConstructor.botSelectStore()
+                "bla bla",
+                botConstructor.botCommands()
             )
     
     return "ok", 200
