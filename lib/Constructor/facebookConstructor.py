@@ -152,46 +152,58 @@ class FacebookConstructor(BotConstructor):
 
     """ Print aviable discounts """
     def printListDiscount(self):
-        doscounts = []
+        try:
+            doscounts = []
 
-        for item in self.availableDiscount:
-            doscounts.append(
-                str(item) + "%"
+            for item in self.availableDiscount:
+                doscounts.append(
+                    str(item) + "%"
+                )
+                
+            return self.botCreateButtons(
+                self.message["select_discount"],
+                doscounts,
+                "discount"
             )
-            
-        return self.botCreateButtons(
-            self.message["select_discount"],
-            doscounts,
-            "discount"
-        )
+        except Exception as error:
+            print error
 
     """ Print aviable shops list """
     def botSelectStore(self):
-        shopName = []
+        try:
+            shopName = []
 
-        for shop in self.availableShops:
-            shopName.append(shop.upper())
-            
-        return self.botCreateButtons(
-            self.message["select_store"],
-            shopName,
-            "choice"
-        )
+            for shop in self.availableShops:
+                shopName.append(shop.upper())
+                
+            return self.botCreateButtons(
+                self.message["select_store"],
+                shopName,
+                "choice"
+            )
+        except Exception as error:
+            print error
 
     """ Print aviable caliber list for current shop """
     def botCaliberChoice(self):
-        return self.botCreateButtons(
-            self.message["select_caliber"],
-            self.categoriesKeys,
-            "top"
-        )
+        try:
+            return self.botCreateButtons(
+                self.message["select_caliber"],
+                self.categoriesKeys,
+                "top"
+            )
+        except Exception as error:
+            print error
 
     """ Print offers """
     def botPrintTop(self, currentCaliber):
-        text = self.topPrices(
-            self.visibleTopItems,
-            str(currentCaliber),
-            self.discount
-        )
+        try:
+            text = self.topPrices(
+                self.visibleTopItems,
+                str(currentCaliber),
+                self.discount
+            )
 
-        return text[:-1], text[-1]
+            return text[:-1], text[-1]
+        except Exception as error:
+            print error

@@ -4,6 +4,8 @@ Simple telegram bot for parse ammo prices
 
 *python telegram.py* - run telegram bot
 
+*python facebook.py* - run facebook bot
+
 *python parse.py* - run data parse script
 
 
