@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os, sys
 from key import default_api_key as apiKey
 

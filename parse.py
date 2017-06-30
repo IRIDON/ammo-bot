@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from config import settings
 from lib.Parse.ibisParse import IbisParseData
 from lib.Parse.stvolParse import StvolParseData
