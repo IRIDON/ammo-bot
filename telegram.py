@@ -27,30 +27,48 @@ def sendTop(message):
 
     botConstructor.botSelectStore(message)
 
-@bot.callback_query_handler(func=lambda call: call.data.find("shop") != -1)
+@bot.callback_query_handler(
+    func=lambda call: call.data.find("shop") != -1
+)
 def callTop(call):
     global commands
     botConstructor.botSwitchShop(call)
 
     if commands == 'top':
-        botConstructor.botComandTop(call.message)
+        botConstructor.botComandTop(
+            call.message
+        )
     elif commands == 'discount':
-        botConstructor.botComandDiscount(call.message)
+        botConstructor.botComandDiscount(
+            call.message
+        )
 
-@bot.callback_query_handler(func=lambda call: call.data.find("top") != -1)
+@bot.callback_query_handler(
+    func=lambda call: call.data.find("top") != -1
+)
 def callTop(call):
     botConstructor.botCallTop(call)
 
-@bot.callback_query_handler(func=lambda call: call.data.find("discount") != -1)
+@bot.callback_query_handler(
+    func=lambda call: call.data.find("discount") != -1
+)
 def callDiscount(call):
     botConstructor.botCallDiscount(call)
 
-@bot.message_handler(func=lambda message: True, content_types=['text'])
+@bot.message_handler(
+    func=lambda message: True, content_types=['text']
+)
 def echo_message(message):
     try:
-        botConstructor.botSendMessage(message.chat.id, settings.MESSAGE["empy"])
+        botConstructor.botSendMessage(
+            message.chat.id,
+            settings.MESSAGE["empy"]
+        )
     except Exception as error:
-        botConstructor.botSendMessage(message.chat.id, 'Opppsss!')
+        botConstructor.botSendMessage(
+            message.chat.id,
+            "Opppsss!"
+        )
         print error
 
 while True:

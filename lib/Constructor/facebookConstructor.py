@@ -3,6 +3,21 @@ import json
 from lib.Constructor.botConstructor import BotConstructor
 
 class FacebookConstructor(BotConstructor):
+    __slots__ = [
+        "currency",
+        "availableDiscount",
+        "message",
+        "commands",
+        "shopData",
+        "visibleTopItems",
+        "availableShops",
+        "currentShop",
+        "categories",
+        "categoriesKeys",
+        "availableAmmo",
+        "dataFileUrl",
+        "discount"
+    ]
     def __init__(self, **kwargs):
         self.currency = kwargs["currency"]
         self.availableDiscount = kwargs["discount"]
