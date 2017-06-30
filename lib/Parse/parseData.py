@@ -4,6 +4,7 @@
 Parse data from websile ibis.net.ua
 create JSON data and save it in file
 """
+from lib.logger import log
 import requests
 from lxml import html
 import json
@@ -65,7 +66,7 @@ class ParseData(object):
             result["time"] = self.getCurrentTime()
 
             self.saveData(self.dataFile, json.dumps(result))
-        except Exception as e:
-            print e
+        except Exception as error:
+            log.error(error)
         finally:
-            print "Parse %s successful" % (self.shopName)
+            log.debug(u"Parse %s successful" % (self.shopName))

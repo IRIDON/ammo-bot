@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from config import settings
+from lib.logger import log
 import telebot, time
 from telebot import types
 from lib.Constructor.telegramConstructor import TelegramConstructor
@@ -69,12 +70,12 @@ def echo_message(message):
             message.chat.id,
             "Opppsss!"
         )
-        print error
+        log.error(error)
 
 while True:
     try:
         bot.polling(none_stop=True)
     except Exception as error:
-        logger.error(error)
+        log.error(error)
 
         time.sleep(15)

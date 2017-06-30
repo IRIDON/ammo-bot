@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from lib.logger import log
 from telebot import types
 from lib.Constructor.botConstructor import BotConstructor
 from lib.Botan import botan
@@ -79,7 +80,6 @@ class TelegramConstructor(BotConstructor):
 
     def botChooseKeyboard(self, chat, message, name, keyboard, text):
         analyticMessage = self.getKeyName(name)
-        analyticMessage = analyticMessage[:1].upper() + analyticMessage[1:]
 
         self.botSendMessage(
             chat.id,
@@ -89,17 +89,19 @@ class TelegramConstructor(BotConstructor):
         self.botan(
             chat.id,
             message,
-            analyticMessage
+            self.capitalize(analyticMessage)
         )
 
     def botSelectStore(self, message):
         try:
+            keyboard = self.getBotInlineKeyboards(
+                shopName,
+                'shop'
+            )
             shopName = []
 
             for shop in self.availableShops:
                 shopName.append(shop.upper())
-                
-            keyboard = self.getBotInlineKeyboards(shopName, 'shop')
 
             self.botSendMessage(
                 message.chat.id,
@@ -111,8 +113,8 @@ class TelegramConstructor(BotConstructor):
                 message,
                 self.message["choose_shop"]
             )
-        except Exception as e:
-            print e
+        except Exception as error:
+            log.error(error)
 
     def botComandStart(self, message):
         try:
@@ -120,14 +122,16 @@ class TelegramConstructor(BotConstructor):
                 helpText = helpFile.read()
 
                 self.botSendMessage(message.chat.id, helpText)
-        except Exception as e:
-            print e
+        except Exception as error:
+            log.error(error)
 
     def botComandTop(self, message):
         try:
             self.discount = 0
-            keyboard = self.getBotInlineKeyboards(self.categoriesKeys, 'top')
-
+            keyboard = self.getBotInlineKeyboards(
+                self.categoriesKeys,
+                'top'
+            )
 
             self.botChooseKeyboard(
                 message.chat,
@@ -136,8 +140,8 @@ class TelegramConstructor(BotConstructor):
                 keyboard,
                 self.message["choose_caliber_with_shop"] % (self.currentShop.upper())
             )
-        except Exception as e:
-            print e
+        except Exception as error:
+            log.error(error)
 
     def botSwitchShop(self, callData):
         try:
@@ -146,8 +150,8 @@ class TelegramConstructor(BotConstructor):
 
             self.botAnswerCallback(callData.id)
             self.initShopData(self.currentShop)
-        except Exception as e:
-            print e
+        except Exception as error:
+            log.error(error)
 
     def botCallTop(self, callData):
         try:
@@ -161,13 +165,19 @@ class TelegramConstructor(BotConstructor):
             )
 
             self.botAnswerCallback(callData.id)
-            self.botSendMessage(callData.message.chat.id, result)
-        except Exception as e:
-            print e
+            self.botSendMessage(
+                callData.message.chat.id,
+                result
+            )
+        except Exception as error:
+            log.error(error)
 
     def botComandDiscount(self, message):
         try:
-            keyboard = self.getBotInlineKeyboards(self.availableDiscount, 'discount')
+            keyboard = self.getBotInlineKeyboards(
+                self.availableDiscount,
+                'discount'
+            )
 
             self.botChooseKeyboard(
                 message.chat,
@@ -176,15 +186,18 @@ class TelegramConstructor(BotConstructor):
                 keyboard,
                 self.message["choose_discount"]
             )
-        except Exception as e:
-            print e
+        except Exception as error:
+            log.error(error)
     
     def botCallDiscount(self, callData):
         try:
+            keyboard = self.getBotInlineKeyboards(
+                self.categoriesKeys,
+                'top'
+            )
             data = callData.data.split('_')
-            self.discount = self.availableDiscount[int(data[1])]
-            keyboard = self.getBotInlineKeyboards(self.categoriesKeys, 'top')
 
+            self.discount = self.availableDiscount[int(data[1])]
             self.botAnswerCallback(callData.id)
             self.botChooseKeyboard(
                 callData.message.chat,
@@ -193,5 +206,5 @@ class TelegramConstructor(BotConstructor):
                 keyboard,
                 self.message["choose_caliber_with_shop"] % (self.currentShop.upper())
             )
-        except Exception as e:
-            print e
+        except Exception as error:
+            log.error(error)

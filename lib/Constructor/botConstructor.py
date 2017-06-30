@@ -75,6 +75,9 @@ class BotConstructor(object):
     def getKeyName(self, name):
         return name.replace("_", " ")
 
-    def toSeconds(day):
+    def toSeconds(self, day):
         return day * 24 * 60 * 60
+
+    def capitalize(self, text):
+        return text[:1].upper() + text[1:]
     

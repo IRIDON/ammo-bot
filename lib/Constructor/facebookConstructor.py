@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
+from lib.logger import log
 from lib.Constructor.botConstructor import BotConstructor
 
 class FacebookConstructor(BotConstructor):
@@ -106,7 +107,7 @@ class FacebookConstructor(BotConstructor):
 
             self.discount = discount
         except Exception as error:
-            print error
+            log.error(error)
         
     """ Create slide button group """
     def createButtonGroup(self, arr, dataId):
@@ -181,7 +182,7 @@ class FacebookConstructor(BotConstructor):
                 "discount"
             )
         except Exception as error:
-            print error
+            log.error(error)
 
     """ Print aviable shops list """
     def botSelectStore(self):
@@ -197,7 +198,7 @@ class FacebookConstructor(BotConstructor):
                 "choice"
             )
         except Exception as error:
-            print error
+            log.error(error)
 
     """ Print aviable caliber list for current shop """
     def botCaliberChoice(self):
@@ -208,7 +209,7 @@ class FacebookConstructor(BotConstructor):
                 "top"
             )
         except Exception as error:
-            print error
+            log.error(error)
 
     """ Print offers """
     def botPrintTop(self, currentCaliber):
@@ -221,4 +222,4 @@ class FacebookConstructor(BotConstructor):
 
             return text[:-1], text[-1]
         except Exception as error:
-            print error
+            log.error(error)
