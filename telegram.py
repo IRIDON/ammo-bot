@@ -4,17 +4,17 @@ import telebot, time
 from telebot import types
 from lib.Constructor.telegramConstructor import TelegramConstructor
 
-bot = telebot.TeleBot(settings.API_TOKEN)
+bot = telebot.TeleBot(settings.TELEGRAM["API_TOKEN"])
 commands = ''
 botConstructor = TelegramConstructor(
     bot,
-    helpFile=settings.BOT_HELP_FILE["telegram"],
+    helpFile=settings.TELEGRAM["BOT_HELP_FILE"],
     currency=settings.CURRENCY,
     discount=settings.DISCONT,
-    message=settings.MESSAGE,
-    apiKey=settings.BOTAN_API,
+    message=settings.TELEGRAM["MESSAGE"],
+    apiKey=settings.TELEGRAM["BOTAN_API"],
     shopData=settings.SHOPS,
-    resultItemCount=settings.RESULT_ITEMS_COUNT["telegram"],
+    resultItemCount=settings.TELEGRAM["RESULT_ITEMS_COUNT"],
 )
 @bot.message_handler(commands=['start', 'help'])
 def sendWelcome(message):

@@ -4,28 +4,31 @@ from key import default_api_key as apiKey
 path = os.path.abspath(os.path.split(sys.argv[0])[0])
 
 default_settings = {
-    "API_TOKEN": apiKey["BOT_API_TOKEN"],
-    "BOTAN_API": apiKey["METRICA_KEY"],
-    "FACEBOOK_ACCESS_TOKEN": apiKey["FACEBOOK_ACCESS_TOKEN"],
-    "FACEBOOK_VERIFY_TOKEN": apiKey["FACEBOOK_VERIFY_TOKEN"],
-    "BOT_HELP_FILE": path + "/data/help.md",
-    "BOT_DATA_FILE": path + "/data/facebookCommands.json",
-    "RESULT_ITEMS_COUNT": {
-        "facebook": 5,
-        "telegram": 7
+    "TELEGRAM": {
+        "API_TOKEN": apiKey["BOT_API_TOKEN"],
+        "BOTAN_API": apiKey["METRICA_KEY"],
+        "BOT_HELP_FILE": path + "/data/help.md",
+        "RESULT_ITEMS_COUNT": 7,
+        "MESSAGE": {
+            "empy": "Sorry, but I don't know how to answer, plese run /help to find out the available commands.",
+            "choose_caliber": "Choose your caliber:",
+            "choose_caliber_with_shop": "Choose your caliber in the %s shop:",
+            "choose_discount": "Choose your discount:",
+            "choose_shop": "Choose shop:",
+            "base_date": "Database update date",
+            "link_text": "Visit to site",
+            "base_error": "Database error, please try again."
+        }
+    },
+    "FACEBOOK": {
+        "PORT": 1024,
+        "ACCESS_TOKEN": apiKey["FACEBOOK_ACCESS_TOKEN"],
+        "VERIFY_TOKEN": apiKey["FACEBOOK_VERIFY_TOKEN"],
+        "BOT_DATA_FILE": path + "/data/facebookCommands.json",
+        "RESULT_ITEMS_COUNT": 5
     },
     "DISCONT": [0, 3, 5, 10, 15, 20, 25],
     "CURRENCY": "UAH",
-    "MESSAGE": {
-        "empy": "Sorry, but I don't know how to answer, plese run /help to find out the available commands.",
-        "choose_caliber": "Choose your caliber:",
-        "choose_caliber_with_shop": "Choose your caliber in the %s shop:",
-        "choose_discount": "Choose your discount:",
-        "choose_shop": "Choose shop:",
-        "base_date": "Database update date",
-        "link_text": "Visit to site",
-        "base_error": "Database error, please try again."
-    },
     "SHOPS": {
         "ibis": {
             "shop_name": "ibis",

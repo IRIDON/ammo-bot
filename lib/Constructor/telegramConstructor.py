@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import json
 from telebot import types
 from lib.Constructor.botConstructor import BotConstructor
 from lib.Botan import botan

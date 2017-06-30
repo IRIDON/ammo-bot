@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import json
 from config import settings
-from flask import Flask, request
+from flask import Flask, request, render_template
 from pymessenger.bot import Bot
 from lib.Constructor.facebookConstructor import FacebookConstructor
 
 app = Flask(__name__)
-bot = Bot(settings.FACEBOOK_ACCESS_TOKEN)
+bot = Bot(settings.FACEBOOK["ACCESS_TOKEN"])
 
 def readDataFile(dataFile):
     with open(dataFile, "r") as dataFile:
@@ -14,21 +14,21 @@ def readDataFile(dataFile):
 
         return data["message"], data["commands"]
 
-dataMessage, dataCommands = readDataFile(settings.BOT_DATA_FILE)
+dataMessage, dataCommands = readDataFile(settings.FACEBOOK["BOT_DATA_FILE"])
 
-botConstructor = FacebookConstructor(
+fb = FacebookConstructor(
     currency=settings.CURRENCY,
     discount=settings.DISCONT,
     message=dataMessage,
     commands=dataCommands,
     shopData=settings.SHOPS,
-    resultItemCount=settings.RESULT_ITEMS_COUNT["facebook"],
+    resultItemCount=settings.FACEBOOK["RESULT_ITEMS_COUNT"],
 )
 
 @app.route("/", methods=['GET'])
 def verify():
     if request.method == 'GET':
-        if request.args.get("hub.verify_token") == settings.FACEBOOK_VERIFY_TOKEN:
+        if request.args.get("hub.verify_token") == settings.FACEBOOK["VERIFY_TOKEN"]:
             return request.args.get("hub.challenge")
         else:
             return 'Invalid verification token'
@@ -45,7 +45,7 @@ def webhook():
     4) Print top list
     """
     data = request.get_json()
-    recipient_id, message = botConstructor.getMessage(data)
+    recipient_id, message = fb.getMessage(data)
 
     if recipient_id and message:
         dataCategory = ''
@@ -59,30 +59,30 @@ def webhook():
             if dataId == "DISCOUNT": # (2.2.1)
                 bot.send_generic_message(
                     recipient_id,
-                    botConstructor.printListDiscount()
+                    fb.printListDiscount()
                 )
             else: # (2.1)
                 bot.send_generic_message(
                     recipient_id,
-                    botConstructor.botSelectStore()
+                    fb.botSelectStore()
                 )
         elif dataCategory == "DISCOUNT":  # (2.2)
-            botConstructor.setDiscount(dataId)
+            fb.setDiscount(dataId)
             bot.send_generic_message(
                 recipient_id,
-                botConstructor.botSelectStore()
+                fb.botSelectStore()
             )
         elif dataCategory == "CHOICE": # (3)
             bot.send_generic_message(
                 recipient_id,
-                botConstructor.botCaliberChoice()
+                fb.botCaliberChoice()
             )
         elif dataCategory == "TOP": # (4)
-            textArray, link = botConstructor.botPrintTop(dataId)
-            textFormated = botConstructor.separateText(textArray)
+            textArray, link = fb.botPrintTop(dataId)
+            textFormated = fb.separateText(textArray)
 
             if len(textFormated) >= 640: # test message for chars limit - for facebook it's 640 chars
-                textPartFirst, textPartSecond = botConstructor.separateMesageToTwo(textArray)
+                textPartFirst, textPartSecond = fb.separateMesageToTwo(textArray)
 
                 bot.send_text_message(
                     recipient_id,
@@ -93,7 +93,7 @@ def webhook():
             bot.send_button_message(
                 recipient_id,
                 textFormated,
-                botConstructor.createButtonLink(
+                fb.createButtonLink(
                     dataMessage["link_text"],
                     link
                 )
@@ -102,10 +102,15 @@ def webhook():
             bot.send_button_message(
                 recipient_id,
                 dataMessage["select_commad"],
-                botConstructor.botCommands()
+                fb.botCommands()
             )
     
     return "ok", 200
 
+
+@app.route("/privacy-policy.html")
+def show_privacyPolicy():
+    return render_template('privacy-policy.html')
+
 if __name__ == "__main__":
-    app.run(port=1024, debug=True)
+    app.run(port=settings.FACEBOOK["PORT"], debug=True)

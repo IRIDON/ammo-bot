@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import json
-import statistics
 
 class BotConstructor(object):
     __slots__ = [
