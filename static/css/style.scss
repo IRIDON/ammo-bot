@@ -1,0 +1,36 @@
+@import "normalize.css"
+
+$color-main: #586b2e;
+$color-dark: #333;
+$color-gray: #b3b3b3;
+$color-important: #fcbb2a;
+
+$wrapper-width: 960px;
+
+body {
+    background-color: #fff;
+    color: $color-dark;
+    font-size: 16px;
+    font-family: Helvetica, Arial, Sans-serif;
+    line-height: 1;
+}
+.wrapper {
+    width: $wrapper-width;
+    margin: 0 auto;
+}
+.head {
+    background-color: $color-main;
+
+    &__logo {
+        background: url("../img/logo.png") no-repeat 0 0;
+        display: block;
+        width: 80px;
+        height: 80px;
+    }
+}
+.content {
+    
+}
+.footer {
+
+}

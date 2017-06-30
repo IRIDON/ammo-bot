@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
-from lib.logger import log
+from lib.Logger import log
 from lib.Constructor.botConstructor import BotConstructor
 
 class FacebookConstructor(BotConstructor):

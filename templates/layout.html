@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AmmoBot</title>
+
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <header class="head">
+        <div class="wrapper">
+            <a class="head__logo" href="./"></a>
+        </div>
+    </header>
+    <section class="content">
+        <div class="wrapper">
+        {% block body %}{% endblock %}
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="wrapper">
+            &copy AmmoBpt All trademarks are the property of their respective owners.
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from config import settings
-from lib.logger import log
+from lib.Logger import log
 import telebot, time
 from telebot import types
 from lib.Constructor.telegramConstructor import TelegramConstructor
