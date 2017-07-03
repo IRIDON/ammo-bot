@@ -77,5 +77,4 @@ while True:
         bot.polling(none_stop=True)
     except Exception as error:
         log.error(error)
-
         time.sleep(15)
