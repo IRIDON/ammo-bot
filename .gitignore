@@ -2,4 +2,5 @@
 config/key.py
 data/*.json
 log/*.log
+node_modules
 .DS_Store
