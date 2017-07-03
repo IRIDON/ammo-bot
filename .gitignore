@@ -1,4 +1,6 @@
 *.pyc
 config/key.py
 data/*.json
+log/*
+node_modules
 .DS_Store

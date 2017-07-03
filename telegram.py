@@ -63,6 +63,6 @@ while True:
     try:
         bot.polling(none_stop=True)
     except Exception as error:
-        logger.error(error)
+        print error
 
         time.sleep(15)
