@@ -6,15 +6,15 @@ $color-gray: #b3b3b3;
 $color-important: #fcbb2a;
 
 $wrapper-width: 960px;
-
-$logo-size: 80px;
+$font-size: 16px;
+$head-size: 80px;
 
 $media-screen_large: "(max-width: #{$wrapper-width})";
 
 body {
     background-color: #fff;
     color: $color-dark;
-    font-size: 16px;
+    font-size: $font-size;
     font-family: Helvetica, Arial, Sans-serif;
     line-height: 1;
 }
@@ -39,21 +39,44 @@ p {
 }
 .head {
     background-color: $color-main;
-    height: $logo-size;
+    height: $head-size;
     overflow: hidden;
 
-    &__logo {
+    &_logo {
         $indent: 5px;
 
         background: url("../img/logo.png") no-repeat 0 0 / cover;
         display: block;
-        width: $logo-size - $indent * 2;
-        height: $logo-size - $indent * 2;
+        width: $head-size - $indent * 2;
+        height: $head-size - $indent * 2;
         margin: $indent 0;
+        float: left
+    }
+    &_menu {
+        $margin: ($head-size - 16px) / 2;
+
+        float: right;
+        margin: $margin 0;
+
+
+        &_item {
+            display: inline-block;
+            list-style-type: none;
+            color: #fff;
+            margin-left: 20px;
+        }
+        &_link {
+            color: inherit;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
     }
 }
 .content {
-    font-size: 16px;
+    font-size: $font-size;
+    margin: 1em 0;
 }
 .footer {
     background-color: $color-gray;

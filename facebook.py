@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-import json
+import json, datetime
 from config import settings
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, abort, url_for
 from pymessenger.bot import Bot
 from lib.Constructor.facebookConstructor import FacebookConstructor
 
@@ -25,13 +25,41 @@ fb = FacebookConstructor(
     resultItemCount=settings.FACEBOOK["RESULT_ITEMS_COUNT"],
 )
 
+class Page(object):
+    def __init__(self, settings):
+        self.settings = settings
+        self.date = datetime.datetime.now()
+        self.pages = self.settings["PAGES"]
+
+    def page(self, name): 
+        if name in self.pages.keys():
+            return render_template(
+                self.getPageTemplate(name),
+                data=self
+            )
+        else:
+            abort(404)
+
+    def getPageTemplate(self, name):
+        return self.pages[name]["template"]
+
+    def getUrl(self, page):
+
+        if page == "/":
+            return url_for("index")
+        else:
+            return url_for("page", page=page)
+
+
+viewPage = Page(settings.WEB)
+
 @app.route("/", methods=['GET'])
-def verify():
+def index():
     if request.method == 'GET':
         if request.args.get("hub.verify_token") == settings.FACEBOOK["VERIFY_TOKEN"]:
             return request.args.get("hub.challenge")
         else:
-            return 'Invalid verification token'
+            return viewPage.page("home")
 
 @app.route("/", methods=['POST'])
 def webhook():
@@ -107,22 +135,27 @@ def webhook():
     
     return "ok", 200
 
-
-pages = [
-    "/",
-    "privacy-policy.html"
-]
-
 @app.route("/<page>")
-def show(page):
+def page(page):
+    page = page.replace(".html", "")
 
-    if pages.find(page != -1):
-        pass
-    return render_template(page)
+    return viewPage.page(page)
 
-@app.route("/privacy-policy.html")
-def show_privacyPolicy():
-    return render_template('privacy-policy.html')
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(
+        os.path.join(app.root_path, 'static'),
+        'favicon.ico',
+        mimetype='image/vnd.microsoft.icon'
+    )
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return viewPage.page("error")
+
+# @app.route("/privacy-policy.html")
+# def show_privacyPolicy():
+#     return render_template('privacy-policy.html')
 
 if __name__ == "__main__":
     app.run(port=settings.FACEBOOK["PORT"], debug=True)

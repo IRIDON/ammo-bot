@@ -6,6 +6,28 @@ from key import default_api_key as apiKey
 path = os.path.abspath(os.path.split(sys.argv[0])[0])
 
 default_settings = {
+    "WEB": {
+        "PAGES": {
+            "home": {
+                "name": "Home",
+                "slug": "/",
+                "template": "index.html",
+                "visible": True
+            },
+            "privacy-policy": {
+                "name": "Privacy Policy",
+                "slug": "privacy-policy.html",
+                "template": "privacy-policy.html",
+                "visible": True
+            },
+            "error": {
+                "name": "Error page",
+                "slug": "page_not_found.html",
+                "template": "page_not_found.html",
+                "visible": False
+            }
+        }
+    },
     "TELEGRAM": {
         "API_TOKEN": apiKey["BOT_API_TOKEN"],
         "BOTAN_API": apiKey["METRICA_KEY"],
@@ -27,7 +49,8 @@ default_settings = {
         "ACCESS_TOKEN": apiKey["FACEBOOK_ACCESS_TOKEN"],
         "VERIFY_TOKEN": apiKey["FACEBOOK_VERIFY_TOKEN"],
         "BOT_DATA_FILE": path + "/data/facebookCommands.json",
-        "RESULT_ITEMS_COUNT": 5
+        "RESULT_ITEMS_COUNT": 5,
+        
     },
     "DISCONT": [0, 3, 5, 10, 15, 20, 25],
     "CURRENCY": "UAH",
