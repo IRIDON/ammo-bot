@@ -108,6 +108,18 @@ def webhook():
     return "ok", 200
 
 
+pages = [
+    "/",
+    "privacy-policy.html"
+]
+
+@app.route("/<page>")
+def show(page):
+
+    if pages.find(page != -1):
+        pass
+    return render_template(page)
+
 @app.route("/privacy-policy.html")
 def show_privacyPolicy():
     return render_template('privacy-policy.html')

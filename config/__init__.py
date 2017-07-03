@@ -23,7 +23,7 @@ default_settings = {
         }
     },
     "FACEBOOK": {
-        "PORT": 1024,
+        "PORT": 1025,
         "ACCESS_TOKEN": apiKey["FACEBOOK_ACCESS_TOKEN"],
         "VERIFY_TOKEN": apiKey["FACEBOOK_VERIFY_TOKEN"],
         "BOT_DATA_FILE": path + "/data/facebookCommands.json",
