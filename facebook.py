@@ -2,25 +2,14 @@
 import json, datetime, os
 from config import settings
 from flask import Flask, request, render_template, abort, url_for, send_from_directory
-from pymessenger.bot import Bot
 from lib.Constructor.facebookConstructor import FacebookConstructor
 
 app = Flask(__name__)
-bot = Bot(settings.FACEBOOK["ACCESS_TOKEN"])
-
-def readDataFile(dataFile):
-    with open(dataFile, "r") as dataFile:
-        data = json.loads(dataFile.read())
-
-        return data["message"], data["commands"]
-
-dataMessage, dataCommands = readDataFile(settings.FACEBOOK["BOT_DATA_FILE"])
-
 fb = FacebookConstructor(
+    token=settings.FACEBOOK["ACCESS_TOKEN"],
+    dataFile=settings.FACEBOOK["BOT_DATA_FILE"],
     currency=settings.CURRENCY,
     discount=settings.DISCONT,
-    message=dataMessage,
-    commands=dataCommands,
     shopData=settings.SHOPS,
     resultItemCount=settings.FACEBOOK["RESULT_ITEMS_COUNT"],
 )
@@ -84,53 +73,18 @@ def webhook():
 
         if dataCategory == "SHOP": # (2)
             if dataId == "DISCOUNT": # (2.2.1)
-                bot.send_generic_message(
-                    recipient_id,
-                    fb.printListDiscount()
-                )
+                fb.printListDiscount(recipient_id)
             else: # (2.1)
-                bot.send_generic_message(
-                    recipient_id,
-                    fb.botSelectStore()
-                )
+                fb.botSelectStore(recipient_id)
         elif dataCategory == "DISCOUNT": # (2.2)
             fb.setDiscount(dataId)
-            bot.send_generic_message(
-                recipient_id,
-                fb.botSelectStore()
-            )
+            fb.botSelectStore(recipient_id)
         elif dataCategory == "CHOICE": # (3)
-            bot.send_generic_message(
-                recipient_id,
-                fb.botCaliberChoice()
-            )
+            fb.botCaliberChoice(recipient_id)
         elif dataCategory == "TOP": # (4)
-            textArray, link = fb.botPrintTop(dataId)
-            textFormated = fb.separateText(textArray)
-
-            if len(textFormated) >= 640: # test message for chars limit - for facebook it's 640 chars
-                textPartFirst, textPartSecond = fb.separateMesageToTwo(textArray)
-
-                bot.send_text_message(
-                    recipient_id,
-                    textPartFirst
-                )
-                textFormated = textPartSecond
-                    
-            bot.send_button_message(
-                recipient_id,
-                textFormated,
-                fb.createButtonLink(
-                    dataMessage["link_text"],
-                    link
-                )
-            )
+            fb.botPrintTop(dataId , recipient_id)
         else: # (1)
-            bot.send_button_message(
-                recipient_id,
-                dataMessage["select_commad"],
-                fb.botCommands()
-            )
+            fb.botCommands(recipient_id)
     
     return "ok", 200
 

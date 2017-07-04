@@ -2,9 +2,11 @@
 import json
 from lib.Logger import log
 from lib.Constructor.botConstructor import BotConstructor
+from pymessenger.bot import Bot
 
 class FacebookConstructor(BotConstructor):
     __slots__ = [
+        "bot",
         "currency",
         "availableDiscount",
         "message",
@@ -20,38 +22,48 @@ class FacebookConstructor(BotConstructor):
         "discount"
     ]
     def __init__(self, **kwargs):
+        self.bot = Bot(kwargs["token"])
         self.currency = kwargs["currency"]
         self.availableDiscount = kwargs["discount"]
-        self.message = kwargs["message"]
-        self.commands = kwargs["commands"]
         self.shopData = kwargs["shopData"]
         self.visibleTopItems = kwargs["resultItemCount"]
         self.availableShops = self.shopData.keys()
         self.currentShop = self.availableShops[0]
         self.discount = 0
+        self.readDataFile(kwargs["dataFile"])
         self.initShopData(self.currentShop)
 
     """ Parse facebook data and return message """
     def getMessage(self, data):
-        for event in data['entry']:
+        try:
+            for event in data['entry']:
 
-            for item in event['messaging']:
-                recipient_id = item['sender']['id']
+                for item in event['messaging']:
+                    recipient_id = item['sender']['id']
 
-                if item.get('message'):
-                    message = item['message']
+                    if item.get('message'):
+                        message = item['message']
 
-                    if message.get('text'):
-                        message = message['text']
+                        if message.get('text'):
+                            message = message['text']
+                        else:
+                            return False, False
+
+                    elif item.get('postback'):
+                        message = item['postback']['payload']
                     else:
                         return False, False
 
-                elif item.get('postback'):
-                    message = item['postback']['payload']
-                else:
-                    return False, False
+                    return recipient_id, message
+        except Exception as error:
+            log.error(error)
 
-                return recipient_id, message
+    def readDataFile(self, dataFile):
+        with open(dataFile, "r") as dataFile:
+            data = json.loads(dataFile.read())
+
+            self.message = data["message"]
+            self.commands = data["commands"]
 
     """ find and structure offer results for choise shop and caliber """
     def topPrices(self, num=3, category='', discount=0):
@@ -151,23 +163,30 @@ class FacebookConstructor(BotConstructor):
         return result
 
     """ Create structure for list main commans """
-    def botCommands(self):
-        result = []
-        data = self.commands
-        self.discount = 0
+    def botCommands(self, recipient_id):
+        try:
+            result = []
+            data = self.commands
+            self.discount = 0
 
-        for key in data:
-            dic = {}
-            dic["type"] = "postback"
-            dic["title"] = data[key][1]
-            dic["payload"] = "%s__%s" % (data[key][0], key.upper())
+            for key in data:
+                dic = {}
+                dic["type"] = "postback"
+                dic["title"] = data[key][1]
+                dic["payload"] = "%s__%s" % (data[key][0], key.upper())
 
-            result.append(dic)
+                result.append(dic)
 
-        return result
+            self.bot.send_button_message(
+                recipient_id,
+                self.message["select_commad"],
+                result
+            )
+        except Exception as error:
+            log.error(error)
 
     """ Print aviable discounts """
-    def printListDiscount(self):
+    def printListDiscount(self, recipient_id):
         try:
             doscounts = []
 
@@ -176,50 +195,83 @@ class FacebookConstructor(BotConstructor):
                     str(item) + "%"
                 )
                 
-            return self.botCreateButtons(
+            keyboard = self.botCreateButtons(
                 self.message["select_discount"],
                 doscounts,
                 "discount"
+            )
+
+            self.bot.send_generic_message(
+                recipient_id,
+                keyboard
             )
         except Exception as error:
             log.error(error)
 
     """ Print aviable shops list """
-    def botSelectStore(self):
+    def botSelectStore(self, recipient_id):
         try:
             shopName = []
 
             for shop in self.availableShops:
                 shopName.append(shop.upper())
                 
-            return self.botCreateButtons(
+            keyboard = self.botCreateButtons(
                 self.message["select_store"],
                 shopName,
                 "choice"
+            )
+
+            self.bot.send_generic_message(
+                recipient_id,
+                keyboard
             )
         except Exception as error:
             log.error(error)
 
     """ Print aviable caliber list for current shop """
-    def botCaliberChoice(self):
+    def botCaliberChoice(self, recipient_id):
         try:
-            return self.botCreateButtons(
+            keyboard = self.botCreateButtons(
                 self.message["select_caliber"],
                 self.categoriesKeys,
                 "top"
+            )
+            self.bot.send_generic_message(
+                recipient_id,
+                keyboard
             )
         except Exception as error:
             log.error(error)
 
     """ Print offers """
-    def botPrintTop(self, currentCaliber):
+    def botPrintTop(self, currentCaliber, recipient_id):
         try:
             text = self.topPrices(
                 self.visibleTopItems,
                 str(currentCaliber),
                 self.discount
             )
+            textArray = text[:-1]
+            link = text[-1]
+            textFormated = self.separateText(textArray)
 
-            return text[:-1], text[-1]
+            if len(textFormated) >= 640: # test message for chars limit - for facebook it's 640 chars
+                textPartFirst, textPartSecond = self.separateMesageToTwo(textArray)
+
+                self.bot.send_text_message(
+                    recipient_id,
+                    textPartFirst
+                )
+                textFormated = textPartSecond
+                    
+            self.bot.send_button_message(
+                recipient_id,
+                textFormated,
+                self.createButtonLink(
+                    self.message["link_text"],
+                    link
+                )
+            )
         except Exception as error:
             log.error(error)
