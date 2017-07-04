@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-import json, datetime
+import json, datetime, os
 from config import settings
-from flask import Flask, request, render_template, abort, url_for
+from flask import Flask, request, render_template, abort, url_for, send_from_directory
 from pymessenger.bot import Bot
 from lib.Constructor.facebookConstructor import FacebookConstructor
 
@@ -30,6 +30,7 @@ class Page(object):
         self.settings = settings
         self.date = datetime.datetime.now()
         self.pages = self.settings["PAGES"]
+        self.fbUrl = self.settings["FACEBOOK_URL"]
 
     def page(self, name): 
         if name in self.pages.keys():
@@ -44,12 +45,10 @@ class Page(object):
         return self.pages[name]["template"]
 
     def getUrl(self, page):
-
         if page == "/":
             return url_for("index")
         else:
             return url_for("page", page=page)
-
 
 viewPage = Page(settings.WEB)
 
@@ -94,7 +93,7 @@ def webhook():
                     recipient_id,
                     fb.botSelectStore()
                 )
-        elif dataCategory == "DISCOUNT":  # (2.2)
+        elif dataCategory == "DISCOUNT": # (2.2)
             fb.setDiscount(dataId)
             bot.send_generic_message(
                 recipient_id,
@@ -152,10 +151,6 @@ def favicon():
 @app.errorhandler(404)
 def page_not_found(error):
     return viewPage.page("error")
-
-# @app.route("/privacy-policy.html")
-# def show_privacyPolicy():
-#     return render_template('privacy-policy.html')
 
 if __name__ == "__main__":
     app.run(port=settings.FACEBOOK["PORT"], debug=True)

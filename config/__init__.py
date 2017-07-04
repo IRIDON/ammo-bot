@@ -26,7 +26,8 @@ default_settings = {
                 "template": "page_not_found.html",
                 "visible": False
             }
-        }
+        },
+        "FACEBOOK_URL": "https://www.facebook.com/ammoPriceBot/"
     },
     "TELEGRAM": {
         "API_TOKEN": apiKey["BOT_API_TOKEN"],
