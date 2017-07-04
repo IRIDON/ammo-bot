@@ -44,17 +44,20 @@ class FacebookConstructor(BotConstructor):
                     if item.get('message'):
                         message = item['message']
 
-                        if message.get('text'):
-                            message = message['text']
+                        if message.get('quick_reply'):
+                            message_text = message['quick_reply']['payload']
+                        elif message.get('text') and not message.get('app_id'):
+                            message_text = message['text']
                         else:
                             return False, False
 
                     elif item.get('postback'):
-                        message = item['postback']['payload']
+                        message_text = item['postback']['payload']
                     else:
                         return False, False
 
-                    return recipient_id, message
+                    return recipient_id, message_text
+                    
         except Exception as error:
             log.error(error)
 
@@ -149,6 +152,22 @@ class FacebookConstructor(BotConstructor):
 
         return result
 
+    def botCreadeQuickReplies(self, text, arr, dataId):
+        result = []
+
+        for name in arr:
+            dic = {}
+            dic["content_type"] = "text"
+            dic["title"] = self.getKeyName(name)
+            dic["payload"] = "%s__%s" % (dataId.upper(), name)
+
+            result.append(dic)
+
+        return {
+            "text": text,
+            "quick_replies": result
+        }
+
     """ Create button link """
     def createButtonLink(self, title, link):
         result = []
@@ -195,13 +214,13 @@ class FacebookConstructor(BotConstructor):
                     str(item) + "%"
                 )
                 
-            keyboard = self.botCreateButtons(
+            keyboard = self.botCreadeQuickReplies(
                 self.message["select_discount"],
                 doscounts,
                 "discount"
             )
 
-            self.bot.send_generic_message(
+            self.bot.send_message(
                 recipient_id,
                 keyboard
             )
@@ -216,13 +235,13 @@ class FacebookConstructor(BotConstructor):
             for shop in self.availableShops:
                 shopName.append(shop.upper())
                 
-            keyboard = self.botCreateButtons(
+            keyboard = self.botCreadeQuickReplies(
                 self.message["select_store"],
                 shopName,
                 "choice"
             )
 
-            self.bot.send_generic_message(
+            self.bot.send_message(
                 recipient_id,
                 keyboard
             )

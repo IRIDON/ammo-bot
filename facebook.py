@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-import json, datetime, os
+import json, os
 from config import settings
-from flask import Flask, request, render_template, abort, url_for, send_from_directory
+from flask import Flask, request, abort, send_from_directory
 from lib.Constructor.facebookConstructor import FacebookConstructor
+from lib.Web.page import Page
 
 app = Flask(__name__)
+viewPage = Page(settings.WEB)
 fb = FacebookConstructor(
     token=settings.FACEBOOK["ACCESS_TOKEN"],
     dataFile=settings.FACEBOOK["BOT_DATA_FILE"],
@@ -13,33 +15,6 @@ fb = FacebookConstructor(
     shopData=settings.SHOPS,
     resultItemCount=settings.FACEBOOK["RESULT_ITEMS_COUNT"],
 )
-
-class Page(object):
-    def __init__(self, settings):
-        self.settings = settings
-        self.date = datetime.datetime.now()
-        self.pages = self.settings["PAGES"]
-        self.fbUrl = self.settings["FACEBOOK_URL"]
-
-    def page(self, name): 
-        if name in self.pages.keys():
-            return render_template(
-                self.getPageTemplate(name),
-                data=self
-            )
-        else:
-            abort(404)
-
-    def getPageTemplate(self, name):
-        return self.pages[name]["template"]
-
-    def getUrl(self, page):
-        if page == "/":
-            return url_for("index")
-        else:
-            return url_for("page", page=page)
-
-viewPage = Page(settings.WEB)
 
 @app.route("/", methods=['GET'])
 def index():

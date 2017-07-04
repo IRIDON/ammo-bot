@@ -69,4 +69,4 @@ class ParseData(object):
         except Exception as error:
             log.error(error)
         finally:
-            log.debug(u"Parse %s successful" % (self.shopName))
+            log.info(u"Parse %s successful" % (self.shopName))
