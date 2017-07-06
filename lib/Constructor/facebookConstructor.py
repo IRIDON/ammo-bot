@@ -41,7 +41,6 @@ class FacebookConstructor(BotConstructor):
     def getMessage(self, data):
         try:
             for event in data['entry']:
-
                 for item in event['messaging']:
                     recipient_id = item['sender']['id']
 
@@ -328,6 +327,7 @@ class BotSetSettings(FacebookConstructor):
         
     def getStart(self):
         text = self.message["greeting_text"] % (self.getAllShopsNames(self.shopData))
+        command = "COMMANDS__COMMANDS"
         payload = {
             "setting_type": "greeting",
             "greeting": [
@@ -337,7 +337,7 @@ class BotSetSettings(FacebookConstructor):
                 }
             ],
             "get_started": {
-                "payload": "COMMANDS__COMMANDS"
+                "payload": command
             }
         }
 
