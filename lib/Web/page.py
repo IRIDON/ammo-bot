@@ -8,8 +8,10 @@ class Page(object):
         self.pages = self.settings["PAGES"]
         self.fbUrl = self.settings["FACEBOOK_URL"]
 
-    def page(self, name): 
+    def page(self, name):
         if name in self.pages.keys():
+            self.title = self.getPageName(name)
+
             return render_template(
                 self.getPageTemplate(name),
                 data=self
@@ -19,6 +21,9 @@ class Page(object):
 
     def getPageTemplate(self, name):
         return self.pages[name]["template"]
+
+    def getPageName(self, name):
+        return self.pages[name]["name"]
 
     def getUrl(self, page):
         if page == "/":
