@@ -2,7 +2,7 @@
 import json, os
 from config import settings
 from flask import Flask, request, abort, send_from_directory
-from lib.Constructor.facebookConstructor import FacebookConstructor
+from lib.Constructor.facebookConstructor import FacebookConstructor, BotSetSettings
 from lib.Web.page import Page
 
 app = Flask(__name__)
@@ -15,6 +15,14 @@ fb = FacebookConstructor(
     shopData=settings.SHOPS,
     resultItemCount=settings.FACEBOOK["RESULT_ITEMS_COUNT"],
 )
+botSettings = BotSetSettings(
+    token=settings.FACEBOOK["ACCESS_TOKEN"],
+    dataFile=settings.FACEBOOK["BOT_DATA_FILE"],
+    shopData=settings.SHOPS
+)
+
+botSettings.getStart()
+botSettings.setMenu()
 
 @app.route("/", methods=['GET'])
 def index():
@@ -45,11 +53,11 @@ def webhook():
         if message.find("__") != -1:
             dataCategory = message.split("__")[0]
             dataId = message.split("__")[1]
-
         if dataCategory == "SHOP": # (2)
             if dataId == "DISCOUNT": # (2.2.1)
                 fb.printListDiscount(recipient_id)
             else: # (2.1)
+                fb.setDiscount("0%")
                 fb.botSelectStore(recipient_id)
         elif dataCategory == "DISCOUNT": # (2.2)
             fb.setDiscount(dataId)
@@ -58,8 +66,10 @@ def webhook():
             fb.botCaliberChoice(recipient_id)
         elif dataCategory == "TOP": # (4)
             fb.botPrintTop(dataId , recipient_id)
-        else: # (1)
+        elif dataCategory == "COMMANDS": # (4)
             fb.botCommands(recipient_id)
+        else: # (1)
+            fb.botNone(recipient_id)
     
     return "ok", 200
 

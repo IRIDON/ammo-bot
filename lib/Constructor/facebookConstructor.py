@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
-import json
+import json, requests
 from lib.Logger import log
 from lib.Constructor.botConstructor import BotConstructor
 from pymessenger.bot import Bot
 
+DEFAULT_API_VERSION = 2.6
+
 class FacebookConstructor(BotConstructor):
     __slots__ = [
+        "accessToken",
         "bot",
         "currency",
         "availableDiscount",
@@ -22,7 +25,8 @@ class FacebookConstructor(BotConstructor):
         "discount"
     ]
     def __init__(self, **kwargs):
-        self.bot = Bot(kwargs["token"])
+        self.accessToken = kwargs["token"]
+        self.bot = Bot(self.accessToken)
         self.currency = kwargs["currency"]
         self.availableDiscount = kwargs["discount"]
         self.shopData = kwargs["shopData"]
@@ -115,6 +119,16 @@ class FacebookConstructor(BotConstructor):
 
         return first, second
 
+    def getAllShopsNames(self, shopData):
+        result = []
+
+        for shopName in shopData:
+            shop = shopData[shopName]
+            
+            result.append(shop["shop_name"])
+
+        return ", ".join(result)
+
     def setDiscount(self, discount):
         try:
             discount = discount.replace("%", "")
@@ -182,24 +196,34 @@ class FacebookConstructor(BotConstructor):
         return result
 
     """ Create structure for list main commans """
+    def getFormateCommands(self, data):
+        result = []
+  
+        for key in data:
+            dic = {}
+            dic["type"] = "postback"
+            dic["title"] = data[key][1]
+            dic["payload"] = "%s__%s" % (data[key][0], key.upper())
+
+            result.append(dic)
+
+        return result
+
     def botCommands(self, recipient_id):
         try:
-            result = []
-            data = self.commands
-            self.discount = 0
-
-            for key in data:
-                dic = {}
-                dic["type"] = "postback"
-                dic["title"] = data[key][1]
-                dic["payload"] = "%s__%s" % (data[key][0], key.upper())
-
-                result.append(dic)
-
             self.bot.send_button_message(
                 recipient_id,
                 self.message["select_commad"],
-                result
+                self.getFormateCommands(self.commands)
+            )
+        except Exception as error:
+            log.error(error)
+
+    def botNone(self, recipient_id):
+        try:
+            self.bot.send_text_message(
+                recipient_id,
+                self.message["no_commad"][0],
             )
         except Exception as error:
             log.error(error)
@@ -294,3 +318,49 @@ class FacebookConstructor(BotConstructor):
             )
         except Exception as error:
             log.error(error)
+
+class BotSetSettings(FacebookConstructor):
+    def __init__(self, token, dataFile, shopData):
+        self.url = "https://graph.facebook.com/v%s/me/messenger_profile?access_token=%s"
+        self.accessToken = token
+        self.shopData = shopData
+        self.readDataFile(dataFile)
+        
+    def getStart(self):
+        text = self.message["greeting_text"] % (self.getAllShopsNames(self.shopData))
+        payload = {
+            "setting_type": "greeting",
+            "greeting":[
+                {
+                    "locale": "default",
+                    "text": text
+                }
+            ],
+            "get_started":{
+                "payload": "COMMANDS__COMMANDS"
+            }
+        }
+
+        return self.botSendProfile(payload)
+
+    def setMenu(self):
+        payload = {
+            "persistent_menu": [
+                {
+                    "locale": "default",
+                    "composer_input_disabled": True,
+                    "call_to_actions": self.getFormateCommands(self.commands)
+                }
+            ]
+        }
+
+        return self.botSendProfile(payload)
+
+    def botSendProfile(self, payload):
+        request_endpoint = self.url % (DEFAULT_API_VERSION, self.accessToken)
+        response = requests.post(
+            request_endpoint,
+            json=payload
+        )
+
+        return response.json()
