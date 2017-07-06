@@ -319,6 +319,13 @@ class FacebookConstructor(BotConstructor):
             log.error(error)
 
 class BotSetSettings(FacebookConstructor):
+    __slots__ = {
+        "url",
+        "accessToken",
+        "shopData",
+        "message",
+        "commands"
+    }
     def __init__(self, token, dataFile, shopData):
         self.url = "https://graph.facebook.com/v%s/me/messenger_profile?access_token=%s"
         self.accessToken = token
