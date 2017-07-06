@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import json, os
 from config import settings
-from flask import Flask, request, abort, send_from_directory
+from flask import Flask, request, send_from_directory
 from lib.Constructor.facebookConstructor import FacebookConstructor, BotSetSettings
 from lib.Web.page import Page
 
