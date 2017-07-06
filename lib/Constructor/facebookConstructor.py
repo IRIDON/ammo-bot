@@ -330,13 +330,13 @@ class BotSetSettings(FacebookConstructor):
         text = self.message["greeting_text"] % (self.getAllShopsNames(self.shopData))
         payload = {
             "setting_type": "greeting",
-            "greeting":[
+            "greeting": [
                 {
                     "locale": "default",
                     "text": text
                 }
             ],
-            "get_started":{
+            "get_started": {
                 "payload": "COMMANDS__COMMANDS"
             }
         }
