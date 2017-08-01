@@ -13,6 +13,8 @@ logging.basicConfig(
 
 log = logging
 
+log.critical("Init app")
+
 DEFAULT_API_VERSION = 2.6
 
 class FacebookConstructor(BotConstructor):
