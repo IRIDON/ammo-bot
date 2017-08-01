@@ -50,7 +50,7 @@ default_settings = {
         "PORT": 1025,
         "ACCESS_TOKEN": apiKey["FACEBOOK_ACCESS_TOKEN"],
         "VERIFY_TOKEN": apiKey["FACEBOOK_VERIFY_TOKEN"],
-        "BOT_DATA_FILE": path + "/data/facebookCommands.json",
+        "BOT_DATA_FILE": path + "/config/facebookCommands.json",
         "RESULT_ITEMS_COUNT": 5,
         
     },
