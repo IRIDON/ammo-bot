@@ -1,8 +1,17 @@
 # -*- coding: utf-8 -*-
 import json, requests
 from lib.Constructor.botConstructor import BotConstructor
-from lib.Logger.log import log
 from pymessenger.bot import Bot
+
+import logging
+
+logging.basicConfig(
+    format = u'%(levelname)-8s [%(asctime)s] %(message)s',
+    level = logging.ERROR,
+    filename = u'log/log.log'
+)
+
+log = logging
 
 DEFAULT_API_VERSION = 2.6
 
