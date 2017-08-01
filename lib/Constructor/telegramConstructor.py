@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from lib.Logger import log
+from lib.Logger.log import log
 from telebot import types
 from lib.Constructor.botConstructor import BotConstructor
 from lib.Botan import botan
