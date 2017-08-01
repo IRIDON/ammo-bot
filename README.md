@@ -17,5 +17,6 @@ pip install requests
 pip install lxml
 pip install Flask
 pip install pymessenger
+pip install logging
 npm install botanio
 ```
