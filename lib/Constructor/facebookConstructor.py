@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import json, requests
 from lib.Constructor.botConstructor import BotConstructor
-from lib.Logger import log
+from lib.Logger.log import log
 from pymessenger.bot import Bot
 
 DEFAULT_API_VERSION = 2.6
