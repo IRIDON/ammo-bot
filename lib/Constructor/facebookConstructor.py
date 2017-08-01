@@ -333,16 +333,19 @@ class BotSetSettings(FacebookConstructor):
         self.readDataFile(dataFile)
         
     def getStart(self):
-        text = self.message["greeting_text"] % (self.getAllShopsNames(self.shopData))
+        textResult = []
+        textData = self.message["greeting_text"]
         command = "COMMANDS__COMMANDS"
+
+        for key, value in textData.iteritems():
+            textResult.append({
+                "locale": key,
+                "text": value  % (self.getAllShopsNames(self.shopData))
+            })
+
         payload = {
             "setting_type": "greeting",
-            "greeting": [
-                {
-                    "locale": "default",
-                    "text": text
-                }
-            ],
+            "greeting": textResult,
             "get_started": {
                 "payload": command
             }

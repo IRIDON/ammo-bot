@@ -27,6 +27,7 @@ default_settings = {
                 "visible": False
             }
         },
+        "BOT_NAME": "AmmoBot",
         "FACEBOOK_URL": "https://www.facebook.com/ammoPriceBot/"
     },
     "TELEGRAM": {
