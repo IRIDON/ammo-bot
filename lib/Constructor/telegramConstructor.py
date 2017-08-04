@@ -114,7 +114,7 @@ class TelegramConstructor(BotConstructor):
                 self.message["choose_shop"]
             )
         except Exception as error:
-            log.error(error)
+            log.error("Telegram " + error)
 
     def botComandStart(self, message):
         try:
@@ -123,7 +123,7 @@ class TelegramConstructor(BotConstructor):
 
                 self.botSendMessage(message.chat.id, helpText)
         except Exception as error:
-            log.error(error)
+            log.error("Telegram " + error)
 
     def botComandTop(self, message):
         try:
@@ -141,7 +141,7 @@ class TelegramConstructor(BotConstructor):
                 self.message["choose_caliber_with_shop"] % (self.currentShop.upper())
             )
         except Exception as error:
-            log.error(error)
+            log.error("Telegram " + error)
 
     def botSwitchShop(self, callData):
         try:
@@ -151,7 +151,7 @@ class TelegramConstructor(BotConstructor):
             self.botAnswerCallback(callData.id)
             self.initShopData(self.currentShop)
         except Exception as error:
-            log.error(error)
+            log.error("Telegram " + error)
 
     def botCallTop(self, callData):
         try:
@@ -170,7 +170,7 @@ class TelegramConstructor(BotConstructor):
                 result
             )
         except Exception as error:
-            log.error(error)
+            log.error("Telegram " + error)
 
     def botComandDiscount(self, message):
         try:
@@ -187,7 +187,7 @@ class TelegramConstructor(BotConstructor):
                 self.message["choose_discount"]
             )
         except Exception as error:
-            log.error(error)
+            log.error("Telegram " + error)
     
     def botCallDiscount(self, callData):
         try:
@@ -207,4 +207,4 @@ class TelegramConstructor(BotConstructor):
                 self.message["choose_caliber_with_shop"] % (self.currentShop.upper())
             )
         except Exception as error:
-            log.error(error)
+            log.error("Telegram " + error)

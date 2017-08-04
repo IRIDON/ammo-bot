@@ -62,7 +62,7 @@ class FacebookConstructor(BotConstructor):
                     return recipient_id, message_text
                     
         except Exception as error:
-            log.error(error)
+            log.error("Facebook " + error)
 
     def readDataFile(self, dataFile):
         with open(dataFile, "r") as dataFile:
@@ -135,7 +135,7 @@ class FacebookConstructor(BotConstructor):
 
             self.discount = discount
         except Exception as error:
-            log.error(error)
+            log.error("Facebook " + error)
         
     """ Create slide button group """
     def createButtonGroup(self, arr, dataId):
@@ -216,7 +216,7 @@ class FacebookConstructor(BotConstructor):
                 self.getFormateCommands(self.commands)
             )
         except Exception as error:
-            log.error(error)
+            log.error("Facebook " + error)
 
     def botNone(self, recipient_id):
         try:
@@ -225,7 +225,7 @@ class FacebookConstructor(BotConstructor):
                 self.message["no_commad"][0],
             )
         except Exception as error:
-            log.error(error)
+            log.error("Facebook " + error)
 
     """ Print aviable discounts """
     def printListDiscount(self, recipient_id):
@@ -248,7 +248,7 @@ class FacebookConstructor(BotConstructor):
                 keyboard
             )
         except Exception as error:
-            log.error(error)
+            log.error("Facebook " + error)
 
     """ Print aviable shops list """
     def botSelectStore(self, recipient_id):
@@ -269,7 +269,7 @@ class FacebookConstructor(BotConstructor):
                 keyboard
             )
         except Exception as error:
-            log.error(error)
+            log.error("Facebook " + error)
 
     """ Print aviable caliber list for current shop """
     def botCaliberChoice(self, recipient_id):
@@ -284,7 +284,7 @@ class FacebookConstructor(BotConstructor):
                 keyboard
             )
         except Exception as error:
-            log.error(error)
+            log.error("Facebook " + error)
 
     """ Print offers """
     def botPrintTop(self, currentCaliber, recipient_id):
@@ -316,7 +316,7 @@ class FacebookConstructor(BotConstructor):
                 )
             )
         except Exception as error:
-            log.error(error)
+            log.error("Facebook " + error)
 
 class BotSetSettings(FacebookConstructor):
     __slots__ = {
