@@ -4,15 +4,7 @@ from config import settings
 from flask import Flask, request, send_from_directory
 from lib.Constructor.facebookConstructor import FacebookConstructor, BotSetSettings
 from lib.Web.page import Page
-import logging
-
-logging.basicConfig(
-    format = u'%(levelname)-8s [%(asctime)s] %(message)s',
-    level = logging.ERROR,
-    filename = u'log/log.log'
-)
-
-log = logging
+from lib.Logger import log
 
 app = Flask(__name__)
 viewPage = Page(settings.WEB)
@@ -36,8 +28,6 @@ botSettings.setMenu()
 @app.route("/", methods=['GET'])
 def index():
     if request.method == 'GET':
-        log.critical("GET request")
-
         if request.args.get("hub.verify_token") == settings.FACEBOOK["VERIFY_TOKEN"]:
             return request.args.get("hub.challenge")
         else:
