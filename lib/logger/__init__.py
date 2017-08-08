@@ -7,4 +7,5 @@ logging.basicConfig(
     filename = '%s/log/log.log' % (path)
 )
 
-log = logging
+def log():
+	return logging
