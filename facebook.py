@@ -1,10 +1,17 @@
 # -*- coding: utf-8 -*-
-import json, os
+import logging, os, sys, json
 from config import settings
 from flask import Flask, request, send_from_directory
 from lib.Constructor.facebookConstructor import FacebookConstructor, BotSetSettings
 from lib.Web.page import Page
-from lib.Logger import log
+
+path = os.path.abspath(os.path.split(sys.argv[0])[0])
+logging.basicConfig(
+    format = u'%(levelname)-8s [%(asctime)s] %(message)s',
+    level = logging.ERROR,
+    filename = '%s/log/log.log' % (path)
+)
+log = logging
 
 app = Flask(__name__)
 viewPage = Page(settings.WEB)
