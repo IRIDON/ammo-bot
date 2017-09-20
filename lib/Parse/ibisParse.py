@@ -40,13 +40,14 @@ class IbisParseData(ParseData):
         price = self.getPrices(page)
         title = page.xpath('//a[@class="pb_product_name"]/text()')
         stock = page.xpath('//div[@class="pb_stock"]')
-        
+
         for index, item in enumerate(price):
             dic = {}
+            avilible = stock[index].xpath('//span//span[@class="pwarehouses_tooltip"]')
             dic["title"] = self.coder(title[index])
             dic["price"] = float(price[index])
-            
-            if not stock[index].xpath('*/text()'):
+
+            if avilible:
                 result.append(dict(dic))
             else:
                 break
