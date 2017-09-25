@@ -4,7 +4,6 @@
 Parse data from websile ibis.net.ua
 create JSON data and save it in file
 """
-from lib.Logger import log
 import requests, logging
 from lxml import html
 import json
