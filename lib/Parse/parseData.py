@@ -4,11 +4,12 @@
 Parse data from websile ibis.net.ua
 create JSON data and save it in file
 """
-import requests, logging
+import requests, logging, os, sys
 from lxml import html
 import json
 import time
 
+path = os.path.abspath(os.path.split(sys.argv[0])[0])
 logging.basicConfig(
     format = u'%(levelname)-8s [%(asctime)s] %(message)s',
     level = logging.ERROR,
