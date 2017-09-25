@@ -5,10 +5,17 @@ Parse data from websile ibis.net.ua
 create JSON data and save it in file
 """
 from lib.Logger import log
-import requests
+import requests, logging
 from lxml import html
 import json
 import time
+
+logging.basicConfig(
+    format = u'%(levelname)-8s [%(asctime)s] %(message)s',
+    level = logging.ERROR,
+    filename = '%s/log/log.log' % (path)
+)
+log = logging
 
 class ParseData(object):
     def __init__(self):
