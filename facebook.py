@@ -77,7 +77,7 @@ def webhook():
         elif dataCategory == "COMMANDS": # (4)
             fb.botCommands(recipient_id)
         else: # (1)
-            fb.botNone(recipient_id)
+            fb.botCommands(recipient_id)
     
     return "ok", 200
 
