@@ -313,6 +313,14 @@ class FacebookConstructor(BotConstructor):
                     textPartFirst
                 )
                 textFormated = textPartSecond
+            elif len(textArray) == 0:
+                self.bot.send_button_message(
+                    self.message["no_results"],
+                    self.createButtonLink(
+                        self.message["link_text"],
+                        link
+                    )
+                )
                     
             self.bot.send_button_message(
                 recipient_id,

@@ -32,6 +32,7 @@ botSettings = BotSetSettings(
 botSettings.getStart()
 botSettings.setMenu()
 
+
 @app.route("/", methods=['GET'])
 def index():
     if request.method == 'GET':
