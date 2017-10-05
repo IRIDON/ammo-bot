@@ -67,7 +67,6 @@ class FacebookConstructor(BotConstructor):
                         return False, False
 
                     return recipient_id, message_text
-                    
         except Exception as error:
             log.error("Facebook " + error)
 
@@ -279,8 +278,10 @@ class FacebookConstructor(BotConstructor):
             log.error("Facebook " + error)
 
     """ Print aviable caliber list for current shop """
-    def botCaliberChoice(self, recipient_id):
+    def botCaliberChoice(self, currentShop, recipient_id):
         try:
+            self.initShopData(currentShop);
+
             keyboard = self.botCreateButtons(
                 self.message["select_caliber"],
                 self.categoriesKeys,
@@ -315,6 +316,7 @@ class FacebookConstructor(BotConstructor):
                 textFormated = textPartSecond
             elif len(textArray) == 0:
                 self.bot.send_button_message(
+                    recipient_id,
                     self.message["no_results"],
                     self.createButtonLink(
                         self.message["link_text"],

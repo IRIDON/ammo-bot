@@ -32,6 +32,7 @@ botSettings = BotSetSettings(
 botSettings.getStart()
 botSettings.setMenu()
 
+print 'Load'
 
 @app.route("/", methods=['GET'])
 def index():
@@ -72,7 +73,7 @@ def webhook():
             fb.setDiscount(dataId)
             fb.botSelectStore(recipient_id)
         elif dataCategory == "CHOICE": # (3)
-            fb.botCaliberChoice(recipient_id)
+            fb.botCaliberChoice(dataId, recipient_id)
         elif dataCategory == "TOP": # (4)
             fb.botPrintTop(dataId , recipient_id)
         elif dataCategory == "COMMANDS": # (4)

@@ -13,6 +13,8 @@ class BotConstructor(object):
         self.shopData = kwargs["shopData"]
 
     def initShopData(self, shopName):
+        shopName = shopName.lower()
+        
         if self.shopData[shopName]:
             shopData = self.shopData[shopName]
 
@@ -20,6 +22,7 @@ class BotConstructor(object):
             self.categoriesKeys = self.categories.keys()
             self.availableAmmo = shopData["ammo_type"]
             self.dataFileUrl = shopData["data_file"]
+            self.currentShop = shopName
         else:
             return False
 
