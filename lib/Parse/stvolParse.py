@@ -33,13 +33,13 @@ class StvolParseData(ParseData):
     def getStructure(self, url):
         result = []
         page = self.requestsPage(url)
-        blocks = page.xpath('.//div[@class="tov-cover"]')
+        blocks = page.xpath('.//div[@class="cover-tov"]')
 
         for item in blocks:
             dic = {}
-            name = item.xpath('.//div[@class="tov-name"]/a/text()')
-            price_1 = item.xpath('.//div[@class="price"]/b/text()')[0].replace(' ', '')
-            price_2 = item.xpath('.//div[@class="price"]/text()')[0]
+            name = item.xpath('.//a[@class="tov-name"]/text()')
+            price_1 = item.xpath('.//div[@class="current-price"]/b/text()')[0].replace(' ', '')
+            price_2 = item.xpath('.//div[@class="current-price"]/text()')[0]
 
             dic["title"] = name[0]
             dic["price"] = self.cleanPriceNum(price_1 + price_2) 

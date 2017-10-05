@@ -92,8 +92,8 @@ default_settings = {
         },
         "stvol": {
             "shop_name": "stvol",
-            "url": "http://stvol.ua",
-            "url_tmp": "http://stvol.ua/catalog/%s/filter/%s/apply/?page_sort=price_asc",
+            "url": "https://stvol.ua",
+            "url_tmp": "https://stvol.ua/catalog/%s/filter/%s/apply/?page_sort=price_asc",
             "data_file": path + "/data/stvol.json",
             "ammo_type": {
                 "rifle": "patrony_nareznye",

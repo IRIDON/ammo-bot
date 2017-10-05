@@ -31,7 +31,7 @@ class ParseData(object):
         return x["price"]
 
     def requestsPage(self, url):
-        page = requests.get(url)
+        page = requests.get(url, verify=False)
 
         return html.fromstring(page.content)
 
