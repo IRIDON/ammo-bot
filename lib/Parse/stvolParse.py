@@ -40,11 +40,13 @@ class StvolParseData(ParseData):
             name = item.xpath('.//a[@class="tov-name"]/text()')
             price_1 = item.xpath('.//div[@class="current-price"]/b/text()')[0].replace(' ', '')
             price_2 = item.xpath('.//div[@class="current-price"]/text()')[0]
+            avilible = item.xpath('.//div[@class="no-item"]')
 
-            dic["title"] = name[0]
-            dic["price"] = self.cleanPriceNum(price_1 + price_2) 
+            if len(avilible) == 0:
+                dic["title"] = name[0]
+                dic["price"] = self.cleanPriceNum(price_1 + price_2) 
 
-            result.append(dict(dic))
+                result.append(dict(dic))
 
         return sorted(result, key=self.sortArrayByPrice)
     
