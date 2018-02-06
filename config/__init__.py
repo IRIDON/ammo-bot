@@ -19,7 +19,8 @@ default_settings = {
         "choose_shop": "Choose shop:",
         "base_date": "Database update date",
         "link_text": "Visit to site",
-        "base_error": "Database error, please try again."
+        "base_error": "Database error, please try again.",
+        "no_results": "Sorry, but this offer is not available, try to search the store site."
     },
     "CALIBERS": [
         "223_Rem",

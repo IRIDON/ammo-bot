@@ -3,6 +3,9 @@ import json
 from telebot import types
 from lib.Constructor.botConstructor import BotConstructor
 from lib.Botan import botan
+from lib.Logger.logger import Log
+
+log = Log()
 
 class TelegramConstructor(BotConstructor):
     __slots__ = [
@@ -119,8 +122,8 @@ class TelegramConstructor(BotConstructor):
                 message,
                 self.message["choose_shop"]
             )
-        except Exception as e:
-            print e
+        except Exception as error:
+            log.error(error)
 
     def botComandStart(self, message):
         try:
@@ -128,8 +131,8 @@ class TelegramConstructor(BotConstructor):
                 helpText = helpFile.read()
 
                 self.botSendMessage(message.chat.id, helpText)
-        except Exception as e:
-            print e
+        except Exception as error:
+            log.error(error)
 
     def botComandTop(self, message):
         try:
@@ -143,8 +146,8 @@ class TelegramConstructor(BotConstructor):
                 keyboard,
                 self.message["choose_caliber_with_shop"] % (self.currentShop.upper())
             )
-        except Exception as e:
-            print e
+        except Exception as error:
+            log.error(error)
 
     def botSwitchShop(self, callData):
         try:
@@ -153,8 +156,8 @@ class TelegramConstructor(BotConstructor):
 
             self.botAnswerCallback(callData.id)
             self.initShopData(self.currentShop)
-        except Exception as e:
-            print e
+        except Exception as error:
+            log.error(error)
 
     def botCallTop(self, callData):
         try:
@@ -169,8 +172,8 @@ class TelegramConstructor(BotConstructor):
 
             self.botAnswerCallback(callData.id)
             self.botSendMessage(callData.message.chat.id, result)
-        except Exception as e:
-            print e
+        except Exception as error:
+            log.error(error)
 
     def botComandDiscount(self, message):
         try:
@@ -183,8 +186,8 @@ class TelegramConstructor(BotConstructor):
                 keyboard,
                 self.message["choose_discount"]
             )
-        except Exception as e:
-            print e
+        except Exception as error:
+            log.error(error)
     
     def botCallDiscount(self, callData):
         try:
@@ -200,8 +203,8 @@ class TelegramConstructor(BotConstructor):
                 keyboard,
                 self.message["choose_caliber_with_shop"] % (self.currentShop.upper())
             )
-        except Exception as e:
-            print e
+        except Exception as error:
+            log.error(error)
 
     def botComandAll(self, message):
         try:
@@ -214,8 +217,8 @@ class TelegramConstructor(BotConstructor):
                 keyboard,
                 self.message["choose_caliber"]
             )
-        except Exception as e:
-            print e
+        except Exception as error:
+            log.error(error)
     
     def botCallAll(self, callData):
         try:
@@ -226,5 +229,5 @@ class TelegramConstructor(BotConstructor):
 
             self.botAnswerCallback(callData.id)
             self.botSendMessage(callData.message.chat.id, result)
-        except Exception as e:
-            print e
+        except Exception as error:
+            log.error(error)

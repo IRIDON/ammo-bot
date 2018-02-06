@@ -93,6 +93,9 @@ class BotConstructor(object):
 
             result.append(template % tuple(resultArr))
 
+        if len(result) == 1:
+            result.append(self.message["no_results"])
+
         if self.dataUpdateTime:
             result.append("\n<i>%s: %s</i>" % (
                 self.message["base_date"],

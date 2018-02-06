@@ -3,6 +3,9 @@ from config import settings
 import telebot, time
 from telebot import types
 from lib.Constructor.telegramConstructor import TelegramConstructor
+from lib.Logger.logger import Log
+
+log = Log()
 
 bot = telebot.TeleBot(settings.API_TOKEN)
 commands = ''
@@ -61,12 +64,12 @@ def echo_message(message):
         botConstructor.botSendMessage(message.chat.id, settings.MESSAGE["empy"])
     except Exception as error:
         botConstructor.botSendMessage(message.chat.id, 'Opppsss!')
-        print error
+        log.error(error)
 
 while True:
     try:
         bot.polling(none_stop=True)
     except Exception as error:
-        print error
+        log.error(error)
 
         time.sleep(15)
