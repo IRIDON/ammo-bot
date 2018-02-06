@@ -19,37 +19,33 @@ class IbisParseData(ParseData):
         self.urlTmp = settings["url_tmp"]
 
     def getPrices(self, tree):
-        price = tree.xpath('//div[@class="pb_price "]')
-        result = []
+        price = tree.xpath('.//div[contains(@class, "pb_price")]')
+        priceText = price[0].xpath('./text()')
 
-        for item in price:
-            pr = item.xpath('./text()')
+        if len(priceText[0].strip()):
+            return float(priceText[0])
+        else:
+            pn = price[0].xpath('*/text()')
 
-            if pr:
-                result.append(float(pr[0]))
-            else:
-                pn = item.xpath('*/text()')
-
-                result.append(float(pn[0] + pn[1]))
-
-        return result
+            return float(pn[0] + pn[1])
 
     def getStructure(self, url):
         result = []
         page = self.requestsPage(url)
-        price = self.getPrices(page)
-        title = page.xpath('//a[@class="pb_product_name"]/text()')
-        stock = page.xpath('//div[@class="pb_stock"]')
+        blocks = page.xpath('.//form[@class="product_brief_list "]')
 
-        for index, item in enumerate(price):
-            dic = {}
-            avilible = stock[index].xpath('//span//span[@class="pwarehouses_tooltip"]')
-            dic["title"] = self.coder(title[index])
-            dic["price"] = float(price[index])
+        for item in blocks:
+            price = self.getPrices(item)
 
-            if avilible:
+            if price:
+                dic = {}
+                name = item.xpath('.//a[@class="pb_product_name"]/text()')
+
+                dic["title"] = name[0].encode('utf-8').strip()
+                dic["price"] = price
+
                 result.append(dict(dic))
             else:
                 break
 
-        return result
+        return sorted(result, key=self.sortArrayByPrice)

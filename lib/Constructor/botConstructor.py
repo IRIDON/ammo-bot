@@ -6,19 +6,21 @@ class BotConstructor(object):
     __slots__ = [
         "currency",
         "message",
-        "shopData"
+        "shopData",
+        "dataUpdateTime"
     ]
     def __init__(self, **kwargs):
         self.currency = kwargs["currency"]
         self.message = kwargs["message"]
         self.shopData = kwargs["shopData"]
+        self.dataUpdateTime = ''
 
     def initShopData(self, shopName):
         if self.shopData[shopName]:
             shopData = self.shopData[shopName]
 
-            self.categories = shopData["category"]
-            self.categoriesKeys = self.categories.keys()
+            self.categories = sorted(shopData["category"].items(), key=lambda item: item[1][2])
+            self.categoriesKeys = map(lambda x: x[0], self.categories)
             self.availableAmmo = shopData["ammo_type"]
             self.dataFileUrl = shopData["data_file"]
         else:
@@ -34,13 +36,34 @@ class BotConstructor(object):
         return format(price * factor, '.2f')
 
     def topPrices(self, num=3, category='', discount=0):
-        result = []
         allData = self.getData()
 
         if not allData:
             return self.message["base_error"]
 
-        data = allData[category]
+        self.dataUpdateTime = allData["time"]
+
+        result = self.formateResult(
+            allData[category],
+            num,
+            category,
+            discount
+        )
+
+        result.append("\n<a href='%s'>%s</a>" % (
+            allData["url"][category] + "?utm_source=ammoBot",
+            self.message["link_text"]
+        ))
+
+        return "\n".join(result)
+
+    def allShopPrices(self, category, num=10):
+        result = self.allPrices(category, num)
+
+        return "\n".join(result)
+
+    def formateResult(self, data, num=3, category='', discount=0):
+        result = []
         dataLen = len(data)
 
         if dataLen < num:
@@ -48,40 +71,63 @@ class BotConstructor(object):
 
         result.append("<b>%s</b>\n" % (self.getKeyName(category)))
 
-        for index in range(0,num):
-            title = data[index]["title"]
-            price = data[index]["price"]
+        for index in range(0, num):
+            item = data[index]
+            shopName = item.get('shop_name')
+            title = item["title"]
+            price = item["price"]
+            template = "<b>%s %s</b> - %s"
+            resultArr = [price, self.currency, title]
 
-            if discount == 0:
-                result.append("<b>%s %s</b> - %s" % (price, self.currency, title))
-            else:
-                result.append("<b>%s %s</b> <i>(%s)</i> - %s" % (
+            if discount != 0 and not shopName:
+                template = "<b>%s %s</b> <i>(%s)</i> - %s"
+                resultArr = (
                     self.getDiscount(price, discount),
                     self.currency,
                     price,
-                    title)
+                    title
                 )
-        
-        result.append("\n<i>%s: %s</i>" % (
-            self.message["base_date"],
-            allData["time"]
-        ))
-        result.append("\n<a href='%s'>%s</a>" % (
-            allData["url"][category] + "?utm_source=ammoBot",
-            self.message["link_text"]
-        ))
-        
-        return "\n".join(result)
+            elif shopName:
+                template = "<b>%s %s</b> - %s (%s)"
+                resultArr.append(shopName)
 
-    def median(self, category):
-        data = self.getData()
-        data = data[category]
-        prices = []
+            result.append(template % tuple(resultArr))
 
-        for item in data:
-            prices.append(item["price"])
+        if self.dataUpdateTime:
+            result.append("\n<i>%s: %s</i>" % (
+                self.message["base_date"],
+                self.dataUpdateTime
+            ))
 
-        return statistics.median_low(prices)
+        return result
+
+    def allPrices(self, caliber, num):
+        data = self.shopData
+        result = []
+        dataFiles = []
+
+        for shopName in self.shopData:
+            shop = data[shopName]
+
+            with open(shop["data_file"], "r") as file:
+                f = json.load(file)
+
+                if not self.dataUpdateTime:
+                    self.dataUpdateTime = f['time']
+
+                if caliber in f:
+                    for item in f[caliber]:
+                        item['shop_name'] = shop['shop_name'].upper()
+
+                        dataFiles.append(item)
+
+        data = sorted(dataFiles, key=lambda x: x["price"])
+
+        return self.formateResult(
+            data,
+            num,
+            caliber
+        )
 
     def getKeyName(self, name):
         return name.replace("_", " ")

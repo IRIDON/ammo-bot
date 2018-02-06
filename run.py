@@ -12,20 +12,26 @@ botConstructor = TelegramConstructor(
     currency=settings.CURRENCY,
     discount=settings.DISCONT,
     message=settings.MESSAGE,
+    calibersAll=settings.CALIBERS,
     apiKey=settings.BOTAN_API,
     shopData=settings.SHOPS,
     resultItemCount=settings.RESULT_ITEMS_COUNT,
+    allResultItemCount=settings.ALL_RESULT_ITEMS_COUNT,
 )
 @bot.message_handler(commands=['start', 'help'])
 def sendWelcome(message):
     botConstructor.botComandStart(message)
 
-@bot.message_handler(commands=['top', 'discount', 'median'])
+@bot.message_handler(commands=['top', 'discount'])
 def sendTop(message):
     global commands
     commands = message.text.replace("/", "")
 
     botConstructor.botSelectStore(message)
+
+@bot.message_handler(commands=['all'])
+def sendTop(message):
+    botConstructor.botComandAll(message)
 
 @bot.callback_query_handler(func=lambda call: call.data.find("shop") != -1)
 def callTop(call):
@@ -36,8 +42,6 @@ def callTop(call):
         botConstructor.botComandTop(call.message)
     elif commands == 'discount':
         botConstructor.botComandDiscount(call.message)
-    elif commands == 'median':
-        botConstructor.botComandMedian(call.message)
 
 @bot.callback_query_handler(func=lambda call: call.data.find("top") != -1)
 def callTop(call):
@@ -47,9 +51,9 @@ def callTop(call):
 def callDiscount(call):
     botConstructor.botCallDiscount(call)
 
-@bot.callback_query_handler(func=lambda call: call.data.find("median") != -1)
-def callTop(call):
-    botConstructor.botCallMedian(call)
+@bot.callback_query_handler(func=lambda call: call.data.find("all") != -1)
+def callAll(call):
+    botConstructor.botCallAll(call)
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def echo_message(message):
@@ -59,10 +63,11 @@ def echo_message(message):
         botConstructor.botSendMessage(message.chat.id, 'Opppsss!')
         print error
 
-while True:
-    try:
-        bot.polling(none_stop=True)
-    except Exception as error:
-        print error
+bot.polling(none_stop=True)
+# while True:
+#     try:
+#         bot.polling(none_stop=True)
+#     except Exception as error:
+#         print error
 
-        time.sleep(15)
+#         time.sleep(15)

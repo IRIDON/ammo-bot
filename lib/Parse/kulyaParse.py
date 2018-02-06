@@ -46,6 +46,5 @@ class KulyaParseData(ParseData):
                 
                 result.append(dict(dic))
 
-
         return sorted(result, key=self.sortArrayByPrice)
     

@@ -16,11 +16,14 @@ class TelegramConstructor(BotConstructor):
         "botanApiKey",
         "discount",
         "visibleTopItems",
+        "allResultItemCount",
         "categoriesKeys",
+        "calibersAll",
         "shopData",
         "currentShop",
         "availableShops",
-        "dataFileUrl"
+        "dataFileUrl",
+        "dataUpdateTime",
     ]
     def __init__(self, bot, **kwargs):
         self.bot = bot
@@ -30,9 +33,12 @@ class TelegramConstructor(BotConstructor):
         self.botanApiKey = kwargs["apiKey"]
         self.message = kwargs["message"]
         self.shopData = kwargs["shopData"]
+        self.calibersAll = kwargs["calibersAll"]
+        self.dataUpdateTime = ''
         self.availableShops = self.shopData.keys()
         self.discount = 0
         self.visibleTopItems = kwargs["resultItemCount"]
+        self.allResultItemCount = kwargs["allResultItemCount"]
         self.currentShop = self.availableShops[0]
         self.initShopData(self.currentShop)
 
@@ -55,6 +61,7 @@ class TelegramConstructor(BotConstructor):
                 text=self.getKeyName(text),
                 callback_data=callback + '_' + str(index)
             )
+
             markup.add(key)
 
         return markup
@@ -129,7 +136,6 @@ class TelegramConstructor(BotConstructor):
             self.discount = 0
             keyboard = self.getBotInlineKeyboards(self.categoriesKeys, 'top')
 
-
             self.botChooseKeyboard(
                 message.chat,
                 message,
@@ -197,31 +203,26 @@ class TelegramConstructor(BotConstructor):
         except Exception as e:
             print e
 
-    def botComandMedian(self, message):
+    def botComandAll(self, message):
         try:
-            self.discount = 0
-            keyboard = self.getBotInlineKeyboards(self.categoriesKeys, 'median')
+            keyboard = self.getBotInlineKeyboards(self.calibersAll, 'all')
 
             self.botChooseKeyboard(
                 message.chat,
                 message,
-                "choose_caliber",
+                "all",
                 keyboard,
-                self.message["choose_caliber_with_shop"] % (self.currentShop.upper())
+                self.message["choose_caliber"]
             )
         except Exception as e:
             print e
-
-    def botCallMedian(self, callData):
+    
+    def botCallAll(self, callData):
         try:
             data = callData.data.split('_')
-            currentCaliber = self.categoriesKeys[int(data[1])]
+            currentCaliber = self.calibersAll[int(data[1])]
 
-            result = "Mediana for %s - <b>%s %s</b>" % (
-                self.getKeyName(currentCaliber),
-                self.median(currentCaliber),
-                self.currency
-            )
+            result = self.allShopPrices(currentCaliber, self.allResultItemCount)
 
             self.botAnswerCallback(callData.id)
             self.botSendMessage(callData.message.chat.id, result)

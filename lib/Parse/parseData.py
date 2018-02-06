@@ -4,10 +4,11 @@
 Parse data from websile ibis.net.ua
 create JSON data and save it in file
 """
-import requests
+import requests, logging, time, json
 from lxml import html
-import json
-import time
+from lib.Logger.logger import Log
+
+log = Log()
 
 class ParseData(object):
     def __init__(self):
@@ -23,7 +24,7 @@ class ParseData(object):
         return x["price"]
 
     def requestsPage(self, url):
-        page = requests.get(url)
+        page = requests.get(url, verify=False)
 
         return html.fromstring(page.content)
 
@@ -50,22 +51,17 @@ class ParseData(object):
         return currentTime
 
     def parse(self):
-        try:
-            result = {
-                "url": {}
-            }
+        result = {
+            "url": {}
+        }
 
-            for ammo in self.availableAmmo:
-                url = self.getUrl(ammo)
-                data = self.getStructure(url)
+        for ammo in self.availableAmmo:
+            url = self.getUrl(ammo)
+            data = self.getStructure(url)
 
-                result[ammo] = data
-                result["url"][ammo] = url
+            result[ammo] = data
+            result["url"][ammo] = url
 
-            result["time"] = self.getCurrentTime()
+        result["time"] = self.getCurrentTime()
 
-            self.saveData(self.dataFile, json.dumps(result))
-        except Exception as e:
-            print e
-        finally:
-            print "Parse %s successful" % (self.shopName)
+        self.saveData(self.dataFile, json.dumps(result))
