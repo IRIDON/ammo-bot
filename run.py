@@ -63,11 +63,10 @@ def echo_message(message):
         botConstructor.botSendMessage(message.chat.id, 'Opppsss!')
         print error
 
-bot.polling(none_stop=True)
-# while True:
-#     try:
-#         bot.polling(none_stop=True)
-#     except Exception as error:
-#         print error
+while True:
+    try:
+        bot.polling(none_stop=True)
+    except Exception as error:
+        print error
 
-#         time.sleep(15)
+        time.sleep(15)
