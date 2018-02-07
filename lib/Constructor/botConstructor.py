@@ -35,6 +35,18 @@ class BotConstructor(object):
 
         return format(price * factor, '.2f')
 
+    def chunkArr(self, seq, num):
+        num = len(seq) / num
+        avg = len(seq) / float(num)
+        out = []
+        last = 0.0
+
+        while last < len(seq):
+            out.append(seq[int(last):int(last + avg)])
+            last += avg
+
+        return out
+
     def topPrices(self, num=3, category='', discount=0):
         allData = self.getData()
 

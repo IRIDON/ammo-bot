@@ -66,6 +66,7 @@ def echo_message(message):
         botConstructor.botSendMessage(message.chat.id, 'Opppsss!')
         log.error(error)
 
+
 while True:
     try:
         bot.polling(none_stop=True)

@@ -53,8 +53,9 @@ class TelegramConstructor(BotConstructor):
 
         return markup
 
-    def getBotInlineKeyboards(self, array, callback='call'):
-        markup = types.InlineKeyboardMarkup()
+    def getBotInlineKeyboards(self, array, callback='call', row=1):
+        result = []
+        markup = types.InlineKeyboardMarkup(row_width=row)
 
         for index, text in enumerate(array):
             if type(text) != str:
@@ -65,7 +66,19 @@ class TelegramConstructor(BotConstructor):
                 callback_data=callback + '_' + str(index)
             )
 
-            markup.add(key)
+            result.append(key)
+
+        if row > 1:
+            rows = self.chunkArr(result, row)
+
+            for key in rows:
+                if len(key) > 1:
+                    markup.row(key[0], key[1])
+                else:
+                    markup.row(key[0])
+        else:
+            for key in result:
+                markup.add(key)
 
         return markup
 
@@ -137,7 +150,7 @@ class TelegramConstructor(BotConstructor):
     def botComandTop(self, message):
         try:
             self.discount = 0
-            keyboard = self.getBotInlineKeyboards(self.categoriesKeys, 'top')
+            keyboard = self.getBotInlineKeyboards(self.categoriesKeys, 'top', 2)
 
             self.botChooseKeyboard(
                 message.chat,
@@ -193,7 +206,7 @@ class TelegramConstructor(BotConstructor):
         try:
             data = callData.data.split('_')
             self.discount = self.availableDiscount[int(data[1])]
-            keyboard = self.getBotInlineKeyboards(self.categoriesKeys, 'top')
+            keyboard = self.getBotInlineKeyboards(self.categoriesKeys, 'top', 2)
 
             self.botAnswerCallback(callData.id)
             self.botChooseKeyboard(
@@ -208,7 +221,7 @@ class TelegramConstructor(BotConstructor):
 
     def botComandAll(self, message):
         try:
-            keyboard = self.getBotInlineKeyboards(self.calibersAll, 'all')
+            keyboard = self.getBotInlineKeyboards(self.calibersAll, 'all', 2)
 
             self.botChooseKeyboard(
                 message.chat,
