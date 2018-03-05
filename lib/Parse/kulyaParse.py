@@ -39,11 +39,16 @@ class KulyaParseData(ParseData):
             dic = {}
             name = item.xpath('.//h2/a/text()')
             price = item.xpath('.//span[@class="PricesalesPrice"]/text()')
+            amount = 1;
+            amountRe = re.search('\(([0-9]+) ?..\.?\)+', name[0])
+
+            if amountRe:
+                amount = int(amountRe.group(1));
 
             if price:
                 dic["title"] = name[0]
-                dic["price"] = self.cleanPriceNum(price[0]) 
-                
+                dic["price"] = self.cleanPriceNum(price[0]) / amount
+
                 result.append(dict(dic))
 
         return sorted(result, key=self.sortArrayByPrice)
