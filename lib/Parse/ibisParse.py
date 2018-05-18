@@ -2,6 +2,7 @@
 
 from lib.Parse.parseData import ParseData
 from lxml import html
+import re
 
 class IbisParseData(ParseData):
     __slots__ = [
@@ -40,9 +41,22 @@ class IbisParseData(ParseData):
             if price:
                 dic = {}
                 name = item.xpath('.//a[@class="pb_product_name"]/text()')
+                amount = 1;
+                unit = item.xpath('.//div[@class="pb_price_unit"]/text()')
+
+                if unit[0].find(u'пак.') != -1:
+                    extra = item.xpath('.//div[@class="pb_extra"]/text()')
+                    extraStr = ','.join(extra)
+
+                    amountRe = re.search(' ?([0-9]+) ?..\.,+', ','.join(extra))
+
+                    if amountRe:
+                        amount = int(amountRe.group(1));
+
+                calcPrice = price / amount;
 
                 dic["title"] = name[0].encode('utf-8').strip()
-                dic["price"] = price
+                dic["price"] = round(calcPrice, 2)
 
                 result.append(dict(dic))
             else:

@@ -109,7 +109,7 @@ default_settings = {
                 "300_Win_Mag": ["kalibr-is-cf2df0be-f397-11e2-bd5e-1cc1de282c58", "rifle", 6],
                 "338_Win_Mag": ["kalibr-is-f37388bc-bb65-11e4-8f94-1cc1de282c58", "rifle", 7],
                 "6.5_Creedmoor": ["kalibr-is-7c63096b-6b9c-11e7-ab40-00155dfa860b", "rifle", 8],
-                "7.62x54_R": ["kalibr-is-9a7138f2-b03a-11e4-bc08-1cc1de282c58", "rifle", 9],
+                "7.62x39": ["kalibr-is-6ed3512f-f38b-11e2-bd5e-1cc1de282c58", "rifle", 9],
                 "222_Rem": ["kalibr-is-619213a1-f397-11e2-bd5e-1cc1de282c58", "rifle", 10],
                 "7.62x54R": ["kalibr-is-9a7138f2-b03a-11e4-bc08-1cc1de282c58", "rifle", 50],
                 "9x21": ["kalibr-is-d6ac461a-d936-11e4-8e15-1cc1de282c58", "rifle", 51],
