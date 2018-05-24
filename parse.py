@@ -18,6 +18,6 @@ kulyaParse = KulyaParseData(
 )
 
 parseIbis.parse()
-# parseStvol.parse()
-# parseSafari.parse()
-# kulyaParse.parse()
+parseStvol.parse()
+parseSafari.parse()
+kulyaParse.parse()
