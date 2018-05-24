@@ -25,7 +25,13 @@ class SafariParseData(ParseData):
         price = re.sub('[^0-9a-zA-Z]+', '.', price[0])
         price = price[:-1]
 
-        return float(price)
+        try:
+            return float(price)
+        except ValueError:
+            price = price.replace('.', '', 2)
+            price = float(price[:-2])
+            print price
+            return price
 
     def getStructure(self, url):
         result = []
