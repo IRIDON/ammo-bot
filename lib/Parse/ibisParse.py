@@ -44,7 +44,7 @@ class IbisParseData(ParseData):
                 amount = 1;
                 unit = item.xpath('.//div[@class="pb_price_unit"]/text()')
 
-                if unit[0].find(u'пак.') != -1:
+                if unit[0].find(u'шт') == -1:
                     extra = item.xpath('.//div[@class="pb_extra"]/text()')
                     extraStr = ','.join(extra)
 
