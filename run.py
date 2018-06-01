@@ -8,7 +8,6 @@ from lib.Logger.logger import Log
 log = Log()
 
 bot = telebot.TeleBot(settings.API_TOKEN)
-commands = ''
 botConstructor = TelegramConstructor(
     bot,
     helpFile=settings.BOT_HELP_FILE,
@@ -25,34 +24,33 @@ botConstructor = TelegramConstructor(
 def sendWelcome(message):
     botConstructor.botComandStart(message)
 
-@bot.message_handler(commands=['top', 'discount'])
+@bot.message_handler(commands=['top'])
 def sendTop(message):
-    global commands
-    commands = message.text.replace("/", "")
-
-    botConstructor.botSelectStore(message)
+    botConstructor.botSelectStore(message, 'shop')
 
 @bot.message_handler(commands=['all'])
 def sendTop(message):
     botConstructor.botComandAll(message)
 
+@bot.message_handler(commands=['discount'])
+def sendTop(message):
+    botConstructor.botSelectStore(message, 'select')
+
 @bot.callback_query_handler(func=lambda call: call.data.find("shop") != -1)
 def callTop(call):
-    global commands
-    botConstructor.botSwitchShop(call)
+    botConstructor.botComandTop(call)
 
-    if commands == 'top':
-        botConstructor.botComandTop(call.message)
-    elif commands == 'discount':
-        botConstructor.botComandDiscount(call.message)
+@bot.callback_query_handler(func=lambda call: call.data.find("select") != -1)
+def callDiscount(call):
+    botConstructor.botComandDiscount(call)
+
+@bot.callback_query_handler(func=lambda call: call.data.find("discount") != -1)
+def callDiscount(call):
+    botConstructor.setDiscontToBase(call)
 
 @bot.callback_query_handler(func=lambda call: call.data.find("top") != -1)
 def callTop(call):
     botConstructor.botCallTop(call)
-
-@bot.callback_query_handler(func=lambda call: call.data.find("discount") != -1)
-def callDiscount(call):
-    botConstructor.botCallDiscount(call)
 
 @bot.callback_query_handler(func=lambda call: call.data.find("all") != -1)
 def callAll(call):
@@ -66,11 +64,11 @@ def echo_message(message):
         botConstructor.botSendMessage(message.chat.id, 'Opppsss!')
         log.error(error)
 
+bot.polling(none_stop=True)
+# while True:
+#     try:
+#         bot.polling(none_stop=True)
+#     except Exception as error:
+#         log.error(error)
 
-while True:
-    try:
-        bot.polling(none_stop=True)
-    except Exception as error:
-        log.error(error)
-
-        time.sleep(15)
+#         time.sleep(15)

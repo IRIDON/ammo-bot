@@ -7,6 +7,9 @@ default_settings = {
     "API_TOKEN": apiKey["BOT_API_TOKEN"],
     "BOTAN_API": apiKey["METRICA_KEY"],
     "BOT_HELP_FILE": path + "/data/help.md",
+    "DATA": {
+        "DISCONT":  path + "/data/discount.vdb"
+    },
     "RESULT_ITEMS_COUNT": 7,
     "ALL_RESULT_ITEMS_COUNT": 12,
     "DISCONT": [0, 3, 5, 10, 15, 20, 25],

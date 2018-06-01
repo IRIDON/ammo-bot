@@ -4,8 +4,11 @@ from telebot import types
 from lib.Constructor.botConstructor import BotConstructor
 from lib.Botan import botan
 from lib.Logger.logger import Log
+from lib.Base import Base
+from config import settings
 
 log = Log()
+base = Base(dataFile=settings.DATA['DISCONT'])
 
 class TelegramConstructor(BotConstructor):
     __slots__ = [
@@ -116,14 +119,14 @@ class TelegramConstructor(BotConstructor):
             analyticMessage
         )
 
-    def botSelectStore(self, message):
+    def botSelectStore(self, message, name):
         try:
             shopName = []
 
             for shop in self.availableShops:
                 shopName.append(shop.upper())
-                
-            keyboard = self.getBotInlineKeyboards(shopName, 'shop')
+
+            keyboard = self.getBotInlineKeyboards(shopName, name)
 
             self.botSendMessage(
                 message.chat.id,
@@ -147,9 +150,19 @@ class TelegramConstructor(BotConstructor):
         except Exception as error:
             log.error(error)
 
-    def botComandTop(self, message):
+    def botComandTop(self, callData):
         try:
-            self.discount = 0
+            self.botSwitchShop(callData)
+            discount = base.get(callData.from_user.id)
+
+            if discount:
+                discount = discount[self.currentShop]
+            else:
+                discount = 0
+
+            self.discount = discount
+
+            message = callData.message
             keyboard = self.getBotInlineKeyboards(self.categoriesKeys, 'top', 2)
 
             self.botChooseKeyboard(
@@ -164,8 +177,7 @@ class TelegramConstructor(BotConstructor):
 
     def botSwitchShop(self, callData):
         try:
-            data = callData.data.split('_')
-            self.currentShop = self.availableShops[int(data[1])]
+            self.currentShop = self.getShopNameFromIndex(callData)
 
             self.botAnswerCallback(callData.id)
             self.initShopData(self.currentShop)
@@ -188,9 +200,11 @@ class TelegramConstructor(BotConstructor):
         except Exception as error:
             log.error(error)
 
-    def botComandDiscount(self, message):
+    def botComandDiscount(self, callData):
         try:
-            keyboard = self.getBotInlineKeyboards(self.availableDiscount, 'discount')
+            message = callData.message
+            shop = self.getShopNameFromIndex(callData)
+            keyboard = self.getBotInlineKeyboards(self.availableDiscount, 'discount_' + shop)
 
             self.botChooseKeyboard(
                 message.chat,
@@ -198,23 +212,6 @@ class TelegramConstructor(BotConstructor):
                 "choose_discount",
                 keyboard,
                 self.message["choose_discount"]
-            )
-        except Exception as error:
-            log.error(error)
-    
-    def botCallDiscount(self, callData):
-        try:
-            data = callData.data.split('_')
-            self.discount = self.availableDiscount[int(data[1])]
-            keyboard = self.getBotInlineKeyboards(self.categoriesKeys, 'top', 2)
-
-            self.botAnswerCallback(callData.id)
-            self.botChooseKeyboard(
-                callData.message.chat,
-                callData.message,
-                "choose_caliber",
-                keyboard,
-                self.message["choose_caliber_with_shop"] % (self.currentShop.upper())
             )
         except Exception as error:
             log.error(error)
@@ -235,12 +232,27 @@ class TelegramConstructor(BotConstructor):
     
     def botCallAll(self, callData):
         try:
+            discountData = base.get(callData.from_user.id)
             data = callData.data.split('_')
             currentCaliber = self.calibersAll[int(data[1])]
 
-            result = self.allShopPrices(currentCaliber, self.allResultItemCount)
+            result = self.allShopPrices(currentCaliber, self.allResultItemCount, discountData)
 
             self.botAnswerCallback(callData.id)
             self.botSendMessage(callData.message.chat.id, result)
         except Exception as error:
             log.error(error)
+
+    def getShopNameFromIndex(self, callData):
+        data = callData.data.split('_')
+
+        return self.availableShops[int(data[1])]
+
+    def setDiscontToBase(self, callData):
+        data = callData.data.split('_')
+        shop = data[1]
+        discount = data[2]
+
+        base.set(callData.from_user.id, shop, discount)
+        self.botSendMessage(callData.message.chat.id, 'Discount set!')
+

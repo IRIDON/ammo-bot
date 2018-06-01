@@ -1,0 +1,1 @@
+print(type('sss') is not int)

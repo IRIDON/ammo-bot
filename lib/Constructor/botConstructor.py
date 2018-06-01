@@ -69,14 +69,18 @@ class BotConstructor(object):
 
         return "\n".join(result)
 
-    def allShopPrices(self, category, num=10):
-        result = self.allPrices(category, num)
+    def allShopPrices(self, category, num=10, discountData=None):
+        if not discountData:
+            discountData = {}
+
+        result = self.allPrices(category, num, discountData)
 
         return "\n".join(result)
 
-    def formateResult(self, data, num=3, category='', discount=0):
+    def formateResult(self, data, num=3, category='', discountData=0):
         result = []
         dataLen = len(data)
+        discount = 0
 
         if dataLen < num:
             num = dataLen
@@ -91,6 +95,14 @@ class BotConstructor(object):
             template = "<b>%s %s</b> - %s"
             resultArr = [price, self.currency, title]
 
+            if type(discountData) is dict:
+                discountFromData = discountData.get(shopName.lower())
+
+                if discountFromData:
+                    discount = discountFromData
+            else:
+                discount = discountData
+
             if discount != 0 and not shopName:
                 template = "<b>%s %s</b> <i>(%s)</i> - %s"
                 resultArr = (
@@ -98,6 +110,15 @@ class BotConstructor(object):
                     self.currency,
                     price,
                     title
+                )
+            elif discount != 0 and shopName:
+                template = "<b>%s %s</b> <i>(%s)</i> - %s (%s)"
+                resultArr = (
+                    self.getDiscount(price, discount),
+                    self.currency,
+                    price,
+                    title,
+                    shopName
                 )
             elif shopName:
                 template = "<b>%s %s</b> - %s (%s)"
@@ -116,7 +137,7 @@ class BotConstructor(object):
 
         return result
 
-    def allPrices(self, caliber, num):
+    def allPrices(self, caliber, num, discountData):
         data = self.shopData
         result = []
         dataFiles = []
@@ -141,7 +162,8 @@ class BotConstructor(object):
         return self.formateResult(
             data,
             num,
-            caliber
+            caliber,
+            discountData
         )
 
     def getKeyName(self, name):
