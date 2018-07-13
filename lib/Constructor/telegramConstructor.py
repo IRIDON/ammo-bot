@@ -251,7 +251,8 @@ class TelegramConstructor(BotConstructor):
     def setDiscontToBase(self, callData):
         data = callData.data.split('_')
         shop = data[1]
-        discount = data[2]
+        discountIndex = int(data[2])
+        discount = self.availableDiscount[discountIndex]
 
         base.set(callData.from_user.id, shop, discount)
         self.botSendMessage(callData.message.chat.id, 'Discount set!')

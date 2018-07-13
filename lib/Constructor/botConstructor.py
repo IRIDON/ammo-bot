@@ -100,8 +100,11 @@ class BotConstructor(object):
 
                 if discountFromData:
                     discount = discountFromData
+                else:
+                    discount = 0
             else:
                 discount = discountData
+
 
             if discount != 0 and not shopName:
                 template = "<b>%s %s</b> <i>(%s)</i> - %s"
@@ -126,8 +129,10 @@ class BotConstructor(object):
 
             result.append(template % tuple(resultArr))
 
+
         if len(result) == 1:
             result.append(self.message["no_results"])
+
 
         if self.dataUpdateTime:
             result.append("\n<i>%s: %s</i>" % (
