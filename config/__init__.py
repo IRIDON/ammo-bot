@@ -196,6 +196,40 @@ default_settings = {
                 "12/70_bulet": ["?custom_f_71[0]=31322f3730", "bore_bulet", 56],
                 "9RA": ["", "traumatic", 57]
             }
+        },
+        "shopgun": {
+            "shop_name": "shopgun",
+            "url": "https://shopgun.com.ua",
+            "url_tmp": "https://shopgun.com.ua/patrhone/%s/%s/?sort=p.price&order=ASC&limit=1002",
+            "data_file": path + "/data/shopgun.json",
+            "ammo_type": {
+                "rifle": "narezhie-patrhone",
+                "traumatic": "travmaticheskie-patroni",
+                "bore": "gladkostvolnye-patrhone"
+            },
+            "category": {
+                "223_Rem": ["kalibr_223rem~-223", "rifle", 0],
+                "308_Win": ["kalibr_308win", "rifle", 1],
+                "338_Lapua_Mag": ["kalibr_338-lapua-mag", "rifle", 2],
+                "7.62x39": ["kalibr_7-62h39", "rifle", 3],
+                "22_LR": ["kalibr_22lr~lr-22~lr22", "rifle", 4],
+                "30-06": ["kalibr_30-06", "rifle", 5],
+                "300_Win_Mag": ["kalibr_300wm", "rifle", 6],
+                "22_WMR": ["kalibr_22wmr", "rifle", 11],
+                "7.62x54_R": ["kalibr_7-62h54r", "rifle", 12],
+                "222_Rem": ["kalibr_222rem", "rifle", 13],
+                "243_Win": ["kalibr_243win", "rifle", 50],
+                "5.45x39": ["kalibr_5-45h39", "rifle", 51],
+                "7mm_Rem_Mag": ["kalibr_7mm-rem-mag", "rifle", 52],
+                "8x57_JS": ["kalibr_8x57-js", "rifle", 70],
+                "9.3x62": ["kalibr_9-3x62", "rifle", 71],
+                "9x19": ["kalibr_9h19", "rifle", 72],
+                "45_ACP": ["kalibr_45", "rifle", 73],
+                "9PA": ["kalibr_9-mm-r-a-", "traumatic", 80],
+                "12_GA": ["patroni-12-calibra", "bore", 90],
+                "16_GA": ["patroni-16-calibra", "bore", 91],
+                "20_GA": ["patroni-18-calibra", "bore", 92]
+            }
         }
     }
 }
