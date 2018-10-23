@@ -21,9 +21,8 @@ shopgun = ShopGunData(
     settings.SHOPS["shopgun"]
 )
 
-# parseIbis.parse()
-# parseStvol.parse()
-# parseSafari.parse()
-# kulyaParse.parse()
-
+parseIbis.parse()
+parseStvol.parse()
+parseSafari.parse()
+kulyaParse.parse()
 shopgun.parse()
