@@ -38,7 +38,6 @@ class ShopGunData(ParseData):
 
             if price:
                 name = name[0].replace('\n', '')
-                print(name)
                 calcPrice = self.cleanPriceNum(price[0]);
 
                 dic["title"] = name
