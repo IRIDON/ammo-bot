@@ -2,7 +2,6 @@
 import json
 from telebot import types
 from lib.Constructor.botConstructor import BotConstructor
-from lib.Botan import botan
 from lib.Logger.logger import Log
 
 log = Log()
@@ -16,7 +15,6 @@ class TelegramConstructor(BotConstructor):
         "categories",
         "message",
         "availableAmmo",
-        "botanApiKey",
         "discount",
         "visibleTopItems",
         "allResultItemCount",
@@ -33,7 +31,6 @@ class TelegramConstructor(BotConstructor):
         self.botHelpFile = kwargs["helpFile"]
         self.currency = kwargs["currency"]
         self.availableDiscount = kwargs["discount"]
-        self.botanApiKey = kwargs["apiKey"]
         self.message = kwargs["message"]
         self.shopData = kwargs["shopData"]
         self.calibersAll = kwargs["calibersAll"]
@@ -82,14 +79,6 @@ class TelegramConstructor(BotConstructor):
 
         return markup
 
-    def botan(self, id, data, name):
-        botan.track(
-            token=self.botanApiKey,
-            uid=id,
-            message=data,
-            name=name
-        )
-
     def botSendMessage(self, id, message, markup=''):
         self.bot.send_message(
             id,
@@ -110,11 +99,6 @@ class TelegramConstructor(BotConstructor):
             text,
             keyboard
         )
-        self.botan(
-            chat.id,
-            message,
-            analyticMessage
-        )
 
     def botSelectStore(self, message):
         try:
@@ -129,11 +113,6 @@ class TelegramConstructor(BotConstructor):
                 message.chat.id,
                 self.message["choose_shop"],
                 keyboard
-            )
-            self.botan(
-                message.chat.id,
-                message,
-                self.message["choose_shop"]
             )
         except Exception as error:
             log.error(error)

@@ -30,7 +30,7 @@ class SafariParseData(ParseData):
         except ValueError:
             price = price.replace('.', '', 2)
             price = float(price[:-2])
-            print price
+
             return price
 
     def getStructure(self, url):

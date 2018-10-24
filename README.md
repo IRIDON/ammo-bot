@@ -14,5 +14,4 @@ pip install pyTelegramBotAPI
 pip install requests
 pip install lxml
 pip install statistics
-npm install botanio
 ```
