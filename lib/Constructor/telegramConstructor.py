@@ -96,9 +96,6 @@ class TelegramConstructor(BotConstructor):
         self.bot.answer_callback_query(id)
 
     def botChooseKeyboard(self, chat, message, name, keyboard, text):
-        analyticMessage = self.getKeyName(name)
-        analyticMessage = analyticMessage[:1].upper() + analyticMessage[1:]
-
         self.botSendMessage(
             chat.id,
             text,

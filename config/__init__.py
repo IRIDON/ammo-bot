@@ -166,37 +166,37 @@ default_settings = {
                 "20/70": ["5377", "bore", 77],
             }
         },
-        "kulya": {
-            "shop_name": "kulya",
-            "url": "http://kulya.com.ua",
-            "url_tmp": "http://kulya.com.ua/sortirovka/%s/%s&limit=72",
-            "data_file": path + "/data/kulya.json",
-            "ammo_type": {
-                "rifle": "nareznye-patroni",
-                "traumatic": "patrony-travmaticheskie",
-                "bore_bulet": "pulya",
-                "bore_buckshot": "kartech",
-                "bore_fraction": "drob-dlya-ohoti"
-            },
-            "category": {
-                "223_Rem": ["?custom_f_88[0]=2e3232332052656d", "rifle", 0],
-                "308_Win": ["?custom_f_88[0]=2e3330382057696e", "rifle", 1],
-                "7.62x39": ["?custom_f_88[0]=372e3632783339", "rifle", 2],
-                "22_LR": ["?custom_f_88[0]=2e32324c52", "rifle", 3],
-                "17_HMR": ["?custom_f_88[0]=2e313720484d52", "rifle", 3],
-                "30-06": ["?custom_f_88[0]=2e33302d3036", "rifle", 4],
-                "7.62x54_R": ["?custom_f_88[0]=372e36327835342052", "rifle", 5],
-                "9x21": ["?custom_f_88[0]=3920d0bcd0bc202839d185323129", "rifle", 6],
-                "22_WMR": ["?custom_f_88[0]=2e323220574d52", "rifle", 50],
-                "300_Win": ["?custom_f_88[0]=2e3330302057696e", "rifle", 51],
-                "243_Win": ["?custom_f_88[0]=2e3234332057696e", "rifle", 52],
-                "5.45x39": ["?custom_f_88[0]=352c3435783339", "rifle", 53],
-                "12/70_buckshot": ["?custom_f_71[0]=31322f3730", "bore_buckshot", 54],
-                "12/70_fraction": ["?custom_f_71[0]=31322f3730", "bore_fraction", 55],
-                "12/70_bulet": ["?custom_f_71[0]=31322f3730", "bore_bulet", 56],
-                "9RA": ["", "traumatic", 57]
-            }
-        },
+        # "kulya": {
+        #     "shop_name": "kulya",
+        #     "url": "http://kulya.com.ua",
+        #     "url_tmp": "http://kulya.com.ua/patrony/%s/%s/?imit=100",
+        #     "data_file": path + "/data/kulya.json",
+        #     "ammo_type": {
+        #         "rifle": "nareznye/kalibr-nareznoj-",
+        #         "traumatic": "patrony-travmaticheskie",
+        #         "bore_bulet": "pulya",
+        #         "bore_buckshot": "kartech",
+        #         "bore_fraction": "drob-dlya-ohoti"
+        #     },
+        #     "category": {
+        #         "223_Rem": ["-223-rem", "rifle", 0],
+        #         "308_Win": ["?custom_f_88[0]=2e3330382057696e", "rifle", 1],
+        #         "7.62x39": ["?custom_f_88[0]=372e3632783339", "rifle", 2],
+        #         "22_LR": ["?custom_f_88[0]=2e32324c52", "rifle", 3],
+        #         "17_HMR": ["?custom_f_88[0]=2e313720484d52", "rifle", 3],
+        #         "30-06": ["?custom_f_88[0]=2e33302d3036", "rifle", 4],
+        #         "7.62x54_R": ["?custom_f_88[0]=372e36327835342052", "rifle", 5],
+        #         "9x21": ["?custom_f_88[0]=3920d0bcd0bc202839d185323129", "rifle", 6],
+        #         "22_WMR": ["?custom_f_88[0]=2e323220574d52", "rifle", 50],
+        #         "300_Win": ["?custom_f_88[0]=2e3330302057696e", "rifle", 51],
+        #         "243_Win": ["?custom_f_88[0]=2e3234332057696e", "rifle", 52],
+        #         "5.45x39": ["?custom_f_88[0]=352c3435783339", "rifle", 53],
+        #         "12/70_buckshot": ["?custom_f_71[0]=31322f3730", "bore_buckshot", 54],
+        #         "12/70_fraction": ["?custom_f_71[0]=31322f3730", "bore_fraction", 55],
+        #         "12/70_bulet": ["?custom_f_71[0]=31322f3730", "bore_bulet", 56],
+        #         "9RA": ["", "traumatic", 57]
+        #     }
+        # },
         "shopgun": {
             "shop_name": "shopgun",
             "url": "https://shopgun.com.ua",

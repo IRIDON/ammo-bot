@@ -33,12 +33,14 @@ class KulyaParseData(ParseData):
     def getStructure(self, url):
         result = []
         page = self.requestsPage(url)
-        blocks = page.xpath('.//div[@class="spacer"]')
 
+        blocks = page.xpath('//div[@class="col-sm-8 col-md-9"]')
+        print(url)
+        print(page.xpath(".//title")[0].text_content().encode('utf-8'))
         for item in blocks:
             dic = {}
-            name = item.xpath('.//h2/a/text()')
-            price = item.xpath('.//span[@class="PricesalesPrice"]/text()')
+            name = item.xpath('.//div[@class="product-name"]/a/text()')
+            price = item.xpath('.//p[@class="price"]/text()')
             amount = 1;
             amountRe = re.search('\( ?([0-9]+) ?..\.?\)+', name[0])
 
