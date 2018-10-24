@@ -208,11 +208,11 @@ default_settings = {
                 "bore": "gladkostvolnye-patrhone"
             },
             "category": {
-                "223_Rem": ["kalibr_223rem", "rifle", 0],
+                "223_Rem": ["kalibr_222rem~-223", "rifle", 0],
                 "308_Win": ["kalibr_308win", "rifle", 1],
                 "338_Lapua_Mag": ["kalibr_338-lapua-mag", "rifle", 2],
                 "7.62x39": ["kalibr_7-62h39", "rifle", 3],
-                "22_LR": ["kalibr_22lr", "rifle", 4],
+                "22_LR": ["kalibr_22lr~lr-22~lr22", "rifle", 4],
                 "30-06": ["kalibr_30-06", "rifle", 5],
                 "300_Win_Mag": ["kalibr_300wm", "rifle", 6],
                 "22_WMR": ["kalibr_22wmr", "rifle", 11],
