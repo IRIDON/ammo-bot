@@ -35,12 +35,17 @@ class TelegramConstructor(BotConstructor):
         self.shopData = kwargs["shopData"]
         self.calibersAll = kwargs["calibersAll"]
         self.dataUpdateTime = ''
-        self.availableShops = self.shopData.keys()
+        self.availableShops = self.getAvailableShops()
         self.discount = 0
         self.visibleTopItems = kwargs["resultItemCount"]
         self.allResultItemCount = kwargs["allResultItemCount"]
         self.currentShop = self.availableShops[0]
         self.initShopData(self.currentShop)
+
+    def getAvailableShops(self):
+        data = self.shopData.keys()
+
+        return sorted(data)
 
     def getBotKeyboards(self, array):
         markup = types.ReplyKeyboardMarkup(row_width=1)
