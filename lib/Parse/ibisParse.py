@@ -42,16 +42,14 @@ class IbisParseData(ParseData):
                 dic = {}
                 name = item.xpath('.//a[@class="pb_product_name"]/text()')
                 amount = 1;
-                unit = item.xpath('.//div[@class="pb_price_unit"]/text()')
 
-                if unit and unit[0].find(u'шт') == -1:
-                    extra = item.xpath('.//div[@class="pb_extra"]/text()')
-                    extraStr = ','.join(extra)
+                extra = item.xpath('.//div[@class="pb_extra"]/text()')
+                extraStr = ','.join(extra)
 
-                    amountRe = re.search(' ?([0-9]+) ?..\.,+', ','.join(extra))
+                amountRe = re.search("([0-9]+) ?%s" % (u"шт"), extraStr)
 
-                    if amountRe:
-                        amount = int(amountRe.group(1));
+                if amountRe:
+                    amount = int(amountRe.group(1));
 
                 calcPrice = price / amount;
 
