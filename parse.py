@@ -22,7 +22,7 @@ shopgun = ShopGunData(
 )
 
 # kulyaParse.parse()
-# parseIbis.parse()
+parseIbis.parse()
 parseStvol.parse()
-# parseSafari.parse()
-# shopgun.parse()
+parseSafari.parse()
+shopgun.parse()
