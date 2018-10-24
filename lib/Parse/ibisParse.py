@@ -61,7 +61,7 @@ class IbisParseData(ParseData):
                     price = calcPrice
 
                 dic["title"] = name[0].encode('utf-8').strip()
-                dic["price"] = round(calcPrice, 2)
+                dic["price"] = price
 
                 result.append(dict(dic))
             else:
