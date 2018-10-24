@@ -62,8 +62,10 @@ class BotConstructor(object):
             discount
         )
 
+        url = self.getCategoryUrl(allData["url"][category])
+
         result.append("\n<a href='%s'>%s</a>" % (
-            allData["url"][category] + "?utm_source=ammoBot",
+            url,
             self.message["link_text"]
         ))
 
@@ -146,6 +148,15 @@ class BotConstructor(object):
 
     def getKeyName(self, name):
         return name.replace("_", " ")
+
+    def getCategoryUrl(self, url):
+        if(url.find('?') == -1):
+            utmSeparator = '?'
+        else:
+            utmSeparator = '&'
+
+        return  url + utmSeparator + "utm_source=ammoBot"
+
 
     def toSeconds(day):
         return day * 24 * 60 * 60
