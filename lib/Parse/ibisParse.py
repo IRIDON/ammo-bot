@@ -42,9 +42,9 @@ class IbisParseData(ParseData):
                 dic = {}
                 amountCategory = self.availableAmmo['22_LR'][0];
                 name = item.xpath('.//a[@class="pb_product_name"]/text()')
-                amount = 1;
 
                 if(url.find(amountCategory) != -1):
+                    amount = 1;
                     extra = item.xpath('.//div[@class="pb_extra"]/text()')
                     extraStr = ','.join(extra)
 

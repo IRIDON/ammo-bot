@@ -7,8 +7,8 @@ default_settings = {
     "API_TOKEN": apiKey["BOT_API_TOKEN"],
     "BOTAN_API": apiKey["METRICA_KEY"],
     "BOT_HELP_FILE": path + "/data/help.md",
-    "RESULT_ITEMS_COUNT": 7,
-    "ALL_RESULT_ITEMS_COUNT": 12,
+    "RESULT_ITEMS_COUNT": 20,
+    "ALL_RESULT_ITEMS_COUNT": 26,
     "DISCONT": [0, 3, 5, 10, 15, 20, 25],
     "CURRENCY": "UAH",
     "MESSAGE": {
@@ -19,6 +19,7 @@ default_settings = {
         "choose_shop": "Choose shop:",
         "base_date": "Database update date",
         "link_text": "Visit to site",
+        "link_tmp": "Visit to %s",
         "base_error": "Database error, please try again.",
         "no_results": "Sorry, but this offer is not available, try to search the store site."
     },
@@ -224,7 +225,7 @@ default_settings = {
                 "8x57_JS": ["kalibr_8x57-js", "rifle", 70],
                 "9.3x62": ["kalibr_9-3x62", "rifle", 71],
                 "9x19": ["kalibr_9h19", "rifle", 72],
-                "45_ACP": ["kalibr_45", "rifle", 73],
+                "45_ACP": ["kalibr_45-acp", "rifle", 73],
                 "9PA": ["kalibr_9-mm-r-a-", "traumatic", 80],
                 "12_GA": ["patroni-12-calibra", "bore", 90],
                 "16_GA": ["patroni-16-calibra", "bore", 91],

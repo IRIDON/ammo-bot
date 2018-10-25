@@ -54,11 +54,11 @@ class StvolParseData(ParseData):
             avilible = item.xpath('.//div[@class="no-item"]')
 
             if len(avilible) == 0:
-                amount = 1
                 price = self.cleanPriceNum(price_1 + price_2) 
                 amountCategory = self.availableAmmo['22_LR'][0];
 
                 if(url.find(amountCategory) != -1):
+                    amount = 1
                     amountTexts = item.xpath('.//div[@class="tov-option-line"]//text()')
 
                     for text in amountTexts:
@@ -67,12 +67,12 @@ class StvolParseData(ParseData):
                         if amountRe:
                             amount =  int(amountRe.group(1))
 
-                    amountPrice = round(price / amount, 2)
+                    calcPrice = round(price / amount, 2)
 
-                    if (amountPrice < 1):
-                        amountPrice = price
+                    if (calcPrice < 1):
+                        calcPrice = price
 
-                    price = amountPrice
+                    price = calcPrice
 
                 dic["title"] = name[0]
                 dic["price"] = price
