@@ -4,7 +4,7 @@ from lib.Parse.parseData import ParseData
 from lxml import html
 import re
 
-class KulyaParseData(ParseData):
+class ShopGunData(ParseData):
     __slots__ = [
         "categories",
         "availableAmmo",
@@ -22,35 +22,25 @@ class KulyaParseData(ParseData):
         self.dataFile = settings["data_file"]
 
     def cleanPriceNum(self, price):
-        price = price.split(" ")[0]
-        price = re.sub('[^0-9a-zA-Z]+', '.', price)
-
-        if price[len(price) - 1] == '.':
-            price = price[:-1]
+        price = re.sub('[^0-9a-zA-Z-.]+', '', price)
 
         return float(price)
 
     def getStructure(self, url):
         result = []
         page = self.requestsPage(url)
+        blocks = page.xpath("//div[contains(@class, 'product-layoutcat')]") 
 
-        blocks = page.xpath('//div[@class="col-sm-8 col-md-9"]')
-        print(url)
-        print(page.xpath(".//title")[0].text_content().encode('utf-8'))
         for item in blocks:
             dic = {}
-            name = item.xpath('.//div[@class="product-name"]/a/text()')
+            name = item.xpath('.//h4/a/text()')
             price = item.xpath('.//p[@class="price"]/text()')
-            amount = 1;
-            amountRe = re.search('\( ?([0-9]+) ?..\.?\)+', name[0])
-
-            if amountRe:
-                amount = int(amountRe.group(1));
 
             if price:
-                calcPrice = self.cleanPriceNum(price[0]) / amount;
+                name = name[0].replace('\n', '')
+                calcPrice = self.cleanPriceNum(price[0]);
 
-                dic["title"] = name[0]
+                dic["title"] = name
                 dic["price"] = round(calcPrice, 2)
 
                 result.append(dict(dic))

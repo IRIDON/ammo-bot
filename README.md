@@ -15,5 +15,4 @@ pip install requests
 pip install lxml
 pip install statistics
 pip install cython vedis
-npm install botanio
 ```

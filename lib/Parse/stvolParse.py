@@ -30,6 +30,17 @@ class StvolParseData(ParseData):
 
         return float(price)
 
+    def getAmount(self, blocks):
+        for text in blocks:
+            amountRe = re.search("([0-9]+) %s" % (u"шт"), text)
+
+            print(text)
+
+            if amountRe:
+                return int(amountRe.group(1))
+            else:
+                return 1
+
     def getStructure(self, url):
         result = []
         page = self.requestsPage(url)
@@ -43,8 +54,28 @@ class StvolParseData(ParseData):
             avilible = item.xpath('.//div[@class="no-item"]')
 
             if len(avilible) == 0:
+                price = self.cleanPriceNum(price_1 + price_2) 
+                amountCategory = self.availableAmmo['22_LR'][0];
+
+                if(url.find(amountCategory) != -1):
+                    amount = 1
+                    amountTexts = item.xpath('.//div[@class="tov-option-line"]//text()')
+
+                    for text in amountTexts:
+                        amountRe = re.search("([0-9]+) %s" % (u"шт"), text)
+
+                        if amountRe:
+                            amount =  int(amountRe.group(1))
+
+                    calcPrice = round(price / amount, 2)
+
+                    if (calcPrice < 1):
+                        calcPrice = price
+
+                    price = calcPrice
+
                 dic["title"] = name[0]
-                dic["price"] = self.cleanPriceNum(price_1 + price_2) 
+                dic["price"] = price
 
                 result.append(dict(dic))
 

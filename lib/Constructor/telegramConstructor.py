@@ -2,7 +2,6 @@
 import json
 from telebot import types
 from lib.Constructor.botConstructor import BotConstructor
-from lib.Botan import botan
 from lib.Logger.logger import Log
 from lib.Base import Base
 from config import settings
@@ -19,7 +18,6 @@ class TelegramConstructor(BotConstructor):
         "categories",
         "message",
         "availableAmmo",
-        "botanApiKey",
         "discount",
         "visibleTopItems",
         "allResultItemCount",
@@ -36,17 +34,21 @@ class TelegramConstructor(BotConstructor):
         self.botHelpFile = kwargs["helpFile"]
         self.currency = kwargs["currency"]
         self.availableDiscount = kwargs["discount"]
-        self.botanApiKey = kwargs["apiKey"]
         self.message = kwargs["message"]
         self.shopData = kwargs["shopData"]
         self.calibersAll = kwargs["calibersAll"]
         self.dataUpdateTime = ''
-        self.availableShops = self.shopData.keys()
+        self.availableShops = self.getAvailableShops()
         self.discount = 0
         self.visibleTopItems = kwargs["resultItemCount"]
         self.allResultItemCount = kwargs["allResultItemCount"]
         self.currentShop = self.availableShops[0]
         self.initShopData(self.currentShop)
+
+    def getAvailableShops(self):
+        data = self.shopData.keys()
+
+        return sorted(data)
 
     def getBotKeyboards(self, array):
         markup = types.ReplyKeyboardMarkup(row_width=1)
@@ -85,14 +87,6 @@ class TelegramConstructor(BotConstructor):
 
         return markup
 
-    def botan(self, id, data, name):
-        botan.track(
-            token=self.botanApiKey,
-            uid=id,
-            message=data,
-            name=name
-        )
-
     def botSendMessage(self, id, message, markup=''):
         self.bot.send_message(
             id,
@@ -105,18 +99,10 @@ class TelegramConstructor(BotConstructor):
         self.bot.answer_callback_query(id)
 
     def botChooseKeyboard(self, chat, message, name, keyboard, text):
-        analyticMessage = self.getKeyName(name)
-        analyticMessage = analyticMessage[:1].upper() + analyticMessage[1:]
-
         self.botSendMessage(
             chat.id,
             text,
             keyboard
-        )
-        self.botan(
-            chat.id,
-            message,
-            analyticMessage
         )
 
     def botSelectStore(self, message, name):
@@ -132,11 +118,6 @@ class TelegramConstructor(BotConstructor):
                 message.chat.id,
                 self.message["choose_shop"],
                 keyboard
-            )
-            self.botan(
-                message.chat.id,
-                message,
-                self.message["choose_shop"]
             )
         except Exception as error:
             log.error(error)

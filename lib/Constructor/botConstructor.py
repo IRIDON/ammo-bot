@@ -62,8 +62,10 @@ class BotConstructor(object):
             discount
         )
 
+        url = self.getCategoryUrl(allData["url"][category])
+
         result.append("\n<a href='%s'>%s</a>" % (
-            allData["url"][category] + "?utm_source=ammoBot",
+            url,
             self.message["link_text"]
         ))
 
@@ -75,9 +77,12 @@ class BotConstructor(object):
 
         result = self.allPrices(category, num, discountData)
 
+        if not result:
+            return self.message["base_error"]
+
         return "\n".join(result)
 
-    def formateResult(self, data, num=3, category='', discountData=0):
+    def formateResult(self, data, num=3, category='', discount=0, urls=None):
         result = []
         dataLen = len(data)
         discount = 0
@@ -140,24 +145,32 @@ class BotConstructor(object):
                 self.dataUpdateTime
             ))
 
+        if urls:
+            result.append("\n" + self.getAllUrl(urls))
+
         return result
 
     def allPrices(self, caliber, num, discountData):
         data = self.shopData
         result = []
         dataFiles = []
+        urls = {}
 
         for shopName in self.shopData:
             shop = data[shopName]
 
             with open(shop["data_file"], "r") as file:
-                f = json.load(file)
+                shopData = json.load(file)
 
                 if not self.dataUpdateTime:
-                    self.dataUpdateTime = f['time']
+                    self.dataUpdateTime = shopData['time']
 
-                if caliber in f:
-                    for item in f[caliber]:
+                if caliber in shopData:
+                    url = shopData['url'][caliber]
+
+                    urls[shopName] = url
+
+                    for item in shopData[caliber]:
                         item['shop_name'] = shop['shop_name'].upper()
 
                         dataFiles.append(item)
@@ -169,10 +182,33 @@ class BotConstructor(object):
             num,
             caliber,
             discountData
+            urls
         )
 
     def getKeyName(self, name):
         return name.replace("_", " ")
+
+    def getCategoryUrl(self, url):
+        if(url.find('?') == -1):
+            utmSeparator = '?'
+        else:
+            utmSeparator = '&'
+
+        return  url + utmSeparator + "utm_source=ammoBot"
+
+    def getAllUrl(self, urls):
+        urlsText = []
+
+        for key, value in urls.iteritems():
+            url = self.getCategoryUrl(value)
+
+            urlsText.append("<a href='%s'>%s</a>" % (
+                url,
+                self.message["link_tmp"] % key
+            ))
+
+        return " - ".join(urlsText)
+
 
     def toSeconds(day):
         return day * 24 * 60 * 60
