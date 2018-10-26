@@ -44,7 +44,7 @@ default_settings = {
         "338_Win_Mag",
         "12/70_bulet",
         "12/70_buckshot",
-        "12/70_fraction",
+        "12/70_birdshot",
         "12/70",
         "12/76",
         "16/70",
@@ -61,7 +61,7 @@ default_settings = {
                 "traumatic": "patrony-travmaticheskie",
                 "bore_bulet": "puli-gladkostvolnie",
                 "bore_buckshot": "kartechy",
-                "bore_fraction": "droby"
+                "bore_birdshot": "droby"
             },
             "category": {
                 "223_Rem": ["198", "rifle", 0],
@@ -87,7 +87,7 @@ default_settings = {
                 "9PA": ["8959", "traumatic", 72],
                 "12/70_bulet": ["364", "bore_bulet", 73],
                 "12/70_buckshot": ["364", "bore_buckshot", 74],
-                "12/70_fraction": ["364", "bore_fraction", 75],
+                "12/70_birdshot": ["364", "bore_birdshot", 75],
             }
         },
         "stvol": {
@@ -177,7 +177,7 @@ default_settings = {
         #         "traumatic": "patrony-travmaticheskie",
         #         "bore_bulet": "pulya",
         #         "bore_buckshot": "kartech",
-        #         "bore_fraction": "drob-dlya-ohoti"
+        #         "bore_birdshot": "drob-dlya-ohoti"
         #     },
         #     "category": {
         #         "223_Rem": ["-223-rem", "rifle", 0],
@@ -193,7 +193,7 @@ default_settings = {
         #         "243_Win": ["?custom_f_88[0]=2e3234332057696e", "rifle", 52],
         #         "5.45x39": ["?custom_f_88[0]=352c3435783339", "rifle", 53],
         #         "12/70_buckshot": ["?custom_f_71[0]=31322f3730", "bore_buckshot", 54],
-        #         "12/70_fraction": ["?custom_f_71[0]=31322f3730", "bore_fraction", 55],
+        #         "12/70_birdshot": ["?custom_f_71[0]=31322f3730", "bore_birdshot", 55],
         #         "12/70_bulet": ["?custom_f_71[0]=31322f3730", "bore_bulet", 56],
         #         "9RA": ["", "traumatic", 57]
         #     }
