@@ -36,10 +36,6 @@ def sendTop(message):
 def sendTop(message):
     botConstructor.botSelectStore(message, 'select')
 
-@bot.callback_query_handler(func=lambda call: call.data.find("shop") != -1)
-def callTop(call):
-    botConstructor.botComandTop(call)
-
 @bot.callback_query_handler(func=lambda call: call.data.find("select") != -1)
 def callDiscount(call):
     botConstructor.botComandDiscount(call)
@@ -47,6 +43,10 @@ def callDiscount(call):
 @bot.callback_query_handler(func=lambda call: call.data.find("discount") != -1)
 def callDiscount(call):
     botConstructor.setDiscontToBase(call)
+
+@bot.callback_query_handler(func=lambda call: call.data.find("shop") != -1)
+def callTop(call):
+    botConstructor.botComandTop(call)
 
 @bot.callback_query_handler(func=lambda call: call.data.find("top") != -1)
 def callTop(call):

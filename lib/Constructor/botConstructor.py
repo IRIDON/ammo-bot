@@ -7,7 +7,8 @@ class BotConstructor(object):
         "currency",
         "message",
         "shopData",
-        "dataUpdateTime"
+        "dataUpdateTime",
+        "shopName"
     ]
     def __init__(self, **kwargs):
         self.currency = kwargs["currency"]
@@ -19,6 +20,7 @@ class BotConstructor(object):
         if self.shopData[shopName]:
             shopData = self.shopData[shopName]
 
+            self.shopName = shopName;
             self.categories = sorted(shopData["category"].items(), key=lambda item: item[1][2])
             self.categoriesKeys = map(lambda x: x[0], self.categories)
             self.availableAmmo = shopData["ammo_type"]
@@ -33,7 +35,7 @@ class BotConstructor(object):
     def getDiscount(self, price, discount):
         factor = (100 - float(discount)) / 100
 
-        return format(price * factor, '.2f')
+        return float(format(price * factor, '.2f'))
 
     def chunkArr(self, seq, num):
         num = len(seq) / num
@@ -47,16 +49,28 @@ class BotConstructor(object):
 
         return out
 
-    def topPrices(self, num=3, category='', discount=0):
+    def topPrices(self, num=3, category='', discountData={}):
+        discount = 0
         allData = self.getData()
 
         if not allData:
             return self.message["base_error"]
 
+        data = allData[category]
+        discount = self.getDiscontFromData(discountData, self.shopName)
+
         self.dataUpdateTime = allData["time"]
+        
+        if discount:
+            for item in data:
+                itemPrice = item['price']
+                item['origin_price'] = itemPrice
+                item['price'] = self.getDiscount(itemPrice, discount)
+
+        data = sorted(data, key=lambda x: x["price"])
 
         result = self.formateResult(
-            allData[category],
+            data,
             num,
             category,
             discount
@@ -71,10 +85,7 @@ class BotConstructor(object):
 
         return "\n".join(result)
 
-    def allShopPrices(self, category, num=10, discountData=None):
-        if not discountData:
-            discountData = {}
-
+    def allShopPrices(self, category, num=10, discountData={}):
         result = self.allPrices(category, num, discountData)
 
         if not result:
@@ -85,46 +96,42 @@ class BotConstructor(object):
     def formateResult(self, data, num=3, category='', discount=0, urls=None):
         result = []
         dataLen = len(data)
-        discount = 0
 
         if dataLen < num:
             num = dataLen
 
-        result.append("<b>%s</b>\n" % (self.getKeyName(category)))
+        categoryName = self.getKeyName(category)
+
+        if discount:
+            title = "<b>%s</b> <i>-%s&#37;</i>\n" % (categoryName, discount)
+        else:
+            title = "<b>%s</b>\n" % (categoryName)
+
+        result.append(title)
 
         for index in range(0, num):
             item = data[index]
             shopName = item.get('shop_name')
             title = item["title"]
             price = item["price"]
+            isDiscount = 'origin_price' in item
             template = "<b>%s %s</b> - %s"
             resultArr = [price, self.currency, title]
 
-            if type(discountData) is dict:
-                discountFromData = discountData.get(shopName.lower())
-
-                if discountFromData:
-                    discount = discountFromData
-                else:
-                    discount = 0
-            else:
-                discount = discountData
-
-
-            if discount != 0 and not shopName:
+            if isDiscount and not shopName:
                 template = "<b>%s %s</b> <i>(%s)</i> - %s"
                 resultArr = (
-                    self.getDiscount(price, discount),
-                    self.currency,
                     price,
+                    self.currency,
+                    item["origin_price"],
                     title
                 )
-            elif discount != 0 and shopName:
+            elif isDiscount and shopName:
                 template = "<b>%s %s</b> <i>(%s)</i> - %s (%s)"
                 resultArr = (
-                    self.getDiscount(price, discount),
-                    self.currency,
                     price,
+                    self.currency,
+                    item["origin_price"],
                     title,
                     shopName
                 )
@@ -137,7 +144,6 @@ class BotConstructor(object):
 
         if len(result) == 1:
             result.append(self.message["no_results"])
-
 
         if self.dataUpdateTime:
             result.append("\n<i>%s: %s</i>" % (
@@ -157,6 +163,7 @@ class BotConstructor(object):
         urls = {}
 
         for shopName in self.shopData:
+            discount = self.getDiscontFromData(discountData, shopName)
             shop = data[shopName]
 
             with open(shop["data_file"], "r") as file:
@@ -173,15 +180,21 @@ class BotConstructor(object):
                     for item in shopData[caliber]:
                         item['shop_name'] = shop['shop_name'].upper()
 
-                        dataFiles.append(item)
+                        if discount:
+                            itemPrice = item['price']
 
-        data = sorted(dataFiles, key=lambda x: x["price"])
+                            item['origin_price'] = itemPrice
+                            item['price'] = self.getDiscount(itemPrice, discount)
+
+                        dataFiles.append(item)
+        
+        dataFiles = sorted(dataFiles, key=lambda x: x["price"])
 
         return self.formateResult(
-            data,
+            dataFiles,
             num,
             caliber,
-            discountData
+            0,
             urls
         )
 
@@ -208,6 +221,15 @@ class BotConstructor(object):
             ))
 
         return " - ".join(urlsText)
+
+    def getDiscontFromData(self, data, shopName):
+        discount = 0
+        discountFromData = data.get(shopName.lower())
+
+        if discountFromData:
+            discount = discountFromData
+
+        return discount
 
 
     def toSeconds(day):

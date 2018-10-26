@@ -18,7 +18,6 @@ class TelegramConstructor(BotConstructor):
         "categories",
         "message",
         "availableAmmo",
-        "discount",
         "visibleTopItems",
         "allResultItemCount",
         "categoriesKeys",
@@ -39,7 +38,6 @@ class TelegramConstructor(BotConstructor):
         self.calibersAll = kwargs["calibersAll"]
         self.dataUpdateTime = ''
         self.availableShops = self.getAvailableShops()
-        self.discount = 0
         self.visibleTopItems = kwargs["resultItemCount"]
         self.allResultItemCount = kwargs["allResultItemCount"]
         self.currentShop = self.availableShops[0]
@@ -107,10 +105,19 @@ class TelegramConstructor(BotConstructor):
 
     def botSelectStore(self, message, name):
         try:
+            discountData = self.getDiscountData(message)
             shopName = []
 
             for shop in self.availableShops:
-                shopName.append(shop.upper())
+                shopUpper = shop.upper()
+                isDiscount = discountData and shop in discountData
+
+                if isDiscount:
+                    template = "%s - %s%s" % (shopUpper, discountData[shop], '%')
+                else:
+                    template = shopUpper
+
+                shopName.append(template)
 
             keyboard = self.getBotInlineKeyboards(shopName, name)
 
@@ -134,14 +141,6 @@ class TelegramConstructor(BotConstructor):
     def botComandTop(self, callData):
         try:
             self.botSwitchShop(callData)
-            discount = base.get(callData.from_user.id)
-
-            if discount:
-                discount = discount[self.currentShop]
-            else:
-                discount = 0
-
-            self.discount = discount
 
             message = callData.message
             keyboard = self.getBotInlineKeyboards(self.categoriesKeys, 'top', 2)
@@ -167,13 +166,14 @@ class TelegramConstructor(BotConstructor):
 
     def botCallTop(self, callData):
         try:
+            discountData = self.getDiscountData(callData)
             data = callData.data.split('_')
             currentCaliber = self.categoriesKeys[int(data[1])]
 
             result = self.topPrices(
                 self.visibleTopItems,
                 currentCaliber,
-                self.discount
+                discountData
             )
 
             self.botAnswerCallback(callData.id)
@@ -213,7 +213,7 @@ class TelegramConstructor(BotConstructor):
     
     def botCallAll(self, callData):
         try:
-            discountData = base.get(callData.from_user.id)
+            discountData = self.getDiscountData(callData)
             data = callData.data.split('_')
             currentCaliber = self.calibersAll[int(data[1])]
 
@@ -229,6 +229,9 @@ class TelegramConstructor(BotConstructor):
 
         return self.availableShops[int(data[1])]
 
+    def getDiscountData(self, message):
+        return base.get(message.from_user.id)
+
     def setDiscontToBase(self, callData):
         data = callData.data.split('_')
         shop = data[1]
@@ -237,4 +240,5 @@ class TelegramConstructor(BotConstructor):
 
         base.set(callData.from_user.id, shop, discount)
         self.botSendMessage(callData.message.chat.id, 'Discount set!')
+        self.botComandStart(callData.message);
 
