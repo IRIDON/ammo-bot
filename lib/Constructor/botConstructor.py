@@ -50,14 +50,13 @@ class BotConstructor(object):
         return out
 
     def topPrices(self, num=3, category='', discountData={}):
-        discount = 0
+        discount = self.getDiscontFromData(discountData, self.shopName)
         allData = self.getData()
 
         if not allData:
             return self.message["base_error"]
 
         data = allData[category]
-        discount = self.getDiscontFromData(discountData, self.shopName)
 
         self.dataUpdateTime = allData["time"]
         
@@ -224,6 +223,10 @@ class BotConstructor(object):
 
     def getDiscontFromData(self, data, shopName):
         discount = 0
+
+        if not data:
+            return discount
+
         discountFromData = data.get(shopName.lower())
 
         if discountFromData:
