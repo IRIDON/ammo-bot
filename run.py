@@ -67,11 +67,10 @@ def echo_message(message):
         log.error(error)
 
 
-bot.polling(none_stop=True)
-# while True:
-#     try:
-#         bot.polling(none_stop=True)
-#     except Exception as error:
-#         log.error(error)
+while True:
+    try:
+        bot.polling(none_stop=True)
+    except Exception as error:
+        log.error(error)
 
-#         time.sleep(15)
+        time.sleep(15)
