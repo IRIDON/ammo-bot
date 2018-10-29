@@ -1,7 +1,6 @@
 import sys
-p = "/Library/Python/2.7/site-packages"
-sys.path.append(p)
-
+# p = "/Library/Python/2.7/site-packages"
+# sys.path.append(p)
 from vedis import Vedis
 import ast
 
