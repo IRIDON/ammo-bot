@@ -45,7 +45,7 @@ class SafariParseData(ParseData):
                 dic = {}
                 name = item.xpath('.//div[@class="g-l-i-details-title"]/a/text()')
 
-                dic["title"] = name[0].encode('raw-unicode-escape')
+                dic["title"] = self.cleanTitle(name[0]).encode('raw-unicode-escape')
                 dic["price"] = self.cleanPriceNum(price)
 
                 result.append(dict(dic))

@@ -74,7 +74,7 @@ class StvolParseData(ParseData):
 
                     price = calcPrice
 
-                dic["title"] = name[0]
+                dic["title"] = self.cleanTitle(name[0])
                 dic["price"] = price
 
                 result.append(dict(dic))

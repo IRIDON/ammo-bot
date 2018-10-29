@@ -40,7 +40,7 @@ class ShopGunData(ParseData):
                 name = name[0].replace('\n', '')
                 calcPrice = self.cleanPriceNum(price[0]);
 
-                dic["title"] = name
+                dic["title"] = self.cleanTitle(name)
                 dic["price"] = round(calcPrice, 2)
 
                 result.append(dict(dic))
