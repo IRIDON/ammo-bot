@@ -50,6 +50,12 @@ class ParseData(object):
 
         return currentTime
 
+    def cleanTitle(self, title):
+        title = title.replace(u"Патрон нарезной ", "")
+        title = title.replace(u"Патрон ", "")
+
+        return title;
+
     def parse(self):
         result = {
             "url": {}
