@@ -34,8 +34,6 @@ class StvolParseData(ParseData):
         for text in blocks:
             amountRe = re.search("([0-9]+) %s" % (u"шт"), text)
 
-            print(text)
-
             if amountRe:
                 return int(amountRe.group(1))
             else:

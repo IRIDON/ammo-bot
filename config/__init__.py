@@ -5,10 +5,10 @@ path = os.path.abspath(os.path.split(sys.argv[0])[0])
 
 default_settings = {
     "API_TOKEN": apiKey["BOT_API_TOKEN"],
-    "BOTAN_API": apiKey["METRICA_KEY"],
-    "BOT_HELP_FILE": path + "/data/help.md",
+    "DEV": apiKey["DEV"],
     "DATA": {
-        "DISCONT":  path + "/data/discount.vdb"
+        "DISCONT":  path + "/data/discount.vdb",
+        "HELP": path + "/data/help.md"
     },
     "RESULT_ITEMS_COUNT": 20,
     "ALL_RESULT_ITEMS_COUNT": 26,
@@ -21,8 +21,8 @@ default_settings = {
         "choose_discount": "Choose your discount:",
         "choose_shop": "Choose shop:",
         "base_date": "Database update date",
-        "link_text": "Visit to site",
-        "link_tmp": "Visit to %s",
+        "link_text": "Visit site",
+        "link_tmp": "Visit the %s",
         "base_error": "Database error, please try again.",
         "no_results": "Sorry, but this offer is not available, try to search the store site."
     },
@@ -35,9 +35,9 @@ default_settings = {
         "17_HMR",
         "30-06",
         "300_Win_Mag",
-        "22_WMR",
         "6.5_Creedmoor",
         "9x21",
+        "22_WMR",
         "300_Win",
         "5.45x39",
         "7.62x54_R",
@@ -90,7 +90,7 @@ default_settings = {
                 "9PA": ["8959", "traumatic", 72],
                 "12/70_bulet": ["364", "bore_bulet", 73],
                 "12/70_buckshot": ["364", "bore_buckshot", 74],
-                "12/70_birdshot": ["364", "bore_birdshot", 75],
+                "12/70_birdshot": ["364", "bore_birdshot", 75]
             }
         },
         "stvol": {
@@ -167,7 +167,7 @@ default_settings = {
                 "12/70": ["5371", "bore", 74],
                 "12/76": ["5372", "bore", 75],
                 "16/70": ["5375", "bore", 76],
-                "20/70": ["5377", "bore", 77],
+                "20/70": ["5377", "bore", 77]
             }
         },
         # "kulya": {

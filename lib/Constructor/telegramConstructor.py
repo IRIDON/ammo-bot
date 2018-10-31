@@ -110,7 +110,7 @@ class TelegramConstructor(BotConstructor):
 
             for shop in self.availableShops:
                 shopUpper = shop.upper()
-                isDiscount = discountData and shop in discountData
+                isDiscount = discountData and shop in discountData and discountData[shop]
 
                 if isDiscount:
                     template = "%s - %s%s" % (shopUpper, discountData[shop], '%')

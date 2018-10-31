@@ -1,7 +1,9 @@
 *.pyc
 config/key.py
 data/*.json
-data/discount.vdb
+data/*vdb
 log/*
 node_modules
 .DS_Store
+
+

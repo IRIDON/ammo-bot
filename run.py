@@ -10,12 +10,11 @@ log = Log()
 bot = telebot.TeleBot(settings.API_TOKEN)
 botConstructor = TelegramConstructor(
     bot,
-    helpFile=settings.BOT_HELP_FILE,
+    helpFile=settings.DATA['HELP'],
     currency=settings.CURRENCY,
     discount=settings.DISCONT,
     message=settings.MESSAGE,
     calibersAll=settings.CALIBERS,
-    apiKey=settings.BOTAN_API,
     shopData=settings.SHOPS,
     resultItemCount=settings.RESULT_ITEMS_COUNT,
     allResultItemCount=settings.ALL_RESULT_ITEMS_COUNT,
@@ -65,10 +64,13 @@ def echo_message(message):
         log.error(error)
 
 
-while True:
-    try:
-        bot.polling(none_stop=True)
-    except Exception as error:
-        log.error(error)
+if settings.DEV:
+    bot.polling(none_stop=True)
+else:
+    while True:
+        try:
+            bot.polling(none_stop=True)
+        except Exception as error:
+            log.error(error)
 
-        time.sleep(15)
+            time.sleep(15)
