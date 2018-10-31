@@ -34,6 +34,8 @@ class Base(object):
 
             self.db[user_id] = data
 
+            self.db.commit()
+
             return True
         except:
             return False
