@@ -37,6 +37,26 @@ class BotConstructor(object):
 
         return float(format(price * factor, '.2f'))
 
+    def getLanguage(self, data):
+        user_data = data.from_user
+        language_code = user_data.language_code
+
+        if language_code:
+            return language_code.split('-')[0].lower()
+
+        return 'en'
+
+    def getString(self, key, language='en'):
+        if not language in self.message:
+            language = 'en'
+
+        message = self.message[language]
+
+        if key in message:
+            return message[key]
+        else:
+            return key
+
     def chunkArr(self, seq, num):
         num = len(seq) / num
         avg = len(seq) / float(num)
@@ -49,12 +69,12 @@ class BotConstructor(object):
 
         return out
 
-    def topPrices(self, num=3, category='', discountData={}):
+    def topPrices(self, num=3, category='', discountData={}, language='en'):
         discount = self.getDiscontFromData(discountData, self.shopName)
         allData = self.getData()
 
         if not allData:
-            return self.message["base_error"]
+            return self.getString("base_error", language)
 
         data = allData[category]
 
@@ -72,27 +92,28 @@ class BotConstructor(object):
             data,
             num,
             category,
-            discount
+            discount,
+            language
         )
 
         url = self.getCategoryUrl(allData["url"][category])
 
         result.append("\n<a href='%s'>%s</a>" % (
             url,
-            self.message["link_text"]
+            self.getString("link_text", language)
         ))
 
         return "\n".join(result)
 
-    def allShopPrices(self, category, num=10, discountData={}):
-        result = self.allPrices(category, num, discountData)
+    def allShopPrices(self, category, num=10, discountData={}, language='en'):
+        result = self.allPrices(category, num, discountData, language)
 
         if not result:
-            return self.message["base_error"]
+            return self.getString("base_error", language)
 
         return "\n".join(result)
 
-    def formateResult(self, data, num=3, category='', discount=0, urls=None):
+    def formateResult(self, data, num=3, category='', discount=0, language='en', urls=None):
         result = []
         dataLen = len(data)
 
@@ -142,20 +163,23 @@ class BotConstructor(object):
 
 
         if len(result) == 1:
-            result.append(self.message["no_results"])
+            result.append(self.getString("no_results", language))
+
+
+        test = self.getString("base_date", language)
 
         if self.dataUpdateTime:
             result.append("\n<i>%s: %s</i>" % (
-                self.message["base_date"],
+                self.getString("base_date", language),
                 self.dataUpdateTime
             ))
 
         if urls:
-            result.append("\n" + self.getAllUrl(urls))
+            result.append("\n" + self.getAllUrl(urls, language))
 
         return result
 
-    def allPrices(self, caliber, num, discountData):
+    def allPrices(self, caliber, num, discountData, language):
         data = self.shopData
         result = []
         dataFiles = []
@@ -194,6 +218,7 @@ class BotConstructor(object):
             num,
             caliber,
             0,
+            language,
             urls
         )
 
@@ -208,15 +233,15 @@ class BotConstructor(object):
 
         return  url + utmSeparator + "utm_source=ammoBot"
 
-    def getAllUrl(self, urls):
+    def getAllUrl(self, urls, language):
         urlsText = []
-
+        
         for key, value in urls.iteritems():
             url = self.getCategoryUrl(value)
 
             urlsText.append("<a href='%s'>%s</a>" % (
                 url,
-                self.message["link_tmp"] % key
+                self.getString("link_tmp", language) % key
             ))
 
         return " - ".join(urlsText)

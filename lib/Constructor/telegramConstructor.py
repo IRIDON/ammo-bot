@@ -12,7 +12,6 @@ base = Base(dataFile=settings.DATA['DISCONT'])
 class TelegramConstructor(BotConstructor):
     __slots__ = [
         "bot",
-        "botHelpFile",
         "currency",
         "availableDiscount",
         "categories",
@@ -30,7 +29,6 @@ class TelegramConstructor(BotConstructor):
     ]
     def __init__(self, bot, **kwargs):
         self.bot = bot
-        self.botHelpFile = kwargs["helpFile"]
         self.currency = kwargs["currency"]
         self.availableDiscount = kwargs["discount"]
         self.message = kwargs["message"]
@@ -106,6 +104,7 @@ class TelegramConstructor(BotConstructor):
     def botSelectStore(self, message, name):
         try:
             discountData = self.getDiscountData(message)
+            language = self.getLanguage(message)
             shopName = []
 
             for shop in self.availableShops:
@@ -123,7 +122,7 @@ class TelegramConstructor(BotConstructor):
 
             self.botSendMessage(
                 message.chat.id,
-                self.message["choose_shop"],
+                self.getString("choose_shop", language),
                 keyboard
             )
         except Exception as error:
@@ -131,10 +130,11 @@ class TelegramConstructor(BotConstructor):
 
     def botComandStart(self, message):
         try:
-            with open(self.botHelpFile, "r") as helpFile:
-                helpText = helpFile.read()
+            language = self.getLanguage(message)
+            arr = self.getString("help", language)
+            string = "\n".join(arr)
 
-                self.botSendMessage(message.chat.id, helpText)
+            self.botSendMessage(message.chat.id, string)
         except Exception as error:
             log.error(error)
 
@@ -143,6 +143,7 @@ class TelegramConstructor(BotConstructor):
             self.botSwitchShop(callData)
 
             message = callData.message
+            language = self.getLanguage(callData)
             keyboard = self.getBotInlineKeyboards(self.categoriesKeys, 'top', 2)
 
             self.botChooseKeyboard(
@@ -150,7 +151,7 @@ class TelegramConstructor(BotConstructor):
                 message,
                 "choose_caliber",
                 keyboard,
-                self.message["choose_caliber_with_shop"] % (self.currentShop.upper())
+                self.getString("choose_caliber_with_shop", language) % (self.currentShop.upper())
             )
         except Exception as error:
             log.error(error)
@@ -169,11 +170,13 @@ class TelegramConstructor(BotConstructor):
             discountData = self.getDiscountData(callData)
             data = callData.data.split('_')
             currentCaliber = self.categoriesKeys[int(data[1])]
+            language = self.getLanguage(callData)
 
             result = self.topPrices(
                 self.visibleTopItems,
                 currentCaliber,
-                discountData
+                discountData,
+                language
             )
 
             self.botAnswerCallback(callData.id)
@@ -186,13 +189,14 @@ class TelegramConstructor(BotConstructor):
             message = callData.message
             shop = self.getShopNameFromIndex(callData)
             keyboard = self.getBotInlineKeyboards(self.availableDiscount, 'discount_' + shop)
+            language = self.getLanguage(callData)
 
             self.botChooseKeyboard(
                 message.chat,
                 message,
                 "choose_discount",
                 keyboard,
-                self.message["choose_discount"]
+                self.getString("choose_discount", language)
             )
         except Exception as error:
             log.error(error)
@@ -200,13 +204,14 @@ class TelegramConstructor(BotConstructor):
     def botComandAll(self, message):
         try:
             keyboard = self.getBotInlineKeyboards(self.calibersAll, 'all', 2)
+            language = self.getLanguage(message)
 
             self.botChooseKeyboard(
                 message.chat,
                 message,
                 "all",
                 keyboard,
-                self.message["choose_caliber"]
+                self.getString("choose_caliber", language)
             )
         except Exception as error:
             log.error(error)
@@ -216,8 +221,14 @@ class TelegramConstructor(BotConstructor):
             discountData = self.getDiscountData(callData)
             data = callData.data.split('_')
             currentCaliber = self.calibersAll[int(data[1])]
+            language = self.getLanguage(callData)
 
-            result = self.allShopPrices(currentCaliber, self.allResultItemCount, discountData)
+            result = self.allShopPrices(
+                currentCaliber, 
+                self.allResultItemCount, 
+                discountData,
+                language
+            )
 
             self.botAnswerCallback(callData.id)
             self.botSendMessage(callData.message.chat.id, result)
@@ -236,9 +247,10 @@ class TelegramConstructor(BotConstructor):
         data = callData.data.split('_')
         shop = data[1]
         discountIndex = int(data[2])
+        language = self.getLanguage(callData)
         discount = self.availableDiscount[discountIndex]
 
         base.set(callData.from_user.id, shop, discount)
-        self.botSendMessage(callData.message.chat.id, 'Discount set!')
+        self.botSendMessage(callData.message.chat.id, self.getString("discount_set", language))
         self.botComandStart(callData.message);
 

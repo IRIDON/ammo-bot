@@ -1,5 +1,6 @@
 import os, sys
 from key import default_api_key as apiKey
+from message import message
 
 path = os.path.abspath(os.path.split(sys.argv[0])[0])
 
@@ -7,25 +8,12 @@ default_settings = {
     "API_TOKEN": apiKey["BOT_API_TOKEN"],
     "DEV": apiKey["DEV"],
     "DATA": {
-        "DISCONT":  path + "/data/discount.vdb",
-        "HELP": path + "/data/help.md"
+        "DISCONT":  path + "/data/discount.vdb"
     },
     "RESULT_ITEMS_COUNT": 20,
     "ALL_RESULT_ITEMS_COUNT": 26,
     "DISCONT": [0, 3, 5, 10, 15, 20, 25],
     "CURRENCY": "UAH",
-    "MESSAGE": {
-        "empy": "Sorry, but I don't know how to answer, plese run /help to find out the available commands.",
-        "choose_caliber": "Choose your caliber:",
-        "choose_caliber_with_shop": "Choose your caliber in the %s shop:",
-        "choose_discount": "Choose your discount:",
-        "choose_shop": "Choose shop:",
-        "base_date": "Database update date",
-        "link_text": "Visit site",
-        "link_tmp": "Visit the %s",
-        "base_error": "Database error, please try again.",
-        "no_results": "Sorry, but this offer is not available, try to search the store site."
-    },
     "CALIBERS": [
         "223_Rem",
         "308_Win",
@@ -237,6 +225,8 @@ default_settings = {
         }
     }
 }
+
+default_settings['MESSAGE'] = message
 
 class Settings:
     def __init__(self):

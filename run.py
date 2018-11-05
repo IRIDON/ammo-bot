@@ -10,7 +10,6 @@ log = Log()
 bot = telebot.TeleBot(settings.API_TOKEN)
 botConstructor = TelegramConstructor(
     bot,
-    helpFile=settings.DATA['HELP'],
     currency=settings.CURRENCY,
     discount=settings.DISCONT,
     message=settings.MESSAGE,

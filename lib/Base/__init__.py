@@ -33,7 +33,6 @@ class Base(object):
             data[shop] = value
 
             self.db[user_id] = data
-
             self.db.commit()
 
             return True
