@@ -128,9 +128,9 @@ class TelegramConstructor(BotConstructor):
         except Exception as error:
             log.error(error)
 
-    def botComandStart(self, message):
+    def botComandStart(self, message, language):
         try:
-            language = self.getLanguage(message)
+            language = language or self.getLanguage(message)
             arr = self.getString("help", language)
             string = "\n".join(arr)
 
@@ -252,5 +252,5 @@ class TelegramConstructor(BotConstructor):
 
         base.set(callData.from_user.id, shop, discount)
         self.botSendMessage(callData.message.chat.id, self.getString("discount_set", language))
-        self.botComandStart(callData.message);
+        self.botComandStart(callData.message, language);
 

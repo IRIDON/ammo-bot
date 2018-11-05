@@ -20,7 +20,7 @@ botConstructor = TelegramConstructor(
 )
 @bot.message_handler(commands=['start', 'help'])
 def sendWelcome(message):
-    botConstructor.botComandStart(message)
+    botConstructor.botComandStart(message, None)
 
 @bot.message_handler(commands=['top'])
 def sendTop(message):
