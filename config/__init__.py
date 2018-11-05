@@ -10,6 +10,7 @@ default_settings = {
     "DATA": {
         "DISCONT":  path + "/data/discount.vdb"
     },
+    "DEFAULT_LANG": 'en', 
     "RESULT_ITEMS_COUNT": 20,
     "ALL_RESULT_ITEMS_COUNT": 26,
     "DISCONT": [0, 3, 5, 10, 15, 20, 25],

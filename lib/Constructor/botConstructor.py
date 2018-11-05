@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import statistics
+from config import settings
 
 class BotConstructor(object):
     __slots__ = [
@@ -38,7 +39,7 @@ class BotConstructor(object):
         return float(format(price * factor, '.2f'))
 
     def getLanguage(self, data):
-        default_lang = 'en'
+        default_lang = settings.DEFAULT_LANG
         user_data = data.from_user
         language_code = user_data.language_code
 
@@ -52,9 +53,9 @@ class BotConstructor(object):
 
         return default_lang
 
-    def getString(self, key, language='en'):
+    def getString(self, key, language=settings.DEFAULT_LANG):
         if not language in self.message:
-            language = 'en'
+            language = settings.DEFAULT_LANG
 
         message = self.message[language]
 
@@ -75,7 +76,7 @@ class BotConstructor(object):
 
         return out
 
-    def topPrices(self, num=3, category='', discountData={}, language='en'):
+    def topPrices(self, num=3, category='', discountData={}, language=settings.DEFAULT_LANG):
         discount = self.getDiscontFromData(discountData, self.shopName)
         allData = self.getData()
 
@@ -111,7 +112,7 @@ class BotConstructor(object):
 
         return "\n".join(result)
 
-    def allShopPrices(self, category, num=10, discountData={}, language='en'):
+    def allShopPrices(self, category, num=10, discountData={}, language=settings.DEFAULT_LANG):
         result = self.allPrices(category, num, discountData, language)
 
         if not result:
@@ -119,7 +120,7 @@ class BotConstructor(object):
 
         return "\n".join(result)
 
-    def formateResult(self, data, num=3, category='', discount=0, language='en', urls=None):
+    def formateResult(self, data, num=3, category='', discount=0, language=settings.DEFAULT_LANG, urls=None):
         result = []
         dataLen = len(data)
 
