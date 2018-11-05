@@ -38,13 +38,19 @@ class BotConstructor(object):
         return float(format(price * factor, '.2f'))
 
     def getLanguage(self, data):
+        default_lang = 'en'
         user_data = data.from_user
         language_code = user_data.language_code
 
-        if language_code:
-            return language_code.split('-')[0].lower()
+        if not language_code:
+            return default_lang
 
-        return 'en'
+        if language_code.find('-') != -1:
+            return language_code.split('-')[0].lower()
+        else:
+            return language_code
+
+        return default_lang
 
     def getString(self, key, language='en'):
         if not language in self.message:
