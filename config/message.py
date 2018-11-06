@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+from config import settings
+
+result_count = settings.RESULT_ITEMS_COUNT
+result_count_all = settings.ALL_RESULT_ITEMS_COUNT
 
 message = {
  	"en": {
@@ -14,11 +18,11 @@ message = {
         "no_results": "Sorry, but this offer is not available, try to search the store site.",
         "discount_set": "Discount set!",
         "help": [
-            "AmmoBot finds out the prices of ammo for you.",
+            "AmmoBot finds out the prices of ammo.",
             "",
-            "/top - print the top 20 offers with a low price",
+            u"/top - print the top %s offers with a low price" % (result_count),
             "/discount - set discount in stores",
-            "/all - print the top 26 offers for all stores",
+            u"/all - print the top %s offers for all stores" % (result_count_all),
             "/start - start bot",
             "/help - print all commands",
             "",
@@ -38,11 +42,11 @@ message = {
         "no_results": u"Извините, но запрашиваемые вами позиций нет в наличии в магазине, попробуйте перейти на сайт магазина и воспользоваться поиском.",
         "discount_set": u"Скидка установлена!",
         "help": [
-            "Патронобот узнает цены на патроны для вас",
+            "Патронобот узнает цены на патроны.",
             "",
-            "/top - вывести топ 20 предложений с низкой ценой",
+            u"/top - вывести топ %s предложений с низкой ценой" % (result_count),
             "/discount - установить скидку в магазинах",
-            "/all - вывести топ 26 предложений по всем магазинам",
+            u"/all - вывести топ %s предложений по всем магазинам" % (result_count_all),
             "/start - старт бота",
             "/help - вывести список доступных команд",
             "",
@@ -62,11 +66,11 @@ message = {
         "no_results": u"Вибачте, але запитувані вами позицій немає в наявності в магазині, спробуйте перейти на сайт магазину і скористатися пошуком.",
         "discount_set": u"Знижка встановлена!",
         "help": [
-            "Патронобот дізнається ціни на патрони для вас",
+            "Патронобот дізнається ціни на патрони.",
             "",
-            "/top - вивести топ 20 пропозицій за ціною",
+            u"/top - вивести топ %s пропозицій за ціною" % (result_count),
             "/discount - встановити знижку в магазинах",
-            "/all - вивести топ 26 пропозицій по всіх магазинах",
+            u"/all - вивести топ %s пропозицій по всіх магазинах" % (result_count_all),
             "/start - старт бота",
             "/help - вивести список доступних команд",
             "",

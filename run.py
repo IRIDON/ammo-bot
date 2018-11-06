@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 from config import settings
+from config.message import message
+from config.shops import shops
+
 import telebot, time
 from telebot import types
 from lib.Constructor.telegramConstructor import TelegramConstructor
@@ -12,9 +15,9 @@ botConstructor = TelegramConstructor(
     bot,
     currency=settings.CURRENCY,
     discount=settings.DISCONT,
-    message=settings.MESSAGE,
+    message=message,
     calibersAll=settings.CALIBERS,
-    shopData=settings.SHOPS,
+    shopData=shops,
     resultItemCount=settings.RESULT_ITEMS_COUNT,
     allResultItemCount=settings.ALL_RESULT_ITEMS_COUNT,
 )

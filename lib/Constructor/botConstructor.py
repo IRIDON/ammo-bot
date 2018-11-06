@@ -234,10 +234,7 @@ class BotConstructor(object):
         return name.replace("_", " ")
 
     def getCategoryUrl(self, url):
-        if(url.find('?') == -1):
-            utmSeparator = '?'
-        else:
-            utmSeparator = '&'
+        utmSeparator = '?' if url.find('?') == -1 else '&'
 
         return  url + utmSeparator + "utm_source=ammoBot"
 

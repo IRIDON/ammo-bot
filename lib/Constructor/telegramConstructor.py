@@ -111,10 +111,7 @@ class TelegramConstructor(BotConstructor):
                 shopUpper = shop.upper()
                 isDiscount = discountData and shop in discountData and discountData[shop]
 
-                if isDiscount:
-                    template = "%s - %s%s" % (shopUpper, discountData[shop], '%')
-                else:
-                    template = shopUpper
+                template = "%s - %s%s" % (shopUpper, discountData[shop], '%') if isDiscount else shopUpper
 
                 shopName.append(template)
 
@@ -252,5 +249,5 @@ class TelegramConstructor(BotConstructor):
 
         base.set(callData.from_user.id, shop, discount)
         self.botSendMessage(callData.message.chat.id, self.getString("discount_set", language))
-        self.botComandStart(callData.message, language);
+        self.botComandStart(callData.message, language)
 
