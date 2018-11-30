@@ -60,7 +60,10 @@ def callAll(call):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def echo_message(message):
     try:
-        botConstructor.botSendMessage(message.chat.id, settings.MESSAGE["empy"])
+        language = botConstructor.getLanguage(message)
+        string = botConstructor.getString("empy", language)
+
+        botConstructor.botSendMessage(message.chat.id, string)
     except Exception as error:
         botConstructor.botSendMessage(message.chat.id, 'Opppsss!')
         log.error(error)

@@ -3,6 +3,7 @@ from config import settings
 
 result_count = settings.RESULT_ITEMS_COUNT
 result_count_all = settings.ALL_RESULT_ITEMS_COUNT
+bot_name = settings.TELEGRAM_BOT_NAME
 
 message = {
  	"en": {
@@ -26,7 +27,7 @@ message = {
             "/start - start bot",
             "/help - print all commands",
             "",
-            "@ammoPriceBot"
+            bot_name
         ]
     },
     "ru": {
@@ -50,7 +51,7 @@ message = {
             "/start - старт бота",
             "/help - вывести список доступных команд",
             "",
-            "@ammoPriceBot"
+            bot_name
         ]
     },
     "uk": {
@@ -74,7 +75,7 @@ message = {
             "/start - старт бота",
             "/help - вивести список доступних команд",
             "",
-            "@ammoPriceBot"
+            bot_name
         ]
     }
 }

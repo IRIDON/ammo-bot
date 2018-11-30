@@ -9,6 +9,7 @@ default_settings = {
     "DATA": {
         "DISCONT":  path + "/data/discount.vdb"
     },
+    "TELEGRAM_BOT_NAME": '@ammoPriceBot',
     "DEFAULT_LANG": 'en', 
     "RESULT_ITEMS_COUNT": 20,
     "ALL_RESULT_ITEMS_COUNT": 26,
