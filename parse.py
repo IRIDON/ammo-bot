@@ -1,4 +1,4 @@
-from config import settings
+from config.shops import shops as SHOPS
 from lib.Parse.ibisParse import IbisParseData
 from lib.Parse.stvolParse import StvolParseData
 from lib.Parse.safariParse import SafariParseData
@@ -6,19 +6,19 @@ from lib.Parse.safariParse import SafariParseData
 from lib.Parse.shopGun import ShopGunData
 
 parseIbis = IbisParseData(
-    settings.SHOPS["ibis"]
+    SHOPS["ibis"]
 )
 parseStvol = StvolParseData(
-    settings.SHOPS["stvol"]
+    SHOPS["stvol"]
 )
 parseSafari = SafariParseData(
-    settings.SHOPS["safari"]
+    SHOPS["safari"]
 )
 # kulyaParse = KulyaParseData(
-#     settings.SHOPS["kulya"]
+#     SHOPS["kulya"]
 # )
 shopgun = ShopGunData(
-    settings.SHOPS["shopgun"]
+    SHOPS["shopgun"]
 )
 
 # kulyaParse.parse()
