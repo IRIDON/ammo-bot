@@ -24,7 +24,7 @@ class ShopGunData(ParseData):
     def cleanPriceNum(self, price):
         price = re.sub('[^0-9a-zA-Z-.]+', '', price)
 
-        return float(price)
+        return float(price) if price else 0
 
     def getStructure(self, url):
         result = []

@@ -6,40 +6,39 @@ shops = {
 	"ibis": {
         "shop_name": "ibis",
         "url": "https://ibis.net.ua/",
-        "url_tmp": "https://ibis.net.ua/products/%s/search/offset/?param_51[]=%s&isort=cheap&show_all=yes",
+        "url_tmp": "https://ibis.net.ua/products/%s/search/%s/?isort=cheap&show_all=yes",
         "data_file": path + "/data/ibis.json",
         "ammo_type": {
             "rifle": "patrony-nareznye86",
             "traumatic": "patrony-travmaticheskie",
-            "bore_bulet": "puli-gladkostvolnie",
-            "bore_buckshot": "kartechy",
-            "bore_birdshot": "droby"
+            "bore": "patrony-gladkostvoljnye85"
         },
         "category": {
-            "223_Rem": ["198", "rifle", 0],
-            "308_Win": ["196", "rifle", 1],
-            "338_Lapua_Mag": ["275", "rifle", 2],
-            "7.62x39": ["6476", "rifle", 3],
-            "22_LR": ["348", "rifle", 4],
-            "17_HMR": ["341", "rifle", 5],
+            "223_Rem": ["223-rem-55645-9fv", "rifle", 0],
+            "308_Win": ["308-win-76251", "rifle", 1],
+            "338_Lapua_Mag": ["338-lapua-mag", "rifle", 2],
+            "7.62x39": ["762h39", "rifle", 3],
+            "22_LR": ["22-lr", "rifle", 4],
+            "17_HMR": ["17-hmr", "rifle", 5],
             "30-06": ["177", "rifle", 6],
-            "300_Win_Mag": ["189", "rifle", 7],
-            "6.5_Creedmoor": ["259908", "rifle", 8],
-            "22_WMR": ["358", "rifle", 11],
-            "7.62x54_R": ["8465", "rifle", 12],
-            "222_Rem": ["533", "rifle", 13],
-            "243_Win": ["188", "rifle", 50],
-            "9x21": ["2255", "rifle", 51],
-            "5.45x39": ["46441", "rifle", 52],
-            "6.5x55": ["6281", "rifle", 53],
-            "50_BMG": ["232110", "rifle", 54],
-            "7mm_Rem_Mag": ["197", "rifle", 55],
-            "8x57_JS": ["6324", "rifle", 70],
-            "9.3x62": ["944", "rifle", 71],
-            "9PA": ["8959", "traumatic", 72],
-            "12/70_bulet": ["364", "bore_bulet", 73],
-            "12/70_buckshot": ["364", "bore_buckshot", 74],
-            "12/70_birdshot": ["364", "bore_birdshot", 75]
+            "300_Win_Mag": ["300-win-mag-0e0", "rifle", 7],
+            "6.5_Creedmoor": ["65-creedmoor", "rifle", 8],
+            "22_WMR": ["22-wmr", "rifle", 11],
+            "7.62x54_R": ["7h57-r", "rifle", 12],
+            "222_Rem": ["222-rem", "rifle", 13],
+            "243_Win": ["243-win", "rifle", 50],
+            "9x21": ["9mm-9h21", "rifle", 51],
+            "5.45x39": ["545h39", "rifle", 52],
+            "6.5x55": ["65x55", "rifle", 53],
+            "50_BMG": ["50-bmg", "rifle", 54],
+            "7mm_Rem_Mag": ["7mm-rem-mag", "rifle", 55],
+            "8x57_JS": ["8h57-js", "rifle", 70],
+            "9.3x62": ["93h62", "rifle", 71],
+            "9PA": ["9-mm_m16", "traumatic", 72],
+            "12/70": ["1270", "bore", 73],
+            "12/76": ["1276", "bore", 74],
+            "16/70": ["1670", "bore", 75],
+            "20/70": ["2070", "bore", 76]
         }
     },
     "stvol": {
@@ -157,31 +156,32 @@ shops = {
         "data_file": path + "/data/shopgun.json",
         "ammo_type": {
             "rifle": "narezhie-patrhone",
-            "traumatic": "travmaticheskie-patroni",
             "bore": "gladkostvolnye-patrhone"
         },
         "category": {
-            "223_Rem": ["kalibr_222rem~-223", "rifle", 0],
-            "308_Win": ["kalibr_308win", "rifle", 1],
-            "338_Lapua_Mag": ["kalibr_338-lapua-mag", "rifle", 2],
-            "7.62x39": ["kalibr_7-62h39", "rifle", 3],
-            "22_LR": ["kalibr_22lr~lr-22~lr22", "rifle", 4],
-            "30-06": ["kalibr_30-06", "rifle", 5],
-            "300_Win_Mag": ["kalibr_300wm", "rifle", 6],
-            "22_WMR": ["kalibr_22wmr", "rifle", 11],
-            "7.62x54_R": ["kalibr_7-62h54r", "rifle", 12],
-            "222_Rem": ["kalibr_222rem", "rifle", 13],
-            "243_Win": ["kalibr_243win", "rifle", 50],
-            "5.45x39": ["kalibr_5-45h39", "rifle", 51],
-            "7mm_Rem_Mag": ["kalibr_7mm-rem-mag", "rifle", 52],
-            "8x57_JS": ["kalibr_8x57-js", "rifle", 70],
-            "9.3x62": ["kalibr_9-3x62", "rifle", 71],
-            "9x19": ["kalibr_9h19", "rifle", 72],
-            "45_ACP": ["kalibr_45-acp", "rifle", 73],
-            "9PA": ["kalibr_9-mm-r-a-", "traumatic", 80],
+            "223_Rem": ["223-rem", "rifle", 0],
+            "308_Win": ["308-win", "rifle", 1],
+            "7.62x39": ["762-na-39", "rifle", 3],
+            "22_LR": ["22-lr", "rifle", 4],
+            "30-06": ["patrhone-30-06", "rifle", 5],
+            "243_Win": ["243-win", "rifle", 50],
             "12_GA": ["patroni-12-calibra", "bore", 90],
             "16_GA": ["patroni-16-calibra", "bore", 91],
             "20_GA": ["patroni-18-calibra", "bore", 92]
+        }
+    },
+    "tactical-systems": {
+        "shop_name": "tactical systems",
+        "url": "http://tactical-systems.com.ua",
+        "url_tmp": "http://tactical-systems.com.ua/tovari/boepripasy/%s/?mfp=18-kalibr[%s]&sort=p.price&order=ASC&limit=100",
+        "data_file": path + "/data/tactical-systems.json",
+        "ammo_type": {
+            "rifle": "nareznyie-boepripasyi",
+            "bore": "gladkostvolnyie-boepripasyi"
+        },
+        "category": {
+            "223_Rem": [".223%20Rem", "rifle", 0],
+            
         }
     }
 }
