@@ -19,14 +19,14 @@ message = {
         "no_results": "Sorry, but this offer is not available, try to search the store site.",
         "discount_set": "Discount set!",
         "help": [
-            "AmmoBot finds out the prices of ammo",
-            "",
+            u"AmmoBot finds out the prices of ammo",
+            u"",
             u"/top - print the top %s offers with a low price" % (result_count),
-            "/discount - set discount in stores",
+            u"/discount - set discount in stores",
             u"/all - print the top %s offers for all stores" % (result_count_all),
-            "/start - start bot",
-            "/help - print all commands",
-            "",
+            u"/start - start bot",
+            u"/help - print all commands",
+            u"",
             bot_name
         ]
     },
@@ -44,13 +44,13 @@ message = {
         "discount_set": u"Скидка установлена!",
         "help": [
             u"Патронобот узнает цены на патроны.",
-            "",
+            u"",
             u"/top - вывести топ %s предложений с низкой ценой" % (result_count),
-            "/discount - установить скидку в магазинах",
+            u"/discount - установить скидку в магазинах",
             u"/all - вывести топ %s предложений по всем магазинам" % (result_count_all),
             u"/start - старт бота",
             u"/help - вывести список доступных команд",
-            "",
+            u"",
             bot_name
         ]
     },
@@ -68,13 +68,13 @@ message = {
         "discount_set": u"Знижка встановлена!",
         "help": [
             u"Патронобот дізнається ціни на патрони.",
-            "",
+            u"",
             u"/top - вивести топ %s пропозицій за ціною" % (result_count),
             u"/discount - встановити знижку в магазинах",
             u"/all - вивести топ %s пропозицій по всіх магазинах" % (result_count_all),
             u"/start - старт бота",
             u"/help - вивести список доступних команд",
-            "",
+            u"",
             bot_name
         ]
     }
