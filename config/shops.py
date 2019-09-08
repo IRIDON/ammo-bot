@@ -170,18 +170,18 @@ shops = {
             "20_GA": ["patroni-18-calibra", "bore", 92]
         }
     },
-    "tactical-systems": {
-        "shop_name": "tactical systems",
-        "url": "http://tactical-systems.com.ua",
-        "url_tmp": "http://tactical-systems.com.ua/tovari/boepripasy/%s/?mfp=18-kalibr[%s]&sort=p.price&order=ASC&limit=100",
-        "data_file": path + "/data/tactical-systems.json",
-        "ammo_type": {
-            "rifle": "nareznyie-boepripasyi",
-            "bore": "gladkostvolnyie-boepripasyi"
-        },
-        "category": {
-            "223_Rem": [".223%20Rem", "rifle", 0],
+    # "tactical-systems": {
+    #     "shop_name": "tactical systems",
+    #     "url": "http://tactical-systems.com.ua",
+    #     "url_tmp": "http://tactical-systems.com.ua/tovari/boepripasy/%s/?mfp=18-kalibr[%s]&sort=p.price&order=ASC&limit=100",
+    #     "data_file": path + "/data/tactical-systems.json",
+    #     "ammo_type": {
+    #         "rifle": "nareznyie-boepripasyi",
+    #         "bore": "gladkostvolnyie-boepripasyi"
+    #     },
+    #     "category": {
+    #         "223_Rem": [".223%20Rem", "rifle", 0],
             
-        }
-    }
+    #     }
+    # }
 }
