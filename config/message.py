@@ -19,7 +19,7 @@ message = {
         "no_results": "Sorry, but this offer is not available, try to search the store site.",
         "discount_set": "Discount set!",
         "help": [
-            "AmmoBot finds out the prices of ammo.",
+            "AmmoBot finds out the prices of ammo",
             "",
             u"/top - print the top %s offers with a low price" % (result_count),
             "/discount - set discount in stores",
@@ -43,13 +43,13 @@ message = {
         "no_results": u"Извините, но запрашиваемые вами позиций нет в наличии в магазине, попробуйте перейти на сайт магазина и воспользоваться поиском.",
         "discount_set": u"Скидка установлена!",
         "help": [
-            "Патронобот узнает цены на патроны.",
+            u"Патронобот узнает цены на патроны.",
             "",
             u"/top - вывести топ %s предложений с низкой ценой" % (result_count),
             "/discount - установить скидку в магазинах",
             u"/all - вывести топ %s предложений по всем магазинам" % (result_count_all),
-            "/start - старт бота",
-            "/help - вывести список доступных команд",
+            u"/start - старт бота",
+            u"/help - вывести список доступных команд",
             "",
             bot_name
         ]
@@ -67,13 +67,13 @@ message = {
         "no_results": u"Вибачте, але запитувані вами позицій немає в наявності в магазині, спробуйте перейти на сайт магазину і скористатися пошуком.",
         "discount_set": u"Знижка встановлена!",
         "help": [
-            "Патронобот дізнається ціни на патрони.",
+            u"Патронобот дізнається ціни на патрони.",
             "",
             u"/top - вивести топ %s пропозицій за ціною" % (result_count),
-            "/discount - встановити знижку в магазинах",
+            u"/discount - встановити знижку в магазинах",
             u"/all - вивести топ %s пропозицій по всіх магазинах" % (result_count_all),
-            "/start - старт бота",
-            "/help - вивести список доступних команд",
+            u"/start - старт бота",
+            u"/help - вивести список доступних команд",
             "",
             bot_name
         ]

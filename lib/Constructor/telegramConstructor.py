@@ -126,14 +126,11 @@ class TelegramConstructor(BotConstructor):
             log.error(error)
 
     def botComandStart(self, message, language):
-        try:
-            language = language or self.getLanguage(message)
-            arr = self.getString("help", language)
-            string = "\n".join(arr)
+        language = language or self.getLanguage(message)
+        arr = self.getString("help", language)
+        string = "\n".join(arr)
 
-            self.botSendMessage(message.chat.id, string)
-        except Exception as error:
-            log.error(error)
+        self.botSendMessage(message.chat.id, string)
 
     def botComandTop(self, callData):
         try:
