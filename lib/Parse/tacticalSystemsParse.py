@@ -22,7 +22,7 @@ class TacticalSystemsParseData(ParseData):
         self.dataFile = settings["data_file"]
 
     def cleanPriceNum(self, price):
-        price = re.sub('[^0-9a-zA-Z]+', '.', price[0])
+        price = re.sub('[^0-9a-zA-Z]+', '.', price)
         price = price[:-1]
 
         try:
@@ -39,14 +39,28 @@ class TacticalSystemsParseData(ParseData):
         blocks = page.xpath('.//div[@class="catalogCard-main"]')
 
         for item in blocks:
-            price = item.xpath('.//div[@class="catalogCard-price"]/text()')
+            priceBlock = item.xpath('.//div[@class="catalogCard-price"]/text()')
 
-            if price:
+            if priceBlock:
                 dic = {}
+                amount = 1;
+                price = self.cleanPriceNum(priceBlock[0])
                 name = item.xpath('.//div[@class="catalogCard-title"]/a/text()')
 
+                amountRe = re.search("([0-9]+) ?%s" % (u"шт"), name[0])
+
+                if amountRe:
+                    amount = int(amountRe.group(1))
+
+                calcPrice = round(price / amount, 2)
+
+                if (calcPrice < 1):
+                    calcPrice = price
+
+                price = calcPrice
+
                 dic["title"] = self.cleanTitle(name[0])
-                dic["price"] = self.cleanPriceNum(price)
+                dic["price"] = price
 
                 result.append(dict(dic))
             else:

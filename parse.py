@@ -22,8 +22,8 @@ tacticalSystems = TacticalSystemsParseData(
 )
 
 
-parseIbis.parse()
-parseStvol.parse()
-parseSafari.parse()
-shopgun.parse()
+# parseIbis.parse()
+# parseStvol.parse()
+# parseSafari.parse()
+# shopgun.parse()
 tacticalSystems.parse()
