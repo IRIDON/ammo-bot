@@ -10,9 +10,5 @@ Simple telegram bot for parse ammo prices
 ## Install
 
 ```
-pip install pyTelegramBotAPI
-pip install requests
-pip install lxml
-pip install statistics
-pip install cython vedis
+pip install -r requirements.txt
 ```
