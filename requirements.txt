@@ -1,0 +1,12 @@
+certifi==2019.6.16
+chardet==3.0.4
+Cython==0.29.13
+docutils==0.15.2
+idna==2.8
+lxml==4.4.1
+pyTelegramBotAPI==3.6.6
+requests==2.22.0
+six==1.12.0
+statistics==1.0.3.5
+urllib3==1.25.3
+vedis==0.7.1
