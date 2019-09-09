@@ -33,6 +33,25 @@ class TacticalSystemsParseData(ParseData):
 
             return price
 
+    def getAmount(self, str):
+        amount = 1
+        amountRe = re.search("([0-9]+) ?%s" % (u"шт"), str)
+
+        if amountRe:
+            amount = int(amountRe.group(1))
+
+        return amount
+
+    def getPriceByAmoint(self, price, amount):
+        calcPrice = round(price / amount, 2)
+
+        if (calcPrice < 1):
+            calcPrice = price
+
+        price = calcPrice
+
+        return price
+
     def getStructure(self, url):
         result = []
         page = self.requestsPage(url)
@@ -43,24 +62,12 @@ class TacticalSystemsParseData(ParseData):
 
             if priceBlock:
                 dic = {}
-                amount = 1;
                 price = self.cleanPriceNum(priceBlock[0])
                 name = item.xpath('.//div[@class="catalogCard-title"]/a/text()')
-
-                amountRe = re.search("([0-9]+) ?%s" % (u"шт"), name[0])
-
-                if amountRe:
-                    amount = int(amountRe.group(1))
-
-                calcPrice = round(price / amount, 2)
-
-                if (calcPrice < 1):
-                    calcPrice = price
-
-                price = calcPrice
+                amount = self.getAmount(name[0])
 
                 dic["title"] = self.cleanTitle(name[0])
-                dic["price"] = price
+                dic["price"] = self.getPriceByAmoint(price, amount)
 
                 result.append(dict(dic))
             else:
