@@ -5,25 +5,13 @@ from lib.Parse.safariParse import SafariParseData
 from lib.Parse.shopGunParse import ShopGunData
 from lib.Parse.tacticalSystemsParse import TacticalSystemsParseData
 
-parseIbis = IbisParseData(
-    SHOPS["ibis"]
-)
-parseStvol = StvolParseData(
-    SHOPS["stvol"]
-)
-parseSafari = SafariParseData(
-    SHOPS["safari"]
-)
-shopgun = ShopGunData(
-    SHOPS["shopgun"]
-)
-tacticalSystems = TacticalSystemsParseData(
-    SHOPS["ts"]
-)
+models = [
+	IbisParseData(SHOPS["ibis"]),
+	StvolParseData(SHOPS["stvol"]),
+	SafariParseData(SHOPS["safari"]),
+	ShopGunData(SHOPS["shopgun"]),
+	TacticalSystemsParseData(SHOPS["ts"]),
+]
 
-
-parseIbis.parse()
-parseStvol.parse()
-parseSafari.parse()
-shopgun.parse()
-tacticalSystems.parse()
+for model in models:
+	model.parse()

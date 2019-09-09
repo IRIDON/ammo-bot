@@ -7,6 +7,7 @@ create JSON data and save it in file
 import requests, logging, time, json
 from lxml import html
 from lib.Logger.logger import Log
+import re
 
 log = Log()
 
@@ -55,6 +56,25 @@ class ParseData(object):
         title = title.replace(u"Патрон ", "")
 
         return title;
+
+    def getAmount(self, string):
+        amount = 1;
+        amountRe = re.search("([0-9]+) ?%s" % (u"шт"), string)
+
+        if amountRe:
+            amount = int(amountRe.group(1))
+
+        return amount
+
+    def getPriceByAmount(self, price, amount):
+        calcPrice = round(price / amount, 2)
+
+        if (calcPrice < 1):
+            calcPrice = price
+
+        price = calcPrice
+
+        return price
 
     def parse(self):
         result = {

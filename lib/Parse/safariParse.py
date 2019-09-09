@@ -43,9 +43,10 @@ class SafariParseData(ParseData):
 
             if price:
                 dic = {}
-                name = item.xpath('.//div[@class="g-l-i-details-title"]/a/text()')
+                nameBlock = item.xpath('.//div[@class="g-l-i-details-title"]/a/text()')
+                name = nameBlock[0]
 
-                dic["title"] = self.cleanTitle(name[0]).encode('raw-unicode-escape')
+                dic["title"] = self.cleanTitle(name).encode('raw-unicode-escape')
                 dic["price"] = self.cleanPriceNum(price)
 
                 result.append(dict(dic))

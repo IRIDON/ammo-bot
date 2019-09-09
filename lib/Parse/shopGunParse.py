@@ -33,12 +33,13 @@ class ShopGunData(ParseData):
 
         for item in blocks:
             dic = {}
-            name = item.xpath('.//h4/a/text()')
-            price = item.xpath('.//p[@class="price"]/text()')
+            nameBlock = item.xpath('.//h4/a/text()')
+            priceBlock = item.xpath('.//p[@class="price"]/text()')
 
-            if price:
-                name = name[0].replace('\n', '')
-                calcPrice = self.cleanPriceNum(price[0]);
+            if priceBlock:
+                price = priceBlock[0]
+                name = nameBlock[0].replace('\n', '')
+                calcPrice = self.cleanPriceNum(price);
 
                 dic["title"] = self.cleanTitle(name)
                 dic["price"] = round(calcPrice, 2)

@@ -41,26 +41,16 @@ class IbisParseData(ParseData):
             if price:
                 dic = {}
                 amountCategory = self.availableAmmo['22_LR'][0];
-                name = item.xpath('.//a[@class="pb_product_name"]/text()')
+                nameBlock = item.xpath('.//a[@class="pb_product_name"]/text()')
+                name = nameBlock[0]
 
                 if(url.find(amountCategory) != -1):
-                    amount = 1;
                     extra = item.xpath('.//div[@class="pb_extra"]/text()')
                     extraStr = ','.join(extra)
+                    amount = self.getAmount(extraStr)
+                    price = self.getPriceByAmount(price, amount)
 
-                    amountRe = re.search("([0-9]+) ?%s" % (u"шт"), extraStr)
-
-                    if amountRe:
-                        amount = int(amountRe.group(1))
-
-                    calcPrice = round(price / amount, 2)
-
-                    if (calcPrice < 1):
-                        calcPrice = price
-
-                    price = calcPrice
-
-                dic["title"] = self.cleanTitle(name[0]).encode('utf-8').strip()
+                dic["title"] = self.cleanTitle(name).encode('utf-8').strip()
                 dic["price"] = price
 
                 result.append(dict(dic))
