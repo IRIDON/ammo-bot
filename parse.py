@@ -18,7 +18,7 @@ shopgun = ShopGunData(
     SHOPS["shopgun"]
 )
 tacticalSystems = TacticalSystemsParseData(
-    SHOPS["tactical-systems"]
+    SHOPS["ts"]
 )
 
 
