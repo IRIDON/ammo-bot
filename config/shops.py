@@ -165,23 +165,39 @@ shops = {
             "22_LR": ["22-lr", "rifle", 4],
             "30-06": ["patrhone-30-06", "rifle", 5],
             "243_Win": ["243-win", "rifle", 50],
-            "12_GA": ["patroni-12-calibra", "bore", 90],
+            "12_GA": ["", "bore", 90],
             "16_GA": ["patroni-16-calibra", "bore", 91],
             "20_GA": ["patroni-18-calibra", "bore", 92]
         }
     },
-    # "tactical-systems": {
-    #     "shop_name": "tactical systems",
-    #     "url": "http://tactical-systems.com.ua",
-    #     "url_tmp": "http://tactical-systems.com.ua/tovari/boepripasy/%s/?mfp=18-kalibr[%s]&sort=p.price&order=ASC&limit=100",
-    #     "data_file": path + "/data/tactical-systems.json",
-    #     "ammo_type": {
-    #         "rifle": "nareznyie-boepripasyi",
-    #         "bore": "gladkostvolnyie-boepripasyi"
-    #     },
-    #     "category": {
-    #         "223_Rem": [".223%20Rem", "rifle", 0],
-            
-    #     }
-    # }
+    "tactical-systems": {
+        "shop_name": "tactical systems",
+        "url": "http://tactical-systems.com.ua",
+        "url_tmp": "https://tactical-systems.com.ua/%s/filter/kalibr=%s;sort_price=ASC&limit=100/",
+        "data_file": path + "/data/tactical-systems.json",
+        "ammo_type": {
+            "rifle": "nareznye-boepripasy",
+            "traumatic": "boepripasyi-neletalnogo-deystviya",
+            "bore": "gladkostvolnye-boepripasy"
+        },
+        "category": {
+            "223_Rem": ["22", "rifle", 0],
+            "308_Win": ["27", "rifle", 1],
+            "22_LR": ["24", "rifle", 2],
+            "7.62x39": ["13", "rifle", 3],
+            "5.45x39": ["32", "rifle", 4],
+            "9x21": ["26", "rifle", 5],
+            "9x19": ["4", "rifle", 6],
+            "9x18": ["33", "rifle", 7],
+            "338_Lapua_Mag": ["16", "rifle", 8],
+            "375_Chey_Tac": ["19", "rifle", 9],
+            "300 AAC": ["28,29s", "rifle", 10],
+
+            "12_GA": ["23,25", "bore", 20],
+            "16_GA": ["31", "bore", 21],
+
+            "12_GA_traumatic": ["23", "traumatic", 30],
+            "9RA": ["34", "traumatic", 31],
+        }
+    }
 }

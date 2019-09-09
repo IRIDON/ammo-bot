@@ -36,16 +36,16 @@ class TacticalSystemsParseData(ParseData):
     def getStructure(self, url):
         result = []
         page = self.requestsPage(url)
-        blocks = page.xpath('.//div[@class="col-sm-4 col-xs-6"]')
-        print(page.xpath('.//text()'))
+        blocks = page.xpath('.//div[@class="catalogCard-main"]')
+
         for item in blocks:
-            price = item.xpath('.//div[@class="price"]/text()')
+            price = item.xpath('.//div[@class="catalogCard-price"]/text()')
 
             if price:
                 dic = {}
-                name = item.xpath('.//div[@class="name"]/a/text()')
+                name = item.xpath('.//div[@class="catalogCard-title"]/a/text()')
 
-                dic["title"] = self.cleanTitle(name[0]).encode('raw-unicode-escape')
+                dic["title"] = self.cleanTitle(name[0])
                 dic["price"] = self.cleanPriceNum(price)
 
                 result.append(dict(dic))
