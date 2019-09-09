@@ -37,7 +37,7 @@ class StvolParseData(ParseData):
 
         for item in blocks:
             dic = {}
-            name = item.xpath('.//a[@class="tov-name"]/text()')
+            nameBlock = item.xpath('.//a[@class="tov-name"]/text()')
             price_1 = item.xpath('.//div[@class="current-price"]/b/text()')[0].replace(' ', '')
             price_2 = item.xpath('.//div[@class="current-price"]/text()')[0]
             avilible = item.xpath('.//div[@class="no-item"]')
@@ -45,6 +45,7 @@ class StvolParseData(ParseData):
             if len(avilible) == 0:
                 amount = 1
                 price = self.cleanPriceNum(price_1 + price_2) 
+                name = nameBlock[0]
                 amountCategory = self.availableAmmo['22_LR'][0];
 
                 if(amountCategory in url):
@@ -53,7 +54,7 @@ class StvolParseData(ParseData):
                     for text in amountTexts:
                         amount = self.getAmount(text)
 
-                dic["title"] = self.cleanTitle(name[0])
+                dic["title"] = self.cleanTitle(name)
                 dic["price"] = self.getPriceByAmount(price, amount)
 
                 result.append(dict(dic))

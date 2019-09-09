@@ -20,13 +20,14 @@ class IbisParseData(ParseData):
         self.urlTmp = settings["url_tmp"]
 
     def getPrices(self, tree):
-        price = tree.xpath('.//div[contains(@class, "pb_price")]')
-        priceText = price[0].xpath('./text()')
+        priceBlock = tree.xpath('.//div[contains(@class, "pb_price")]')
+        price = priceBlock[0]
+        priceText = price.xpath('./text()')
 
         if len(priceText[0].strip()):
             return float(priceText[0])
         else:
-            pn = price[0].xpath('*/text()')
+            pn = price.xpath('*/text()')
 
             return float(pn[0] + pn[1])
 
@@ -44,7 +45,7 @@ class IbisParseData(ParseData):
                 nameBlock = item.xpath('.//a[@class="pb_product_name"]/text()')
                 name = nameBlock[0]
 
-                if(url.find(amountCategory) != -1):
+                if(amountCategory in url):
                     extra = item.xpath('.//div[@class="pb_extra"]/text()')
                     extraStr = ','.join(extra)
                     amount = self.getAmount(extraStr)
