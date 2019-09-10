@@ -92,9 +92,7 @@ class ParseData(object):
         if (calcPrice < 1):
             calcPrice = price
 
-        price = calcPrice
-
-        return price
+        return calcPrice
 
     def parse(self):
         result = {

@@ -45,9 +45,15 @@ class KulyaParseData(ParseData):
         if (calcPrice < 1):
             calcPrice = price
 
-        price = calcPrice
+        return calcPrice
 
-        return price
+    def cleanTitle(self, title):
+        title = title.replace(u"Патрон нарезной ", "")
+        title = title.replace(u"Патрон нарізний ", "")
+        title = title.replace(u"Патрон ", "")
+        title = title.replace(u"НабоЇ ", "")
+
+        return title;
 
     def getStructure(self, url):
         result = []
@@ -60,7 +66,7 @@ class KulyaParseData(ParseData):
             priceBlock = item.xpath('.//p[@class="price"]/span/text()')
 
             if priceBlock and nameBlock:
-                name = nameBlock[0]
+                name = self.cleanTitle(nameBlock[0])
                 price = self.cleanPriceNum(priceBlock[0])
                 amount = self.getAmount(name);
                 price = self.getPriceByAmount(price, amount)

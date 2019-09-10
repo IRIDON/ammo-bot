@@ -30,34 +30,23 @@ class FourSeasonsParseData(ParseData):
 
         return float(price)
 
-    def getAmount(self, string):
-        amount = 1;
-        amountRe = re.search("\(([0-9]+)?%s\)" % (u"шт"), string)
+    def getRequestProp(self, urlTmp):
+        requestData = {
+            "order": 2,
+            "limit": 100,
+            "orderby": 0
+        }
+        url, key = urlTmp.split('---')
 
-        if amountRe:
-            amount = int(amountRe.group(1));
+        if key and key != '0':
+            requestData["extra_fields[19][]"] = key
 
-        return amount
-
-    def getPriceByAmount(self, price, amount):
-        calcPrice = round(price / amount, 2)
-
-        if (calcPrice < 1):
-            calcPrice = price
-
-        price = calcPrice
-
-        return price
+        return url, requestData
 
     def getStructure(self, urlTmp):
         result = []
-        urlArr = urlTmp.split('---')
-        url = urlArr[0]
-        key = urlArr[1]
-        
-        page = self.requestsPostPage(url, {
-            "extra_fields[19][]": key
-        })
+        url, requestData = self.getRequestProp(urlTmp)
+        page = self.requestsPostPage(url, requestData)
 
         blocks = page.xpath('//div[@class="span4 block_product"]')
 
