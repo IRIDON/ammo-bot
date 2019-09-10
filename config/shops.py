@@ -118,37 +118,42 @@ shops = {
             "20/70": ["5377", "bore", 77]
         }
     },
-    # "kulya": {
-    #     "shop_name": "kulya",
-    #     "url": "http://kulya.com.ua",
-    #     "url_tmp": "http://kulya.com.ua/patrony/%s/%s/?imit=100",
-    #     "data_file": path + "/data/kulya.json",
-    #     "ammo_type": {
-    #         "rifle": "nareznye/kalibr-nareznoj-",
-    #         "traumatic": "patrony-travmaticheskie",
-    #         "bore_bulet": "pulya",
-    #         "bore_buckshot": "kartech",
-    #         "bore_birdshot": "drob-dlya-ohoti"
-    #     },
-    #     "category": {
-    #         "223_Rem": ["-223-rem", "rifle", 0],
-    #         "308_Win": ["?custom_f_88[0]=2e3330382057696e", "rifle", 1],
-    #         "7.62x39": ["?custom_f_88[0]=372e3632783339", "rifle", 2],
-    #         "22_LR": ["?custom_f_88[0]=2e32324c52", "rifle", 3],
-    #         "17_HMR": ["?custom_f_88[0]=2e313720484d52", "rifle", 3],
-    #         "30-06": ["?custom_f_88[0]=2e33302d3036", "rifle", 4],
-    #         "7.62x54_R": ["?custom_f_88[0]=372e36327835342052", "rifle", 5],
-    #         "9x21": ["?custom_f_88[0]=3920d0bcd0bc202839d185323129", "rifle", 6],
-    #         "22_WMR": ["?custom_f_88[0]=2e323220574d52", "rifle", 50],
-    #         "300_Win": ["?custom_f_88[0]=2e3330302057696e", "rifle", 51],
-    #         "243_Win": ["?custom_f_88[0]=2e3234332057696e", "rifle", 52],
-    #         "5.45x39": ["?custom_f_88[0]=352c3435783339", "rifle", 53],
-    #         "12/70_buckshot": ["?custom_f_71[0]=31322f3730", "bore_buckshot", 54],
-    #         "12/70_birdshot": ["?custom_f_71[0]=31322f3730", "bore_birdshot", 55],
-    #         "12/70_bulet": ["?custom_f_71[0]=31322f3730", "bore_bulet", 56],
-    #         "9RA": ["", "traumatic", 57]
-    #     }
-    # },
+    "kulya": {
+        "shop_name": "kulya",
+        "url": "http://kulya.com.ua",
+        "url_tmp": "http://kulya.com.ua/patrony/%s/%s/?sort=p.price&order=ASC&limit=100",
+        "data_file": path + "/data/kulya.json",
+        "ammo_type": {
+            "rifle": "nareznye/kalibr-nareznoj-",
+            "traumatic": "travmaticheskie/kalibr-travmat-",
+            "bore_bulet": "gladkostvolnye/pulya/kalibr-gladkostvolnyj-",
+            "bore_buckshot": "gladkostvolnye/kartech/kalibr-gladkostvolnyj-/",
+            "bore_birdshot": "gladkostvolnye/drob/kalibr-gladkostvolnyj-"
+        },
+        "category": {
+            "223_Rem": ["-223-rem", "rifle", 0],
+            "308_Win": ["-308-win", "rifle", 1],
+            "7.62x39": ["7-62x39", "rifle", 2],
+            "22_LR": ["-22lr", "rifle", 3],
+            "17_HMR": ["-17-hmr", "rifle", 3],
+            "30-06": ["-30-06", "rifle", 4],
+            "7.62x54_R": ["7-62x54-r", "rifle", 5],
+            "9x21": ["9h21", "rifle", 6],
+            "22_WMR": ["-22-wmr", "rifle", 50],
+            "243_Win": ["-243-win", "rifle", 52],
+            "5.45x39": ["5-45x39", "rifle", 53],
+            "9.3x62": ["9-3x62", "rifle", 54],
+            "300 AAC": ["300-aac-blackout", "rifle", 55],
+            "300_Win_Mag": ["300winmag", "rifle", 56],
+            "7mm_Rem_Mag": ["7mm-rem-mag", "rifle", 57],
+
+            "12_buckshot": ["12-67/12-70", "bore_buckshot", 60],
+            "12_birdshot": ["12-65/12-67/12-70/12-76", "bore_birdshot", 61],
+            "12_bulet": ["12-65/12-67/12-70/12-76", "bore_bulet", 62],
+
+            "9RA": ["9-mm", "traumatic", 70]
+        }
+    },
     "shopgun": {
         "shop_name": "shopgun",
         "url": "https://shopgun.com.ua",

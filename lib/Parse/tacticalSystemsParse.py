@@ -42,10 +42,10 @@ class TacticalSystemsParseData(ParseData):
             priceBlock = item.xpath('.//div[@class="catalogCard-price"]/text()')
             nameBlock = item.xpath('.//div[@class="catalogCard-title"]/a/text()')
 
-            if priceBlock and priceBlock:
+            if priceBlock and nameBlock:
                 dic = {}
-                price = self.cleanPriceNum(priceBlock[0])
                 name = nameBlock[0]
+                price = self.cleanPriceNum(priceBlock[0])
                 amount = self.getAmount(name)
 
                 dic["title"] = self.cleanTitle(name)

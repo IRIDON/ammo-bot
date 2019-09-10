@@ -4,7 +4,7 @@
 Parse data from websile ibis.net.ua
 create JSON data and save it in file
 """
-import requests, logging, time, json
+import requests, urllib2, logging, time, json
 from lxml import html
 from lib.Logger.logger import Log
 import re
@@ -28,6 +28,21 @@ class ParseData(object):
         page = requests.get(url, verify=False)
 
         return html.fromstring(page.content)
+
+    def requestsUrllib2Page(self, url):
+        try:
+            response = urllib2.urlopen(url)
+            page = response.read()
+
+            return html.fromstring(page)
+        except Exception as error:
+            log.error(error)
+
+    def get_link_response_code(link_to_check):
+        resp = requests.head(link_to_check)
+        if resp.status_code == 405:
+            resp = requests.get(link_to_check)
+        return resp.status_code
 
     def getHourInSeconds(self, hour):
         return hour * 60 * 60

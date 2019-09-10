@@ -30,28 +30,43 @@ class KulyaParseData(ParseData):
 
         return float(price)
 
+    def getAmount(self, string):
+        amount = 1;
+        amountRe = re.search("\(([0-9]+)?%s\)" % (u"шт"), string)
+
+        if amountRe:
+            amount = int(amountRe.group(1));
+
+        return amount
+
+    def getPriceByAmount(self, price, amount):
+        calcPrice = round(price / amount, 2)
+
+        if (calcPrice < 1):
+            calcPrice = price
+
+        price = calcPrice
+
+        return price
+
     def getStructure(self, url):
         result = []
-        page = self.requestsPage(url)
+        page = self.requestsUrllib2Page(url)
+        blocks = page.xpath('//div[@class="product-thumb"]')
 
-        blocks = page.xpath('//div[@class="col-sm-8 col-md-9"]')
-        print(url)
-        print(page.xpath(".//title")[0].text_content().encode('utf-8'))
         for item in blocks:
             dic = {}
-            name = item.xpath('.//div[@class="product-name"]/a/text()')
-            price = item.xpath('.//p[@class="price"]/text()')
-            amount = 1;
-            amountRe = re.search('\( ?([0-9]+) ?..\.?\)+', name[0])
+            nameBlock = item.xpath('.//div[@class="product-name"]/a/text()')
+            priceBlock = item.xpath('.//p[@class="price"]/span/text()')
 
-            if amountRe:
-                amount = int(amountRe.group(1));
+            if priceBlock and nameBlock:
+                name = nameBlock[0]
+                price = self.cleanPriceNum(priceBlock[0])
+                amount = self.getAmount(name);
+                price = self.getPriceByAmount(price, amount)
 
-            if price:
-                calcPrice = self.cleanPriceNum(price[0]) / amount;
-
-                dic["title"] = name[0]
-                dic["price"] = round(calcPrice, 2)
+                dic["title"] = name
+                dic["price"] = price
 
                 result.append(dict(dic))
 
