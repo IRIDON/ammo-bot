@@ -241,13 +241,16 @@ class TelegramConstructor(BotConstructor):
         return base.get(message.from_user.id)
 
     def setDiscontToBase(self, callData):
-        data = callData.data.split('_')
-        shop = data[1]
-        discountIndex = int(data[2])
-        language = self.getLanguage(callData)
-        discount = self.availableDiscount[discountIndex]
+        try:
+            data = callData.data.split('_')
+            shop = data[1].replase(' ', '_')
+            discountIndex = int(data[2])
+            language = self.getLanguage(callData)
+            discount = self.availableDiscount[discountIndex]
 
-        base.set(callData.from_user.id, shop, discount)
-        self.botSendMessage(callData.message.chat.id, self.getString("discount_set", language))
-        self.botComandStart(callData.message, language)
+            base.set(callData.from_user.id, shop, discount)
+            self.botSendMessage(callData.message.chat.id, self.getString("discount_set", language))
+            self.botComandStart(callData.message, language)
+        except Exception as error:
+            log.error(error)
 
