@@ -33,6 +33,7 @@ class IbisParseData(ParseData):
 
     def getStructure(self, url):
         result = []
+        amountCategory = self.availableAmmo['22_LR'][0]
         page = self.requestsPage(url)
         blocks = page.xpath('.//form[@class="product_brief_list "]')
 
@@ -41,7 +42,6 @@ class IbisParseData(ParseData):
 
             if price:
                 dic = {}
-                amountCategory = self.availableAmmo['22_LR'][0];
                 nameBlock = item.xpath('.//a[@class="pb_product_name"]/text()')
                 name = nameBlock[0]
 

@@ -34,7 +34,7 @@ shops = {
             "7mm_Rem_Mag": ["7mm-rem-mag", "rifle", 55],
             "8x57_JS": ["8h57-js", "rifle", 70],
             "9.3x62": ["93h62", "rifle", 71],
-            "9PA": ["9-mm_m16", "traumatic", 72],
+            "9RA": ["9-mm_m16", "traumatic", 72],
             "12/70": ["1270", "bore", 73],
             "12/76": ["1276", "bore", 74],
             "16/70": ["1670", "bore", 75],
@@ -79,8 +79,8 @@ shops = {
     },
     "safari": {
         "shop_name": "safari",
-        "url": "http://safari-ukraina.com",
-        "url_tmp": "http://safari-ukraina.com/%s=%s;sort=cheap/",
+        "url": "https://safari-ukraina.com/",
+        "url_tmp": "https://safari-ukraina.com/%s=%s;sort=cheap/",
         "data_file": path + "/data/safari.json",
         "ammo_type": {
             "rifle": "nareznye-patrony/c269/kalibr-nareznoy",
@@ -161,7 +161,8 @@ shops = {
         "data_file": path + "/data/shopgun.json",
         "ammo_type": {
             "rifle": "narezhie-patrhone",
-            "bore": "gladkostvolnye-patrhone"
+            "bore": "gladkostvolnye-patrhone",
+            "traumatic": "travmaticheskie-patroni"
         },
         "category": {
             "223_Rem": ["223-rem", "rifle", 0],
@@ -169,15 +170,18 @@ shops = {
             "7.62x39": ["762-na-39", "rifle", 3],
             "22_LR": ["22-lr", "rifle", 4],
             "30-06": ["patrhone-30-06", "rifle", 5],
-            "243_Win": ["243-win", "rifle", 50],
-            "12_GA": ["", "bore", 90],
-            "16_GA": ["patroni-16-calibra", "bore", 91],
-            "20_GA": ["patroni-18-calibra", "bore", 92]
+            "243_Win": ["243-win", "rifle", 6],
+
+            "12/70": ["patroni-12-calibra", "bore", 20],
+            "16/70": ["patroni-16-calibra", "bore", 21],
+            "20/70": ["patroni-18-calibra", "bore", 22],
+
+            "9RA": ["kalibr_9h21/?attrb[13]=101", "traumatic", 30]
         }
     },
     "tactical_systems": {
         "shop_name": "tactical systems",
-        "url": "http://tactical-systems.com.ua",
+        "url": "https://tactical-systems.com.ua",
         "url_tmp": "https://tactical-systems.com.ua/%s/filter/kalibr=%s;sort_price=ASC&limit=100/",
         "data_file": path + "/data/ts.json",
         "ammo_type": {
@@ -198,8 +202,8 @@ shops = {
             "375_Chey_Tac": ["19", "rifle", 9],
             "300 AAC": ["28,29s", "rifle", 10],
 
-            "12_GA": ["23,25", "bore", 20],
-            "16_GA": ["31", "bore", 21],
+            "12/70": ["23,25", "bore", 20],
+            "16/70": ["31", "bore", 21],
 
             "12_GA_traumatic": ["23", "traumatic", 30],
             "9RA": ["34", "traumatic", 31],
