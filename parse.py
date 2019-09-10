@@ -5,6 +5,7 @@ from lib.Parse.safariParse import SafariParseData
 from lib.Parse.shopGunParse import ShopGunData
 from lib.Parse.tacticalSystemsParse import TacticalSystemsParseData
 from lib.Parse.kulyaParse import KulyaParseData
+from lib.Parse.fourSeasonsParse import FourSeasonsParseData
 
 models = [
 	IbisParseData(SHOPS["ibis"]),
@@ -13,6 +14,7 @@ models = [
 	ShopGunData(SHOPS["shopgun"]),
 	TacticalSystemsParseData(SHOPS["tactical_systems"]),
 	KulyaParseData(SHOPS["kulya"]),
+	# FourSeasonsParseData(SHOPS["four_seasons"]),
 ]
 
 for model in models:

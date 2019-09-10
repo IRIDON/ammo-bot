@@ -29,6 +29,11 @@ class ParseData(object):
 
         return html.fromstring(page.content)
 
+    def requestsPostPage(self, url, data):
+        page = requests.post(url, verify=False, data=data)
+
+        return html.fromstring(page.content)
+
     def requestsUrllib2Page(self, url):
         try:
             response = urllib2.urlopen(url)

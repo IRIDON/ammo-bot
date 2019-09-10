@@ -208,5 +208,29 @@ shops = {
             "12_GA_traumatic": ["23", "traumatic", 30],
             "9RA": ["34", "traumatic", 31],
         }
-    }
+    },
+    # "four_seasons" : {
+    #     "shop_name": "four seasons",
+    #     "url": "http://gun.lviv.ua/",
+    #     "url_tmp": "http://gun.lviv.ua/index.php/zbroya-i-komplektuyuchi/boieprypasy/%s---%s",
+    #     "data_file": path + "/data/four.json",
+    #     "ammo_type": {
+    #         "rifle": "narizni-patrony",
+    #         "bore_12": "hladkostvolni-patrony/12-kalibr",
+    #         "bore_16": "hladkostvolni-patrony/16-kalibr",
+    #         "bore_20": "hladkostvolni-patrony/20-kalibr",
+    #     },
+    #     "category": {
+    #         "22_LR": [349, "rifle", 0],
+    #         "308_Win": [105, "rifle", 1],
+    #         "30-06": [273, "rifle", 2],
+    #         "300_Win_Mag": [274, "rifle", 3],
+    #         "8x57": [278, "rifle", 4],
+    #         "22_WMR": [280, "rifle", 5],
+
+    #         "12/70": [0, "bore_12", 10],
+    #         "16/70": [0, "bore_16", 11],
+    #         "20/70": [0, "bore_20", 12],
+    #     }
+    # }
 }
