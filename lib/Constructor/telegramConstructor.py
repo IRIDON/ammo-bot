@@ -242,12 +242,13 @@ class TelegramConstructor(BotConstructor):
 
     def setDiscontToBase(self, callData):
         try:
+            
             data = callData.data.split('_')
-            shop = data[1].replase(' ', '_')
+            shop = data[1]
             discountIndex = int(data[2])
             language = self.getLanguage(callData)
             discount = self.availableDiscount[discountIndex]
-
+            
             base.set(callData.from_user.id, shop, discount)
             self.botSendMessage(callData.message.chat.id, self.getString("discount_set", language))
             self.botComandStart(callData.message, language)
