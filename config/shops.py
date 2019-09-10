@@ -170,7 +170,7 @@ shops = {
             "20_GA": ["patroni-18-calibra", "bore", 92]
         }
     },
-    "ts": {
+    "tactical_systems": {
         "shop_name": "tactical systems",
         "url": "http://tactical-systems.com.ua",
         "url_tmp": "https://tactical-systems.com.ua/%s/filter/kalibr=%s;sort_price=ASC&limit=100/",
