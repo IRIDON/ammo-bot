@@ -185,7 +185,7 @@ shops = {
             "9RA": ["kalibr_9h21/?attrb[13]=101", "traumatic", 30]
         }
     },
-    "tacticalsystems": {
+    "tactical-systems": {
         "shop_name": "tactical systems",
         "url": "https://tactical-systems.com.ua",
         "url_tmp": "https://tactical-systems.com.ua/%s/filter/kalibr=%s;sort_price=ASC&limit=100/",
