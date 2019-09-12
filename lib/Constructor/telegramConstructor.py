@@ -233,12 +233,18 @@ class TelegramConstructor(BotConstructor):
             log.error(error)
 
     def getShopNameFromIndex(self, callData):
-        data = callData.data.split('_')
+        try:
+            data = callData.data.split('_')
 
-        return self.availableShops[int(data[1])]
+            return self.availableShops[int(data[1])]
+        except Exception as error:
+            log.error(error)
 
     def getDiscountData(self, message):
-        return base.get(message.from_user.id)
+        try:
+            return base.get(message.from_user.id)
+        except Exception as error:
+            log.error(error)
 
     def setDiscontToBase(self, callData):
         try:
