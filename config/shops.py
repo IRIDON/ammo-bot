@@ -108,7 +108,7 @@ shops = {
             "470_Nitro-Express": ["5506", "rifle", 50],
             "9mm": ["5547", "rifle", 51],
             "5.45x39": ["5525", "rifle", 52],
-            "300 AAC": ["5472", "rifle", 53],
+            "300_AAC": ["5472", "rifle", 53],
             "7mm_Rem_Mag": ["5536", "rifle", 54],
             "7x64": ["5541", "rifle", 55],
             "7x65_R": ["5542", "rifle", 56],
@@ -149,7 +149,7 @@ shops = {
             "243_Win": ["-243-win", "rifle", 52],
             "5.45x39": ["5-45x39", "rifle", 53],
             "9.3x62": ["9-3x62", "rifle", 54],
-            "300 AAC": ["300-aac-blackout", "rifle", 55],
+            "300_AAC": ["300-aac-blackout", "rifle", 55],
             "300_Win_Mag": ["300winmag", "rifle", 56],
             "7mm_Rem_Mag": ["7mm-rem-mag", "rifle", 57],
 
@@ -206,7 +206,7 @@ shops = {
             "9x18": ["33", "rifle", 7],
             "338_Lapua_Mag": ["16", "rifle", 8],
             "375_Chey_Tac": ["19", "rifle", 9],
-            "300 AAC": ["28,29s", "rifle", 10],
+            "300_AAC": ["28,29s", "rifle", 10],
 
             "12/70": ["23,25", "bore", 20],
             "16/70": ["31", "bore", 21],
@@ -215,28 +215,62 @@ shops = {
             "9RA": ["34", "traumatic", 31],
         }
     },
-    # "four_seasons" : {
-    #     "shop_name": "four seasons",
-    #     "url": "http://gun.lviv.ua/",
-    #     "url_tmp": "http://gun.lviv.ua/index.php/zbroya-i-komplektuyuchi/boieprypasy/%s---%s",
-    #     "data_file": path + "/data/four.json",
-    #     "ammo_type": {
-    #         "rifle": "narizni-patrony",
-    #         "bore_12": "hladkostvolni-patrony/12-kalibr",
-    #         "bore_16": "hladkostvolni-patrony/16-kalibr",
-    #         "bore_20": "hladkostvolni-patrony/20-kalibr",
-    #     },
-    #     "category": {
-    #         "22_LR": [349, "rifle", 0],
-    #         "308_Win": [105, "rifle", 1],
-    #         "30-06": [273, "rifle", 2],
-    #         "300_Win_Mag": [274, "rifle", 3],
-    #         "8x57": [278, "rifle", 4],
-    #         "22_WMR": [280, "rifle", 5],
+    "tactica": {
+        "shop_name": "tactica",
+        "url": "https://tactica.kiev.ua",
+        "url_tmp": "https://tactica.kiev.ua/shop_1/ammunition/%s/&p_val=[0:3]&a_val=[%s]&limit=100&sort=p.price&order=DESC&page=1",
+        "data_file": path + "/data/tactica.json",
+        "ammo_type": {
+            "rifle": "threaded",
+            "traumatic": "traumatic",
+            "bore": "smoothbore"
+        },
+        "categories_compare": {
+            "rifle": 69,
+            "traumatic": 70,
+            "bore": 68,
+        },
+        "category": {
+            "223_Rem": ["[33:.223%20Rem%20(5.56%D1%8545)]", "rifle", 0],
+            "308_Win": ["[33:.308%20Win%20(7.62%D1%8551)]", "rifle", 1],
+            "22_LR": ["[33:.22LR]", "rifle", 2],
+            "7.62x39": ["[33:7.62x39]", "rifle", 3],
+            "9x21": ["[33:9x21]", "rifle", 5],
 
-    #         "12/70": [0, "bore_12", 10],
-    #         "16/70": [0, "bore_16", 11],
-    #         "20/70": [0, "bore_20", 12],
-    #     }
-    # }
+            "12/70": ["[33:12/70]", "bore", 20],
+            "16/70": ["[33:16/70]", "bore", 21],
+            "20/70": ["[33:20/70]", "bore", 22],
+
+            # "5.45x39": ["[33:5.45x39]", "rifle", 4],
+            # "30-06": ["[33:.30-06%20Sprg%20(7.62%D1%8563)]", "rifle", 6],
+            # "300_Win_Mag": ["[33:.300%20Win%20Mag]", "rifle", 7],
+            # "300_AAC": ["[33:.300%20Whisper/Blackout%20(7.62%D1%8535)]", "rifle", 8],
+            # "9x19": ["[33:9x19]", "rifle", 9],
+            # "9x18": ["[33:9x18]", "rifle", 10],
+        }
+    },
+    "four_seasons" : {
+        "shop_name": "four seasons",
+        "url": "http://gun.lviv.ua/",
+        "url_tmp": "http://gun.lviv.ua/index.php/zbroya-i-komplektuyuchi/boieprypasy/%s---%s",
+        "data_file": path + "/data/four.json",
+        "ammo_type": {
+            "rifle": "narizni-patrony",
+            "bore_12": "hladkostvolni-patrony/12-kalibr",
+            "bore_16": "hladkostvolni-patrony/16-kalibr",
+            "bore_20": "hladkostvolni-patrony/20-kalibr",
+        },
+        "category": {
+            "22_LR": [349, "rifle", 0],
+            "308_Win": [105, "rifle", 1],
+            "30-06": [273, "rifle", 2],
+            "300_Win_Mag": [274, "rifle", 3],
+            "8x57": [278, "rifle", 4],
+            "22_WMR": [280, "rifle", 5],
+
+            "12/70": [0, "bore_12", 10],
+            "16/70": [0, "bore_16", 11],
+            "20/70": [0, "bore_20", 12],
+        }
+    }
 }
