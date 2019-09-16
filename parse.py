@@ -28,4 +28,4 @@ try:
 	for model in models:
 		model.parse()
 except Exception as error:
-            log.error(error)
+    log.error(error)
