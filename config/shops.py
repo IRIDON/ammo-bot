@@ -218,6 +218,7 @@ shops = {
     "tactica": {
         "shop_name": "tactica",
         "url": "https://tactica.kiev.ua",
+        "url_request": "https://tactica.kiev.ua/index.php?route=module/filter_products/getProductsByCategory",
         "url_tmp": "https://tactica.kiev.ua/shop_1/ammunition/%s/&p_val=[0:3]&a_val=[%s]&limit=100&sort=p.price&order=DESC&page=1",
         "data_file": path + "/data/tactica.json",
         "ammo_type": {

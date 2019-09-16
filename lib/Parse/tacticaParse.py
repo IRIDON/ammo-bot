@@ -20,6 +20,7 @@ class TacticaParseData(ParseData):
         self.availableAmmo = settings["category"]
         self.categoriesCompare = settings["categories_compare"]
         self.url = settings["url"]
+        self.urlRequest = settings["url_request"]
         self.urlTmp = settings["url_tmp"]
         self.dataFile = settings["data_file"]
 
@@ -42,20 +43,29 @@ class TacticaParseData(ParseData):
             if value == category:
                 return self.categoriesCompare[key]
 
-    def getStructure(self, url):
-        result = []
-        # page = self.requestsUrllib2Page(url)
-        # blocks = page.xpath('//div[@class="product"]')
+    def getValueFromUrl(self, url):
         idRe = re.search("\&a\_val\=\[\[(.+)\]\]", url)
         idVal = idRe.group(1)
-        value = idVal.split(':')[1]
 
+        if idVal:
+            return idVal.split(':')[1]
+        else:
+            return None
+
+    def getCategoryFromUrl(self, url):
         categoryRe = re.search("ammunition\/([a-z]+)\/", url)
         categoryVal = categoryRe.group(1)
-        category = self.getNumCategoryByName(categoryVal)
 
-        requests = self.requestsPost("https://tactica.kiev.ua/index.php?route=module/filter_products/getProductsByCategory", {
-            "category_id": category,
+        if categoryVal:
+            return self.getNumCategoryByName(categoryVal)
+        else:
+            return None
+
+    def getStructure(self, url):
+        result = []
+        value = self.getValueFromUrl(url)
+        category = self.getCategoryFromUrl(url)
+        requestData = {
             "manufacturer_id": "0",
             "sort": "p.price",
             "order": "DESC",
@@ -64,8 +74,15 @@ class TacticaParseData(ParseData):
             "path": "189_67_69",
             "p_val[min]": "0",
             "p_val[max]": "2",
-            "a_val[33][]": urllib.unquote(value)
-        })
+        }
+
+        if not value and not category:
+            return;
+
+        requestData["category_id"] = category
+        requestData["a_val[33][]"] = urllib.unquote(value)
+
+        requests = self.requestsPost(self.urlRequest, requestData)
         data = requests.json()
 
         if 'products' in data:
