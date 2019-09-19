@@ -15,13 +15,13 @@ log = Log()
 
 models = [
 	IbisParseData(SHOPS["ibis"]),
-	# StvolParseData(SHOPS["stvol"]),
-	# SafariParseData(SHOPS["safari"]),
-	# ShopGunData(SHOPS["shopgun"]),
-	# TacticalSystemsParseData(SHOPS["tactical-systems"]),
-	# KulyaParseData(SHOPS["kulya"]),
-	# TacticaParseData(SHOPS["tactica"]),
-	# FourSeasonsParseData(SHOPS["four_seasons"]),
+	StvolParseData(SHOPS["stvol"]),
+	SafariParseData(SHOPS["safari"]),
+	ShopGunData(SHOPS["shopgun"]),
+	TacticalSystemsParseData(SHOPS["tactical-systems"]),
+	KulyaParseData(SHOPS["kulya"]),
+	TacticaParseData(SHOPS["tactica"]),
+	FourSeasonsParseData(SHOPS["four_seasons"]),
 ]
 
 try:
