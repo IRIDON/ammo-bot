@@ -32,16 +32,23 @@ class TacticaParseData(ParseData):
         return priceNum if priceNum != 0 else None
 
     def cleanTitle(self, title):
-        title = title.replace(u"Набій нарізний мисливський ", "")
-        title = title.replace(u"Набій нарізний спортивний ", "")
-        title = title.replace(u"Набій нарізний ", "")
+        text = u"Набій нарізний"
 
-        return title;
+        if text in title:
+            title = title.replace(text + u" мисливський ", "")
+            title = title.replace(text + u" спортивний ", "")
+            title = title.replace(text + u" ", "")
+
+            return title;
+        else:
+            return title;
 
     def getNumCategoryByName(self, category):
         for key, value in self.categories.items():
             if value == category:
-                return self.categoriesCompare[key]
+                com = self.categoriesCompare
+
+                return compare[key] if key in compare else None
 
     def getValueFromUrl(self, url):
         idRe = re.search("\&a\_val\=\[\[(.+)\]\]", url)

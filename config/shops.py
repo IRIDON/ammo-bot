@@ -1,17 +1,19 @@
 import os, sys
 
 path = os.path.abspath(os.path.split(sys.argv[0])[0])
+data_path = path + "/data/"
 
 shops = {
 	"ibis": {
         "shop_name": "ibis",
         "url": "https://ibis.net.ua/",
         "url_tmp": "https://ibis.net.ua/products/%s/search/%s/?isort=cheap&show_all=yes",
-        "data_file": path + "/data/ibis.json",
+        "data_file": data_path + "ibis.json",
         "ammo_type": {
             "rifle": "patrony-nareznye86",
             "traumatic": "patrony-travmaticheskie",
-            "bore": "patrony-gladkostvoljnye85"
+            "bore": "patrony-gladkostvoljnye85",
+            "flober": "patrony-flobera",
         },
         "category": {
             "223_Rem": ["223-rem-55645-9fv", "rifle", 0],
@@ -40,14 +42,13 @@ shops = {
             "12/70": ["1270", "bore", 80],
             "12/76": ["1276", "bore", 81],
             "16/70": ["1670", "bore", 82],
-            "20/70": ["2070", "bore", 83]
+            "20/70": ["2070", "bore", 83],
         }
     },
     "stvol": {
         "shop_name": "stvol",
         "url": "https://stvol.ua",
-        "url_tmp": "https://stvol.ua/catalog/%s/filter/%s/apply/?page_sort=price_asc",
-        "data_file": path + "/data/stvol.json",
+        "data_file": data_path + "stvol.json",
         "ammo_type": {
             "rifle": "patrony_nareznye",
             "bore": "patrony_gladkostvolnye",
@@ -85,11 +86,12 @@ shops = {
         "shop_name": "safari",
         "url": "https://safari-ukraina.com/",
         "url_tmp": "https://safari-ukraina.com/%s=%s;sort=cheap/",
-        "data_file": path + "/data/safari.json",
+        "data_file": data_path + "safari.json",
         "ammo_type": {
             "rifle": "nareznye-patrony/c269/kalibr-nareznoy",
             "bore": "gladkie-patrony/c281/kalibr-gladk1",
-            "traumatic": "travmaticheskie-patrony/c176999/detail_11301"
+            "traumatic": "travmaticheskie-patrony/c176999/detail_11301",
+            "flober": "patrony-flobera/c178839"
         },
         "category": {
             "223_Rem": ["5456", "rifle", 0],
@@ -121,14 +123,14 @@ shops = {
             "12/70": ["5371", "bore", 80],
             "12/76": ["5372", "bore", 81],
             "16/70": ["5375", "bore", 82],
-            "20/70": ["5377", "bore", 83]
+            "20/70": ["5377", "bore", 83],
         }
     },
     "kulya": {
         "shop_name": "kulya",
         "url": "http://kulya.com.ua",
         "url_tmp": "http://kulya.com.ua/patrony/%s/%s/?sort=p.price&order=ASC&limit=100",
-        "data_file": path + "/data/kulya.json",
+        "data_file": data_path + "kulya.json",
         "ammo_type": {
             "rifle": "nareznye/kalibr-nareznoj-",
             "traumatic": "travmaticheskie/kalibr-travmat-",
@@ -164,7 +166,7 @@ shops = {
         "shop_name": "shopgun",
         "url": "https://shopgun.com.ua",
         "url_tmp": "https://shopgun.com.ua/patrhone/%s/%s/?sort=p.price&order=ASC&limit=1002",
-        "data_file": path + "/data/shopgun.json",
+        "data_file": data_path + "shopgun.json",
         "ammo_type": {
             "rifle": "narezhie-patrhone",
             "bore": "gladkostvolnye-patrhone",
@@ -189,7 +191,7 @@ shops = {
         "shop_name": "tactical systems",
         "url": "https://tactical-systems.com.ua",
         "url_tmp": "https://tactical-systems.com.ua/%s/filter/kalibr=%s;sort_price=ASC&limit=100/",
-        "data_file": path + "/data/ts.json",
+        "data_file": data_path + "ts.json",
         "ammo_type": {
             "rifle": "nareznye-boepripasy",
             "traumatic": "boepripasyi-neletalnogo-deystviya",
@@ -220,7 +222,7 @@ shops = {
         "url": "https://tactica.kiev.ua",
         "url_request": "https://tactica.kiev.ua/index.php?route=module/filter_products/getProductsByCategory",
         "url_tmp": "https://tactica.kiev.ua/shop_1/ammunition/%s/&p_val=[0:3]&a_val=[%s]&limit=100&sort=p.price&order=DESC&page=1",
-        "data_file": path + "/data/tactica.json",
+        "data_file": data_path + "tactica.json",
         "ammo_type": {
             "rifle": "threaded",
             "traumatic": "traumatic",
@@ -254,7 +256,7 @@ shops = {
         "shop_name": "four seasons",
         "url": "http://gun.lviv.ua/",
         "url_tmp": "http://gun.lviv.ua/index.php/zbroya-i-komplektuyuchi/boieprypasy/%s---%s",
-        "data_file": path + "/data/four.json",
+        "data_file": data_path + "four.json",
         "ammo_type": {
             "rifle": "narizni-patrony",
             "bore_12": "hladkostvolni-patrony/12-kalibr",
