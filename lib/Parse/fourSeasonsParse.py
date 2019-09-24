@@ -30,6 +30,12 @@ class FourSeasonsParseData(ParseData):
 
         return float(price)
 
+    def cleanTitle(self, title):
+        title = title.replace(u"Патрон нарізний ", "")
+        title = title.replace(u"Патрон ", "")
+
+        return title
+
     def getRequestProp(self, urlTmp):
         requestData = {
             "order": 2,
@@ -59,7 +65,7 @@ class FourSeasonsParseData(ParseData):
                 name = nameBlock[0]
                 price = self.cleanPriceNum(priceBlock[0])
 
-                dic["title"] = name
+                dic["title"] = self.cleanTitle(name)
                 dic["price"] = price
 
                 result.append(dict(dic))

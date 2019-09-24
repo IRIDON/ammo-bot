@@ -48,6 +48,7 @@ shops = {
     "stvol": {
         "shop_name": "stvol",
         "url": "https://stvol.ua",
+        "url_tmp": "https://stvol.ua/catalog/%s/filter/%s/apply/?page_sort=price_asc",
         "data_file": data_path + "stvol.json",
         "ammo_type": {
             "rifle": "patrony_nareznye",
