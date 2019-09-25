@@ -48,7 +48,7 @@ shops = {
     "stvol": {
         "shop_name": "stvol",
         "url": "https://stvol.ua",
-        "url_tmp": "https://stvol.ua/catalog/%s/filter/%s/apply/?page_sort=price_asc",
+        "url_tmp": "https://stvol.ua/catalog/%s/filter/kalibr-is-%s/apply/?page_sort=price_asc",
         "data_file": data_path + "stvol.json",
         "ammo_type": {
             "rifle": "patrony_nareznye",
@@ -56,31 +56,31 @@ shops = {
             "traumatic": "patrony_travmaticheskogo_deystviya"
         },
         "category": {
-            "223_Rem": ["kalibr-is-91bb3ef4-f38b-11e2-bd5e-1cc1de282c58", "rifle", 0],
-            "308_Win": ["kalibr-is-99957513-f397-11e2-bd5e-1cc1de282c58", "rifle", 1],
-            "338_Lapua_Mag": ["kalibr-is-ca7b6293-be7d-11e4-bddc-1cc1de282c58", "rifle", 2],
-            "22_LR": ["kalibr-is-ada64ea2-f397-11e2-bd5e-1cc1de282c58", "rifle", 3],
-            "17_HMR": ["kalibr-is-b522825f-f397-11e2-bd5e-1cc1de282c58", "rifle", 4],
-            "30-06": ["kalibr-is-c20cd9bc-f397-11e2-bd5e-1cc1de282c58", "rifle", 5],
-            "300_Win_Mag": ["kalibr-is-cf2df0be-f397-11e2-bd5e-1cc1de282c58", "rifle", 6],
-            "338_Win_Mag": ["kalibr-is-f37388bc-bb65-11e4-8f94-1cc1de282c58", "rifle", 7],
-            "6.5_Creedmoor": ["kalibr-is-7c63096b-6b9c-11e7-ab40-00155dfa860b", "rifle", 8],
-            "7.62x39": ["kalibr-is-6ed3512f-f38b-11e2-bd5e-1cc1de282c58", "rifle", 9],
-            "222_Rem": ["kalibr-is-619213a1-f397-11e2-bd5e-1cc1de282c58", "rifle", 10],
-            "7.62x54R": ["kalibr-is-9a7138f2-b03a-11e4-bc08-1cc1de282c58", "rifle", 50],
-            "9x21": ["kalibr-is-d6ac461a-d936-11e4-8e15-1cc1de282c58", "rifle", 51],
-            "5.45x39": ["kalibr-is-4f22644d-be84-11e4-bddc-1cc1de282c58", "rifle", 52],
-            "300_AAC": ["kalibr-is-b79860b6-1837-11e6-9b00-1cc1de282c58", "rifle", 53],
-            "6.5x55": ["kalibr-is-68682503-f398-11e2-bd5e-1cc1de282c58", "rifle", 54],
-            "7mm_Rem_Mag": ["kalibr-is-05d3a7d3-d94a-11e4-8e15-1cc1de282c58", "rifle", 55],
-            "9.3x62": ["kalibr-is-247b80d0-f398-11e2-bd5e-1cc1de282c58", "rifle", 70],
+            "223_Rem": ["91bb3ef4-f38b-11e2-bd5e-1cc1de282c58", "rifle", 0],
+            "308_Win": ["99957513-f397-11e2-bd5e-1cc1de282c58", "rifle", 1],
+            "338_Lapua_Mag": ["ca7b6293-be7d-11e4-bddc-1cc1de282c58", "rifle", 2],
+            "22_LR": ["ada64ea2-f397-11e2-bd5e-1cc1de282c58", "rifle", 3],
+            "17_HMR": ["b522825f-f397-11e2-bd5e-1cc1de282c58", "rifle", 4],
+            "30-06": ["c20cd9bc-f397-11e2-bd5e-1cc1de282c58", "rifle", 5],
+            "300_Win_Mag": ["cf2df0be-f397-11e2-bd5e-1cc1de282c58", "rifle", 6],
+            "338_Win_Mag": ["f37388bc-bb65-11e4-8f94-1cc1de282c58", "rifle", 7],
+            "6.5_Creedmoor": ["7c63096b-6b9c-11e7-ab40-00155dfa860b", "rifle", 8],
+            "7.62x39": ["6ed3512f-f38b-11e2-bd5e-1cc1de282c58", "rifle", 9],
+            "222_Rem": ["619213a1-f397-11e2-bd5e-1cc1de282c58", "rifle", 10],
+            "7.62x54R": ["9a7138f2-b03a-11e4-bc08-1cc1de282c58", "rifle", 50],
+            "9x21": ["d6ac461a-d936-11e4-8e15-1cc1de282c58", "rifle", 51],
+            "5.45x39": ["4f22644d-be84-11e4-bddc-1cc1de282c58", "rifle", 52],
+            "300_AAC": ["b79860b6-1837-11e6-9b00-1cc1de282c58", "rifle", 53],
+            "6.5x55": ["68682503-f398-11e2-bd5e-1cc1de282c58", "rifle", 54],
+            "7mm_Rem_Mag": ["05d3a7d3-d94a-11e4-8e15-1cc1de282c58", "rifle", 55],
+            "9.3x62": ["247b80d0-f398-11e2-bd5e-1cc1de282c58", "rifle", 70],
 
-            "9RA": ["kalibr-is-f5f0d571-640b-11e4-9e41-1cc1de282c58", "traumatic", 80],
+            "9RA": ["f5f0d571-640b-11e4-9e41-1cc1de282c58", "traumatic", 80],
 
-            "12/70": ["kalibr-is-a45bde61-d219-11e4-8e15-1cc1de282c58", "bore", 90],
-            "12/76": ["kalibr-is-5998ccc0-d90e-11e4-8e15-1cc1de282c58", "bore", 91],
-            "16/70": ["kalibr-is-114c2f3e-d210-11e4-8e15-1cc1de282c58", "bore", 92],
-            "20/70": ["kalibr-is-d44ea6b4-d204-11e4-8e15-1cc1de282c58", "bore", 93]
+            "12/70": ["a45bde61-d219-11e4-8e15-1cc1de282c58", "bore", 90],
+            "12/76": ["5998ccc0-d90e-11e4-8e15-1cc1de282c58", "bore", 91],
+            "16/70": ["114c2f3e-d210-11e4-8e15-1cc1de282c58", "bore", 92],
+            "20/70": ["d44ea6b4-d204-11e4-8e15-1cc1de282c58", "bore", 93]
         }
     },
     "safari": {
