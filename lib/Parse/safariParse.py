@@ -41,7 +41,9 @@ class SafariParseData(ParseData):
                 dic["title"] = self.cleanTitle(name).encode('raw-unicode-escape')
                 dic["price"] = self.cleanPriceNum(price)
 
-                result.append(dict(dic))
+                result.append(
+                    dict(dic)
+                )
             else:
                 break
 

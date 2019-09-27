@@ -57,7 +57,9 @@ class IbisParseData(ParseData):
                 dic["title"] = self.cleanTitle(name).encode('utf-8').strip()
                 dic["price"] = price
 
-                result.append(dict(dic))
+                result.append(
+                    dict(dic)
+                )
             else:
                 break
 

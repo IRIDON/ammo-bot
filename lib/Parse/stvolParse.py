@@ -51,7 +51,9 @@ class StvolParseData(ParseData):
                 dic["title"] = self.cleanTitle(name)
                 dic["price"] = self.getPriceByAmount(price, amount)
 
-                result.append(dict(dic))
+                result.append(
+                    dict(dic)
+                )
 
         return sorted(result, key=self.sortArrayByPrice)
     

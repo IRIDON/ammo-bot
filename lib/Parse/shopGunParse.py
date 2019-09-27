@@ -42,7 +42,9 @@ class ShopGunData(ParseData):
                 dic["title"] = self.cleanTitle(name)
                 dic["price"] = round(calcPrice, 2)
 
-                result.append(dict(dic))
+                result.append(
+                    dict(dic)
+                )
 
         return sorted(result, key=self.sortArrayByPrice)
     

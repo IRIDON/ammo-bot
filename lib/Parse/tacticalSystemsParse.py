@@ -42,7 +42,9 @@ class TacticalSystemsParseData(ParseData):
                 dic["title"] = self.cleanTitle(name)
                 dic["price"] = self.getPriceByAmount(price, amount)
 
-                result.append(dict(dic))
+                result.append(
+                    dict(dic)
+                )
             else:
                 break
 

@@ -166,7 +166,8 @@ class TelegramConstructor(BotConstructor):
         try:
             discountData = self.getDiscountData(callData)
             data = callData.data.split('_')
-            currentCaliber = self.categoriesKeys[int(data[1])]
+            index = int(data[1])
+            currentCaliber = self.categoriesKeys[index]
             language = self.getLanguage(callData)
 
             result = self.topPrices(
@@ -217,7 +218,8 @@ class TelegramConstructor(BotConstructor):
         try:
             discountData = self.getDiscountData(callData)
             data = callData.data.split('_')
-            currentCaliber = self.calibersAll[int(data[1])]
+            index = int(data[1])
+            currentCaliber = self.calibersAll[index]
             language = self.getLanguage(callData)
 
             result = self.allShopPrices(
@@ -235,8 +237,9 @@ class TelegramConstructor(BotConstructor):
     def getShopNameFromIndex(self, callData):
         try:
             data = callData.data.split('_')
+            index = int(data[1])
 
-            return self.availableShops[int(data[1])]
+            return self.availableShops[index]
         except Exception as error:
             log.error(error)
 

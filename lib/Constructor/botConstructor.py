@@ -38,7 +38,9 @@ class BotConstructor(object):
     def getDiscount(self, price, discount):
         factor = (100 - float(discount)) / 100
 
-        return float(format(price * factor, '.2f'))
+        return float(
+            format(price * factor, '.2f')
+        )
 
     def getLanguage(self, data):
         user_data = data.from_user
@@ -47,7 +49,7 @@ class BotConstructor(object):
         if not language_code:
             return default_lang
 
-        if language_code.find('-') != -1:
+        if "-" in language_code:
             return language_code.split('-')[0].lower()
         else:
             return language_code
@@ -72,7 +74,9 @@ class BotConstructor(object):
         last = 0.0
 
         while last < len(seq):
-            out.append(seq[int(last):int(last + avg)])
+            out.append(
+                seq[int(last):int(last + avg)]
+            )
             last += avg
 
         return out
@@ -231,10 +235,12 @@ class BotConstructor(object):
         )
 
     def getKeyName(self, name):
-        return name.replace("_", " ")
+        separator = "_"
+
+        return name.replace(separator, " ")
 
     def getCategoryUrl(self, url):
-        utmSeparator = '?' if url.find('?') == -1 else '&'
+        utmSeparator = '&' if "?" in url else '?'
 
         return  url + utmSeparator + "utm_source=ammoBot"
 

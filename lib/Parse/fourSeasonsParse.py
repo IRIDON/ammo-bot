@@ -63,7 +63,9 @@ class FourSeasonsParseData(ParseData):
                 dic["title"] = self.cleanTitle(name)
                 dic["price"] = price
 
-                result.append(dict(dic))
+                result.append(
+                    dict(dic)
+                )
 
         return sorted(result, key=self.sortArrayByPrice)
     

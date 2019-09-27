@@ -95,7 +95,9 @@ class TacticaParseData(ParseData):
                     dic["title"] = self.cleanTitle(item['name'])
                     dic["price"] = price
 
-                    result.append(dict(dic))
+                    result.append(
+                        dict(dic)
+                    )
 
         return sorted(result, key=self.sortArrayByPrice)
     

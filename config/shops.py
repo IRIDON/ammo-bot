@@ -253,7 +253,7 @@ shops = {
             # "9x18": ["[33:9x18]", "rifle", 10],
         }
     },
-    "four_seasons" : {
+    "four-seasons" : {
         "shop_name": "four seasons",
         "url": "http://gun.lviv.ua/",
         "url_tmp": "http://gun.lviv.ua/index.php/zbroya-i-komplektuyuchi/boieprypasy/%s---%s",
