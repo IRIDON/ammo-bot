@@ -48,8 +48,10 @@ class ParseData(object):
 
     def get_link_response_code(link_to_check):
         resp = requests.head(link_to_check)
+
         if resp.status_code == 405:
             resp = requests.get(link_to_check)
+            
         return resp.status_code
 
     def getHourInSeconds(self, hour):
