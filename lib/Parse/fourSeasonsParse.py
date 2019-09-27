@@ -31,6 +31,7 @@ class FourSeasonsParseData(ParseData):
         return float(price)
 
     def cleanTitle(self, title):
+        title = title.replace(u"Патрон нарізний ", "")
         title = title.replace(u"Патрон ", "")
         title = title.replace(u"Набій ", "")
 

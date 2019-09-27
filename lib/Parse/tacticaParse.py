@@ -32,11 +32,12 @@ class TacticaParseData(ParseData):
         return priceNum if priceNum != 0 else None
 
     def cleanTitle(self, title):
-        title = title.replace(u"Набій мисливський ", "")
-        title = title.replace(u"Набій спортивний ", "")
         title = title.replace(u"Набій нарізний мисливський ", "")
         title = title.replace(u"Набій нарізний спортивний ", "")
+        title = title.replace(u"Набій мисливський ", "")
+        title = title.replace(u"Набій спортивний ", "")
         title = title.replace(u"Набій нарізний ", "")
+        title = title.replace(u"Набій ", "")
 
         return title;
 
