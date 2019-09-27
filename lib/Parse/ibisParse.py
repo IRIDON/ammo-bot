@@ -2,6 +2,7 @@
 
 from lib.Parse.parseData import ParseData
 from lxml import html
+from config.shops import shops
 import re
 
 class IbisParseData(ParseData):
@@ -12,7 +13,9 @@ class IbisParseData(ParseData):
         "urlTmp",
         "shopName"
     ]
-    def __init__(self, settings):
+    def __init__(self):
+        settings = shops["ibis"]
+
         self.shopName = settings["shop_name"]
         self.categories = settings["ammo_type"]
         self.dataFile = settings["data_file"]

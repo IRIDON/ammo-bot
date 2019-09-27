@@ -2,6 +2,7 @@
 
 from lib.Parse.parseData import ParseData
 from lxml import html
+from config.shops import shops
 import re
 
 class ShopGunData(ParseData):
@@ -13,18 +14,15 @@ class ShopGunData(ParseData):
         "dataFile",
         "shopName"
     ]
-    def __init__(self, settings):
+    def __init__(self):
+        settings = shops["shopgun"]
+
         self.shopName = settings["shop_name"]
         self.categories = settings["ammo_type"]
         self.availableAmmo = settings["category"]
         self.url = settings["url"]
         self.urlTmp = settings["url_tmp"]
         self.dataFile = settings["data_file"]
-
-    def cleanPriceNum(self, price):
-        price = re.sub('[^0-9a-zA-Z-.]+', '', price)
-
-        return float(price) if price else 0
 
     def getStructure(self, url):
         result = []

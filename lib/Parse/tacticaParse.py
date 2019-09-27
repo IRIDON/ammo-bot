@@ -3,6 +3,7 @@
 from lib.Parse.parseData import ParseData
 from lxml import html
 import re
+from config.shops import shops
 import urllib
 
 class TacticaParseData(ParseData):
@@ -14,7 +15,9 @@ class TacticaParseData(ParseData):
         "dataFile",
         "shopName"
     ]
-    def __init__(self, settings):
+    def __init__(self):
+        settings = shops["tactica"]
+
         self.shopName = settings["shop_name"]
         self.categories = settings["ammo_type"]
         self.availableAmmo = settings["category"]
@@ -23,13 +26,6 @@ class TacticaParseData(ParseData):
         self.urlRequest = settings["url_request"]
         self.urlTmp = settings["url_tmp"]
         self.dataFile = settings["data_file"]
-
-    def cleanPriceNum(self, price):
-        priceRe = re.search("([0-9-\.]+) %s" % (u"грн."), price)
-        priceVal = priceRe.group(1)
-        priceNum = float(priceVal)
-
-        return priceNum if priceNum != 0 else None
 
     def cleanTitle(self, title):
         title = title.replace(u"Набій нарізний мисливський ", "")

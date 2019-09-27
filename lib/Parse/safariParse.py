@@ -2,6 +2,7 @@
 
 from lib.Parse.parseData import ParseData
 from lxml import html
+from config.shops import shops
 import re
 
 class SafariParseData(ParseData):
@@ -13,7 +14,9 @@ class SafariParseData(ParseData):
         "dataFile",
         "shopName"
     ]
-    def __init__(self, settings):
+    def __init__(self):
+        settings = shops["safari"]
+
         self.shopName = settings["shop_name"]
         self.categories = settings["ammo_type"]
         self.availableAmmo = settings["category"]
@@ -21,29 +24,18 @@ class SafariParseData(ParseData):
         self.urlTmp = settings["url_tmp"]
         self.dataFile = settings["data_file"]
 
-    def cleanPriceNum(self, price):
-        price = re.sub('[^0-9a-zA-Z]+', '.', price[0])
-        price = price[:-1]
-
-        try:
-            return float(price)
-        except ValueError:
-            price = price.replace('.', '', 2)
-            price = float(price[:-2])
-
-            return price
-
     def getStructure(self, url):
         result = []
         page = self.requestsPage(url)
         blocks = page.xpath('.//div[@class="g-l-i g-l-i-list"]')
 
         for item in blocks:
-            price = item.xpath('.//div[@name="price"]/text()')
+            priceBlock = item.xpath('.//div[@name="price"]/text()')
 
-            if price:
+            if priceBlock:
                 dic = {}
                 nameBlock = item.xpath('.//div[@class="g-l-i-details-title"]/a/text()')
+                price = priceBlock[0]
                 name = nameBlock[0]
 
                 dic["title"] = self.cleanTitle(name).encode('raw-unicode-escape')

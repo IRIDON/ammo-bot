@@ -22,7 +22,7 @@ shops = {
             "7.62x39": ["762h39", "rifle", 3],
             "22_LR": ["22-lr", "rifle", 4],
             "17_HMR": ["17-hmr", "rifle", 5],
-            "30-06": ["177", "rifle", 6],
+            "30-06": ["30-06", "rifle", 6],
             "300_Win_Mag": ["300-win-mag-0e0", "rifle", 7],
             "6.5_Creedmoor": ["65-creedmoor", "rifle", 8],
             "22_WMR": ["22-wmr", "rifle", 11],

@@ -2,6 +2,7 @@
 
 from lib.Parse.parseData import ParseData
 from lxml import html
+from config.shops import shops
 import re
 
 class KulyaParseData(ParseData):
@@ -13,22 +14,15 @@ class KulyaParseData(ParseData):
         "dataFile",
         "shopName"
     ]
-    def __init__(self, settings):
+    def __init__(self):
+        settings = shops["kulya"]
+
         self.shopName = settings["shop_name"]
         self.categories = settings["ammo_type"]
         self.availableAmmo = settings["category"]
         self.url = settings["url"]
         self.urlTmp = settings["url_tmp"]
         self.dataFile = settings["data_file"]
-
-    def cleanPriceNum(self, price):
-        price = price.split(" ")[0]
-        price = re.sub('[^0-9a-zA-Z]+', '.', price)
-
-        if price[len(price) - 1] == '.':
-            price = price[:-1]
-
-        return float(price)
 
     def getAmount(self, string):
         amount = 1;
