@@ -5,6 +5,7 @@ path = os.path.abspath(os.path.split(sys.argv[0])[0])
 
 default_settings = {
     "API_TOKEN": apiKey["BOT_API_TOKEN"],
+    "AI_API_KEY": apiKey["AI_API_KEY"],
     "DEV": apiKey["DEV"],
     "DATA": {
         "DISCONT":  path + "/data/discount.vdb"

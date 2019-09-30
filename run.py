@@ -3,14 +3,17 @@ from config import settings
 from config.message import message
 from config.shops import shops
 
-import telebot, time
+import telebot, time, apiai, json
 from telebot import types
 from lib.Constructor.telegramConstructor import TelegramConstructor
 from lib.Logger.logger import Log
 
 log = Log()
 
+dialogBot = apiai.ApiAI(settings.AI_API_KEY)
+
 bot = telebot.TeleBot(settings.API_TOKEN)
+
 botConstructor = TelegramConstructor(
     bot,
     currency=settings.CURRENCY,
@@ -37,33 +40,52 @@ def sendTop(message):
 def sendTop(message):
     botConstructor.botSelectStore(message, 'select')
 
-@bot.callback_query_handler(func=lambda call: call.data.find("select") != -1)
+@bot.callback_query_handler(func=lambda call: "select" in call.data)
 def callDiscount(call):
     botConstructor.botComandDiscount(call)
 
-@bot.callback_query_handler(func=lambda call: call.data.find("discount") != -1)
+@bot.callback_query_handler(func=lambda call: "discount" in call.data)
 def callDiscount(call):
     botConstructor.setDiscontToBase(call)
 
-@bot.callback_query_handler(func=lambda call: call.data.find("shop") != -1)
+@bot.callback_query_handler(func=lambda call: "shop" in call.data)
 def callTop(call):
     botConstructor.botComandTop(call)
 
-@bot.callback_query_handler(func=lambda call: call.data.find("top") != -1)
+@bot.callback_query_handler(func=lambda call: "top" in call.data)
 def callTop(call):
     botConstructor.botCallTop(call)
 
-@bot.callback_query_handler(func=lambda call: call.data.find("all") != -1)
+@bot.callback_query_handler(func=lambda call: "all" in call.data)
 def callAll(call):
     botConstructor.botCallAll(call)
+
+
+def bot_request(message):
+    try:
+        request = dialogBot.text_request()
+        request.lang = 'ru'
+        request.session_id = 'AmmoBot'
+        request.query = message
+        responseJson = json.loads(request.getresponse().read().decode('utf-8'))
+        botMessage = responseJson['result']['fulfillment']['speech']
+
+        if botMessage:
+            return botMessage
+        else:
+            return "Я Вас не совсем понял!"
+
+    except Exception as error:
+        log.error(error)
+
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def echo_message(message):
     try:
-        language = botConstructor.getLanguage(message)
-        string = botConstructor.getString("empy", language)
+        response = bot_request(message.text)
 
-        botConstructor.botSendMessage(message.chat.id, string)
+        botConstructor.botSendMessage(message.chat.id, response)
+
     except Exception as error:
         botConstructor.botSendMessage(message.chat.id, 'Opppsss!')
         log.error(error)
