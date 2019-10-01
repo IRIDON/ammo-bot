@@ -70,10 +70,7 @@ def bot_request(message):
         responseJson = json.loads(request.getresponse().read().decode('utf-8'))
         botMessage = responseJson['result']['fulfillment']['speech']
 
-        if botMessage:
-            return botMessage
-        else:
-            return "Я Вас не совсем понял!"
+        return botMessage if botMessage else "Я Вас не совсем понял!"
 
     except Exception as error:
         log.error(error)
