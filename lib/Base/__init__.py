@@ -1,12 +1,7 @@
-import sys
+import sys, ast
+
 from config import settings
-
-if settings.DEV:
-    p = "/Library/Python/2.7/site-packages"
-    sys.path.append(p)
-
 from vedis import Vedis
-import ast
 
 class Base(object):
     __slots__ = [
