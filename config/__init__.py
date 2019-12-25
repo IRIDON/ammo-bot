@@ -25,6 +25,7 @@ default_settings = {
         "30-06",
         "300_Win_Mag",
         "6.5_Creedmoor",
+        "300_AAC",
         "9x21",
         "22_WMR",
         "300_Win",

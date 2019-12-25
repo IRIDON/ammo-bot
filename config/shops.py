@@ -25,6 +25,7 @@ shops = {
             "30-06": ["177", "rifle", 6],
             "300_Win_Mag": ["300-win-mag-0e0", "rifle", 7],
             "6.5_Creedmoor": ["65-creedmoor", "rifle", 8],
+            "300_AAC": ["300-whisperblackout", "rifle", 9],
             "22_WMR": ["22-wmr", "rifle", 11],
             "7.62x54_R": ["7h57-r", "rifle", 12],
             "222_Rem": ["222-rem", "rifle", 13],
