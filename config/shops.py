@@ -27,7 +27,7 @@ shops = {
             "6.5_Creedmoor": ["65-creedmoor", "rifle", 8],
             "300_AAC": ["300-whisperblackout", "rifle", 9],
             "22_WMR": ["22-wmr", "rifle", 11],
-            "7.62x54_R": ["7h57-r", "rifle", 12],
+            "7.62x54_R": ["762h54-r", "rifle", 12],
             "222_Rem": ["222-rem", "rifle", 13],
             "243_Win": ["243-win", "rifle", 50],
             "9x21": ["9mm-9h21", "rifle", 51],
