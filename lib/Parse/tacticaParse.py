@@ -34,6 +34,7 @@ class TacticaParseData(ParseData):
         title = title.replace(u"Набій спортивний ", "")
         title = title.replace(u"Набій нарізний ", "")
         title = title.replace(u"Набій ", "")
+        title = title.replace(u" / ", "/")
 
         return title;
 

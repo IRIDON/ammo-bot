@@ -46,6 +46,7 @@ class KulyaParseData(ParseData):
         title = title.replace(u"Патрон нарізний ", "")
         title = title.replace(u"Патрон ", "")
         title = title.replace(u"НабоЇ ", "")
+        title = title.replace(u" / ", "/")
 
         return title;
 
