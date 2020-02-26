@@ -1,5 +1,5 @@
-import sys
-import ast
+import sys, ast
+
 from config import settings
 from vedis import Vedis
 
