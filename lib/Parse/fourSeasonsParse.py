@@ -15,7 +15,7 @@ class FourSeasonsParseData(ParseData):
         "shopName"
     ]
     def __init__(self):
-        settings = shops["four_seasons"]
+        settings = shops["four-seasons"]
 
         self.shopName = settings["shop_name"]
         self.categories = settings["ammo_type"]
@@ -68,4 +68,3 @@ class FourSeasonsParseData(ParseData):
                 )
 
         return sorted(result, key=self.sortArrayByPrice)
-    
