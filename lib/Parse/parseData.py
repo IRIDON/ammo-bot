@@ -93,7 +93,7 @@ class ParseData(object):
     def cleanTitle(self, title):
         title = title.replace(u"Патрон нарезной ", "")
         title = title.replace(u"Патрон ", "")
-        title = title.replace(u" / ", "/")
+        title = title.replace(u" /", "/")
 
         return title;
 

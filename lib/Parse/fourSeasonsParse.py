@@ -28,7 +28,7 @@ class FourSeasonsParseData(ParseData):
         title = title.replace(u"Патрон нарізний ", "")
         title = title.replace(u"Патрон ", "")
         title = title.replace(u"Набій ", "")
-        title = title.replace(u" / ", "/")
+        title = title.replace(u" /", "/")
 
         return title
 
