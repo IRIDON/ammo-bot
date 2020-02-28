@@ -81,7 +81,7 @@ class ParseData(object):
             price = price.split(" ")[0]
 
         price = re.sub('[^0-9a-zA-Z]+', '.', price)
-
+        
         if price[len(price) - 1] == '.':
             price = price[:-1]
 

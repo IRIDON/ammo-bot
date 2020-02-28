@@ -36,7 +36,9 @@ class TacticalSystemsParseData(ParseData):
             if priceBlock and nameBlock:
                 dic = {}
                 name = nameBlock[0]
-                price = self.cleanPriceNum(priceBlock[0])
+                price = self.cleanPriceNum(
+                    priceBlock[0].replace(' ', '')
+                )
                 amount = self.getAmount(name)
 
                 dic["title"] = self.cleanTitle(name)
