@@ -20,7 +20,7 @@ shops = {
             "308_Win": ["308-win-76251", "rifle", 1],
             "338_Lapua_Mag": ["338-lapua-mag", "rifle", 2],
             "7.62x39": ["762h39", "rifle", 3],
-            "22_LR": ["22-lr", "rifle", 4],
+            "22_LR": ["22-lr_snw", "rifle", 4],
             "17_HMR": ["17-hmr", "rifle", 5],
             "30-06": ["30-06", "rifle", 6],
             "300_Win_Mag": ["300-win-mag-0e0", "rifle", 7],
