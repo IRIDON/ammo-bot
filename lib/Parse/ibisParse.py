@@ -7,6 +7,7 @@ import re
 
 class IbisParseData(ParseData):
     __slots__ = [
+        "url",
         "ammo_type",
         "dataFile",
         "availableAmmo",
@@ -16,6 +17,7 @@ class IbisParseData(ParseData):
     def __init__(self):
         settings = shops["ibis"]
 
+        self.url = settings["url"]
         self.shopName = settings["shop_name"]
         self.categories = settings["ammo_type"]
         self.dataFile = settings["data_file"]
@@ -34,6 +36,18 @@ class IbisParseData(ParseData):
 
             return float(pn[0] + pn[1])
 
+    def getAmountFromUrl(self, url):
+        page = self.requestsPage(self.url + url)
+        blocks = page.xpath('.//*[@class="prod_extra_table"]/tr/td')
+
+        for item in blocks:
+            text = item.xpath('./text()')
+
+            if text and u'шт' in text[0]:
+                return self.getAmount(text[0])
+            else:
+                return 1
+
     def getStructure(self, url):
         result = []
         amountCategory = self.availableAmmo['22_LR'][0]
@@ -49,9 +63,8 @@ class IbisParseData(ParseData):
                 name = nameBlock[0]
 
                 if(amountCategory in url):
-                    extra = item.xpath('.//div[@class="pb_extra"]/text()')
-                    extraStr = ','.join(extra)
-                    amount = self.getAmount(extraStr)
+                    itemUrl = item.xpath('.//a[@class="pb_product_name"]/@href')
+                    amount = self.getAmountFromUrl(itemUrl[0])
                     price = self.getPriceByAmount(price, amount)
 
                 dic["title"] = self.cleanTitle(name).encode('utf-8').strip()
