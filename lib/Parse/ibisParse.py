@@ -45,8 +45,6 @@ class IbisParseData(ParseData):
 
             if text and u'шт' in text[0]:
                 return self.getAmount(text[0])
-            else:
-                return 1
 
     def getStructure(self, url):
         result = []
@@ -61,11 +59,11 @@ class IbisParseData(ParseData):
                 dic = {}
                 nameBlock = item.xpath('.//a[@class="pb_product_name"]/text()')
                 name = nameBlock[0]
-
+                
                 if(amountCategory in url):
                     itemUrl = item.xpath('.//a[@class="pb_product_name"]/@href')
                     amount = self.getAmountFromUrl(itemUrl[0])
-                    price = self.getPriceByAmount(price, amount)
+                    price = self.getPriceByAmount(price, amount if amount else 1)
 
                 dic["title"] = self.cleanTitle(name).encode('utf-8').strip()
                 dic["price"] = price
