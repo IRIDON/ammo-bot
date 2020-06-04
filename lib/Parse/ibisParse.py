@@ -36,22 +36,37 @@ class IbisParseData(ParseData):
 
             return float(pn[0] + pn[1])
 
+    def getAmount(self, string):
+        amount = 1;
+        amountRe = re.search("([0-9]+) ?%s" % (u"шт"), string)
+
+        if amountRe:
+            amount = int(amountRe.group(1))
+        else:
+            amount = float(string)
+
+        return amount
+
     def getAmountFromUrl(self, url):
         page = self.requestsPage(self.url + url)
-        blocks = page.xpath('.//*[@class="prod_extra_table"]/tr/td')
+        blocks = page.xpath('.//*[@class="prod_extra_table"]/tr')
 
         for item in blocks:
-            text = item.xpath('./text()')
+            text = item.xpath('./td/b/text()')
 
             if text and u'шт' in text[0]:
-                return self.getAmount(text[0])
+                secondItem = item.xpath('./td')[1]
+                secondItemText = secondItem.xpath('./text()')
 
-    def getStructure(self, url):
+                return self.getAmount(
+                    secondItemText[0]
+                )
+
+    def getPageData(self, page, url):
         result = []
         amountCategory = self.availableAmmo['22_LR'][0]
-        page = self.requestsPage(url)
         blocks = page.xpath('.//form[@class="product_brief_list "]')
-
+        
         for item in blocks:
             price = self.getPrices(item)
 
@@ -73,5 +88,19 @@ class IbisParseData(ParseData):
                 )
             else:
                 break
+
+        return result
+
+    def getStructure(self, url):
+        page = self.requestsPage(url)
+        paginationsPage = page.xpath('.//div[@class="category_nav"]/a[@class="page_num"]/@href')
+        result = self.getPageData(page, url)
+        
+        if len(paginationsPage) != 0:
+            for pageUrl in paginationsPage:
+                fullUrl = self.url + pageUrl
+                itemPage = self.requestsPage(fullUrl)
+
+                result = result + self.getPageData(itemPage, fullUrl)
 
         return sorted(result, key=self.sortArrayByPrice)

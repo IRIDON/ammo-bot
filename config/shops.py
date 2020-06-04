@@ -7,7 +7,7 @@ shops = {
 	"ibis": {
         "shop_name": "ibis",
         "url": "https://ibis.net.ua/",
-        "url_tmp": "https://ibis.net.ua/products/%s/search/%s/?isort=cheap&show_all=yes",
+        "url_tmp": "https://ibis.net.ua/products/%s/search/%s/?isort=cheap",
         "data_file": data_path + "ibis.json",
         "ammo_type": {
             "rifle": "patrony-nareznye86",
