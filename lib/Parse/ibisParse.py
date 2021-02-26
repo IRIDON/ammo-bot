@@ -38,15 +38,14 @@ class IbisParseData(ParseData):
 
     def getAmountFromUrl(self, url):
         page = self.requestsPage(self.url + url)
-        blocks = page.xpath('.//*[@class="prod_extra_table"]/tr/td')
+
+        blocks = page.xpath('//table[@class="prod_extra_table"]/tr/td/text()')
 
         for item in blocks:
-            text = item.xpath('./text()')
-
-            if text and u'шт' in text[0]:
-                return self.getAmount(text[0])
-            else:
-                return 1
+            if item and u'шт' in item:
+                return self.getAmount(item)
+        else:
+            return 1
 
     def getStructure(self, url):
         result = []
