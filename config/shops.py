@@ -4,7 +4,7 @@ path = os.path.abspath(os.path.split(sys.argv[0])[0])
 data_path = path + "/data/"
 
 shops = {
-	"ibis": {
+    "ibis": {
         "shop_name": "ibis",
         "url": "https://ibis.net.ua/",
         "url_tmp": "https://ibis.net.ua/products/%s/search/%s/?isort=cheap&show_all=yes",
@@ -16,29 +16,28 @@ shops = {
             "flober": "patrony-flobera",
         },
         "category": {
-            "223_Rem": ["223-rem-55645-9fv", "rifle", 0],
-            "308_Win": ["308-win-76251", "rifle", 1],
-            "338_Lapua_Mag": ["338-lapua-mag", "rifle", 2],
+            "223_Rem": ["223-rem-sw8", "rifle", 0],
+            "308_Win": ["308-win-dgs", "rifle", 1],
+            "338_Lapua_Mag": ["338-lapua-mag-1s0", "rifle", 2],
             "7.62x39": ["762h39", "rifle", 3],
             "22_LR": ["22-lr_snw", "rifle", 4],
             "17_HMR": ["17-hmr_e94", "rifle", 5],
-            "30-06": ["30-06", "rifle", 6],
+            "30-06": ["30-06-s8e", "rifle", 6],
             "300_Win_Mag": ["300-win-mag-0e0", "rifle", 7],
             "6.5_Creedmoor": ["65-creedmoor", "rifle", 8],
             "300_AAC": ["300-whisperblackout", "rifle", 9],
-            "22_WMR": ["22-wmr", "rifle", 11],
+            "22_WMR": ["22-wmr_tgr", "rifle", 11],
             "7.62x54_R": ["762h54-r", "rifle", 12],
             "222_Rem": ["222-rem-99s", "rifle", 13],
-            "243_Win": ["243-win", "rifle", 50],
+            "243_Win": ["243-win-1i9", "rifle", 50],
             "9x21": ["9mm-9x21", "rifle", 51],
             "5.45x39": ["545h39", "rifle", 52],
-            "6.5x55": ["65x55", "rifle", 53],
             "50_BMG": ["50-bmg", "rifle", 54],
             "7mm_Rem_Mag": ["7mm-rem-mag", "rifle", 55],
             "8x57_JS": ["8h57-js", "rifle", 60],
             "9.3x62": ["93h62", "rifle", 61],
 
-            "9RA": ["9-mm_m16", "traumatic", 70],
+            "9RA": ["9-mm_m16/9-mm-ra", "traumatic", 70],
 
             "12/70": ["1270", "bore", 80],
             "12/76": ["1276", "bore", 81],
