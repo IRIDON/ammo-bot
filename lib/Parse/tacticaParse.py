@@ -92,7 +92,7 @@ class TacticaParseData(ParseData):
                 
                 dic = {}
                 price = self.cleanPriceNum(item['price'])
-                print(item['price'])
+
                 if price:
                     dic["title"] = self.cleanTitle(item['name'])
                     dic["price"] = price
