@@ -24,6 +24,9 @@ class TacticalSystemsParseData(ParseData):
         self.urlTmp = settings["url_tmp"]
         self.dataFile = settings["data_file"]
 
+    def cleanName(self, name):
+        return name.replace('\n', '').strip();
+
     def getStructure(self, url):
         result = []
         page = self.requestsPage(url)
@@ -35,7 +38,7 @@ class TacticalSystemsParseData(ParseData):
 
             if priceBlock and nameBlock:
                 dic = {}
-                name = nameBlock[0]
+                name = self.cleanName(nameBlock[0])
                 price = self.cleanPriceNum(
                     priceBlock[0].replace(' ', '')
                 )

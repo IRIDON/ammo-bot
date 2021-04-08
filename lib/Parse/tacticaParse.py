@@ -75,7 +75,7 @@ class TacticaParseData(ParseData):
             "page": "1",
             "path": "189_67_69",
             "p_val[min]": "0",
-            "p_val[max]": "2",
+            "p_val[max]": "9999999",
         }
 
         if not value and not category:
@@ -89,9 +89,10 @@ class TacticaParseData(ParseData):
 
         if 'products' in data:
             for item in data['products']:
+                
                 dic = {}
                 price = self.cleanPriceNum(item['price'])
-
+                print(item['price'])
                 if price:
                     dic["title"] = self.cleanTitle(item['name'])
                     dic["price"] = price

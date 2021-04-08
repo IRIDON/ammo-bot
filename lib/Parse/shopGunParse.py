@@ -27,7 +27,7 @@ class ShopGunData(ParseData):
     def getStructure(self, url):
         result = []
         page = self.requestsPage(url)
-        blocks = page.xpath("//div[contains(@class, 'product')]") 
+        blocks = page.xpath('.//div[@class="product"]')
 
         for item in blocks:
             dic = {}

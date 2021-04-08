@@ -191,7 +191,7 @@ shops = {
     "tactical-systems": {
         "shop_name": "tactical systems",
         "url": "https://tactical-systems.com.ua",
-        "url_tmp": "https://tactical-systems.com.ua/%s/filter/kalibr=%s;sort_price=ASC&limit=100/",
+        "url_tmp": "https://tactical-systems.com.ua/%s/filter/kalibr=%s;sort_price=ASC/",
         "data_file": data_path + "ts.json",
         "ammo_type": {
             "rifle": "nareznye-boepripasy",
@@ -240,13 +240,13 @@ shops = {
             "22_LR": ["[33:.22LR]", "rifle", 2],
             "7.62x39": ["[33:7.62x39]", "rifle", 3],
             "9x21": ["[33:9x21]", "rifle", 5],
+            "30-06": ["[33:.30-06%20Sprg%20(7.62%D1%8563)]", "rifle", 6],
 
             "12/70": ["[33:12/70]", "bore", 20],
             "16/70": ["[33:16/70]", "bore", 21],
             "20/70": ["[33:20/70]", "bore", 22],
 
             # "5.45x39": ["[33:5.45x39]", "rifle", 4],
-            # "30-06": ["[33:.30-06%20Sprg%20(7.62%D1%8563)]", "rifle", 6],
             # "300_Win_Mag": ["[33:.300%20Win%20Mag]", "rifle", 7],
             # "300_AAC": ["[33:.300%20Whisper/Blackout%20(7.62%D1%8535)]", "rifle", 8],
             # "9x19": ["[33:9x19]", "rifle", 9],
