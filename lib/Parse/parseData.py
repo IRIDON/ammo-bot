@@ -77,6 +77,7 @@ class ParseData(object):
         return currentTime
 
     def cleanPriceNum(self, price):
+        print(price)
         if " " in price:
             price = price.split(" ")[0]
 
