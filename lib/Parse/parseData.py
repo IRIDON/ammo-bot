@@ -81,6 +81,7 @@ class ParseData(object):
         if " " in price:
             price = price.split(" ")[0]
         print(price)
+        print(price.replace(' ', ''))
         price = re.sub('[^0-9a-zA-Z]+', '.', price)
 
         if price[len(price) - 1] == '.':
