@@ -24,6 +24,15 @@ class SafariParseData(ParseData):
         self.urlTmp = settings["url_tmp"]
         self.dataFile = settings["data_file"]
 
+    def cleanPriceNum(self, price):
+        price = price.encode('utf-8')
+
+        price = re.sub('[^0-9a-zA-Z]+', '.', price)
+        priceArr = price.split('.')[:-1]
+        result = "%s.%s" % (''.join(priceArr[:-1]), priceArr[len(priceArr) - 1])
+
+        return "%s.%s" % (''.join(priceArr[:-1]), priceArr[len(priceArr) - 1])
+
     def getStructure(self, url):
         result = []
         page = self.requestsPage(url)

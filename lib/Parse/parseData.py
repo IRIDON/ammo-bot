@@ -77,19 +77,17 @@ class ParseData(object):
         return currentTime
 
     def cleanPriceNum(self, price):
-        print(price)
         if " " in price:
             price = price.split(" ")[0]
-        print(price)
-        print(price.replace(' ', ''))
-        price = re.sub('[^0-9a-zA-Z]+', '.', price)
 
+        price = re.sub('[^0-9a-zA-Z]+', '.', price)
+        print(price)
         if price[len(price) - 1] == '.':
             price = price[:-1]
 
         if price[0] == '.':
             price = price[1:]
-        print(price)
+
         return float(price)
 
     def cleanTitle(self, title):
