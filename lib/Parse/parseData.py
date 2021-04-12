@@ -118,11 +118,13 @@ class ParseData(object):
         result = {
             "url": {}
         }
+        count = 0
 
         for ammo in self.availableAmmo:
             url = self.getUrl(ammo)
             data = self.getStructure(url)
-
+            
+            count += len(data)
             result[ammo] = data
             result["url"][ammo] = url
 
