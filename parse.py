@@ -14,14 +14,14 @@ from lib.Logger.logger import Log
 log = Log()
 
 models = [
-	# IbisParseData(),
-	# StvolParseData(),
-	# SafariParseData(),
-	# ShopGunData(),
+	IbisParseData(),
+	StvolParseData(),
+	SafariParseData(),
+	ShopGunData(),
 	TacticalSystemsParseData(),
-	# KulyaParseData(),
-	# TacticaParseData(),
-	# FourSeasonsParseData(),
+	KulyaParseData(),
+	TacticaParseData(),
+	FourSeasonsParseData(),
 ]
 for model in models:
 	model.parse()
