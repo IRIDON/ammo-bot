@@ -29,6 +29,7 @@ class TacticalSystemsParseData(ParseData):
 
     def getStructure(self, url):
         result = []
+        amountCategory = self.availableAmmo['22_LR'][0]
         page = self.requestsPage(url)
         blocks = page.xpath('.//div[@class="catalogCard-main"]')
 
@@ -42,10 +43,13 @@ class TacticalSystemsParseData(ParseData):
                 price = self.cleanPriceNum(
                     priceBlock[0].replace(' ', '')
                 )
-                amount = self.getAmount(name)
+
+                if(amountCategory in url):
+                    amount = self.getAmount(name)
+                    price = self.getPriceByAmount(price, amount)
 
                 dic["title"] = self.cleanTitle(name)
-                dic["price"] = self.getPriceByAmount(price, amount)
+                dic["price"] = price
 
                 result.append(
                     dict(dic)
