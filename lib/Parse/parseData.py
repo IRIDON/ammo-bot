@@ -87,7 +87,7 @@ class ParseData(object):
 
         if price[0] == '.':
             price = price[1:]
-
+        print(price)
         return float(price)
 
     def cleanTitle(self, title):
