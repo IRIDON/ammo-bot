@@ -14,19 +14,18 @@ from lib.Logger.logger import Log
 log = Log()
 
 models = [
-	# IbisParseData(),
-	# StvolParseData(),
+	IbisParseData(),
+	StvolParseData(),
 	SafariParseData(),
-	# ShopGunData(),
-	# TacticalSystemsParseData(),
-	# KulyaParseData(),
-	# TacticaParseData(),
-	# FourSeasonsParseData(),
+	ShopGunData(),
+	TacticalSystemsParseData(),
+	KulyaParseData(),
+	TacticaParseData(),
+	FourSeasonsParseData(),
 ]
-for model in models:
-	model.parse()
-# try:
-# 	for model in models:
-# 		model.parse()
-# except Exception as error:
-#     log.error(error)
+
+try:
+	for model in models:
+		model.parse()
+except Exception as error:
+    log.error(error)
