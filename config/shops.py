@@ -185,7 +185,7 @@ shops = {
             "16/70": ["patroni-16-calibra", "bore", 21],
             "20/70": ["patroni-18-calibra", "bore", 22],
 
-            "9RA": ["kalibr_9h21/?attrb[13]=101", "traumatic", 30]
+            "9RA": ["kalibr_9-mm-r-a-", "traumatic", 30]
         }
     },
     "tactical-systems": {

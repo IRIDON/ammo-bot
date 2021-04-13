@@ -26,13 +26,13 @@ class ShopGunData(ParseData):
 
     def getStructure(self, url):
         result = []
-        page = self.requestsPage(url)
+        page = self.requestsUrllib2Page(url)
         blocks = page.xpath('.//div[@class="product"]')
 
         for item in blocks:
             dic = {}
             nameBlock = item.xpath('.//div[@class="name"]/a/text()')
-            priceBlock = item.xpath('.//div[@class="price-buy"]/div/text()')
+            priceBlock = item.xpath('.//span[@class="price"]/text()')
 
             if priceBlock:
                 price = priceBlock[0]

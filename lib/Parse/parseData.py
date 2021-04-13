@@ -25,19 +25,23 @@ class ParseData(object):
         return x["price"]
 
     def requestsPage(self, url):
+        print(url)
         page = requests.get(url, verify=False)
 
         return html.fromstring(page.content)
 
     def requestsPost(self, url, data):
+        print(url)
         return requests.post(url, verify=False, data=data)
 
     def requestsPostPage(self, url, data):
+        print(url)
         page = requests.post(url, verify=False, data=data)
 
         return html.fromstring(page.content)
 
     def requestsUrllib2Page(self, url):
+        print(url)
         try:
             response = urllib2.urlopen(url)
             page = response.read()
