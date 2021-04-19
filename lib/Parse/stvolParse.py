@@ -24,6 +24,37 @@ class StvolParseData(ParseData):
         self.urlTmp = settings["url_tmp"]
         self.dataFile = settings["data_file"]
 
+    def _findAmount(self, items):
+        for text in items:
+            amount = self.getAmount(text)
+
+            if amount > 1:
+                return amount
+        else:
+            return 1
+
+    def _getAmount(self, item):
+        amountTexts = item.xpath('.//div[@class="tov-option-line"]/text()')
+        amount = self._findAmount(amountTexts)
+
+        if amount > 1:
+            return amount
+        else:
+            url = item.xpath('.//a[@class="tov-name"]/@href')
+            amount_url = self._getAmountFromUrl(url[0])
+
+            if amount_url > 1:
+                return amount_url
+            else:
+                return amount
+
+    def _getAmountFromUrl(self, url):
+        page = self.requestsPage(self.url + url)
+        blocks = page.xpath('.//*[@class="characteristics-line"]/text()')
+        amount = self._findAmount(blocks)
+
+        return amount
+
     def getStructure(self, url):
         result = []
         page = self.requestsPage(url)
@@ -43,10 +74,7 @@ class StvolParseData(ParseData):
                 amountCategory = self.availableAmmo['22_LR'][0];
 
                 if(amountCategory in url):
-                    amountTexts = item.xpath('.//div[@class="tov-option-line"]//text()')
-
-                    for text in amountTexts:
-                        amount = self.getAmount(text)
+                    amount = self._getAmount(item)
 
                 dic["title"] = self.cleanTitle(name)
                 dic["price"] = self.getPriceByAmount(price, amount)
