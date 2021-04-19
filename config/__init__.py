@@ -31,6 +31,7 @@ default_settings = {
         "300_Win",
         "5.45x39",
         "7.62x54_R",
+        "8x57_JS",
         "222_Rem",
         "9RA",
         "7mm_Rem_Mag",

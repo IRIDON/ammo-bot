@@ -74,6 +74,7 @@ shops = {
             "6.5x55": ["68682503-f398-11e2-bd5e-1cc1de282c58", "rifle", 54],
             "7mm_Rem_Mag": ["05d3a7d3-d94a-11e4-8e15-1cc1de282c58", "rifle", 55],
             "9.3x62": ["247b80d0-f398-11e2-bd5e-1cc1de282c58", "rifle", 70],
+            "8x57_JS": ["kalibr-is-bd7a32ad-f398-11e2-bd5e-1cc1de282c58", "rifle", 71],
 
             "9RA": ["f5f0d571-640b-11e4-9e41-1cc1de282c58", "traumatic", 80],
 
@@ -118,6 +119,7 @@ shops = {
             "8x57_JRS": ["5543", "rifle", 60],
             "8x57_JS": ["5544", "rifle", 61],
             "9.3x74_R": ["5552", "rifle", 62],
+            "8x57_JS": ["5544", "rifle", 63],
 
             "9RA": ["5384", "traumatic", 70],
 
@@ -180,6 +182,7 @@ shops = {
             "22_LR": ["22-lr", "rifle", 4],
             "30-06": ["patrhone-30-06", "rifle", 5],
             "243_Win": ["243-win", "rifle", 6],
+            "8x57_JS": ["kalibr_16-70", "rifle", 7],
 
             "12/70": ["patroni-12-calibra", "bore", 20],
             "16/70": ["patroni-16-calibra", "bore", 21],
