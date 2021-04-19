@@ -67,7 +67,7 @@ shops = {
             "6.5_Creedmoor": ["7c63096b-6b9c-11e7-ab40-00155dfa860b", "rifle", 8],
             "7.62x39": ["6ed3512f-f38b-11e2-bd5e-1cc1de282c58", "rifle", 9],
             "222_Rem": ["619213a1-f397-11e2-bd5e-1cc1de282c58", "rifle", 10],
-            "7.62x54R": ["9a7138f2-b03a-11e4-bc08-1cc1de282c58", "rifle", 50],
+            "7.62x54R": ["kalibr-is-9a7138f2-b03a-11e4-bc08-1cc1de282c58", "rifle", 50],
             "9x21": ["d6ac461a-d936-11e4-8e15-1cc1de282c58", "rifle", 51],
             "5.45x39": ["4f22644d-be84-11e4-bddc-1cc1de282c58", "rifle", 52],
             "300_AAC": ["b79860b6-1837-11e6-9b00-1cc1de282c58", "rifle", 53],
