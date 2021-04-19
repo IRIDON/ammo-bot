@@ -19,6 +19,9 @@ class BotConstructor(object):
         self.shopData = kwargs["shopData"]
         self.dataUpdateTime = ''
 
+    def _sortPrice(self, data):
+        return sorted(data, key=lambda x: float(x["price"]))
+
     def initShopData(self, shopName):
         if self.shopData[shopName]:
             shopData = self.shopData[shopName]
@@ -98,8 +101,7 @@ class BotConstructor(object):
                 item['origin_price'] = itemPrice
                 item['price'] = self.getDiscount(itemPrice, discount)
 
-        data = sorted(data, key=lambda x: x["price"])
-
+        data = self._sortPrice(data)
         result = self.formateResult(
             data,
             num,
@@ -223,7 +225,7 @@ class BotConstructor(object):
 
                         dataFiles.append(item)
         
-        dataFiles = sorted(dataFiles, key=lambda x: x["price"])
+        dataFiles = self._sortPrice(dataFiles)
 
         return self.formateResult(
             dataFiles,
@@ -273,4 +275,3 @@ class BotConstructor(object):
 
     def toSeconds(day):
         return day * 24 * 60 * 60
-    
