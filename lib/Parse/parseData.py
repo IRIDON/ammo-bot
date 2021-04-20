@@ -22,7 +22,7 @@ class ParseData(object):
         return text.decoder('utf-8')
 
     def sortArrayByPrice(self, x):
-        return x["price"]
+        return float(x["price"])
 
     def requestsPage(self, url):
         page = requests.get(url, verify=False)

@@ -19,9 +19,6 @@ class BotConstructor(object):
         self.shopData = kwargs["shopData"]
         self.dataUpdateTime = ''
 
-    def _sortPrice(self, data):
-        return sorted(data, key=lambda x: float(x["price"]))
-
     def initShopData(self, shopName):
         if self.shopData[shopName]:
             shopData = self.shopData[shopName]
@@ -34,11 +31,54 @@ class BotConstructor(object):
         else:
             return False
 
+    def _sortPrice(self, data):
+        return sorted(data, key=lambda x: float(x["price"]))
+
+    def getKeyName(self, name):
+        separator = "_"
+
+        return name.replace(separator, " ")
+
+    def _getCategoryUrl(self, url):
+        utmSeparator = '&' if "?" in url else '?'
+
+        return  url + utmSeparator + "utm_source=ammoBot"
+
+    def _getAllUrl(self, urls, language):
+        urlsText = []
+        
+        for key, value in urls.iteritems():
+            url = self._getCategoryUrl(value)
+
+            urlsText.append("<a href='%s'>%s</a>" % (
+                url,
+                self.getString("link_tmp", language) % key
+            ))
+
+        return " - ".join(urlsText)
+
+    def _getDiscontFromData(self, data, shopName):
+        discount = 0
+
+        if not data:
+            return discount
+
+        discountFromData = data.get(shopName.lower())
+
+        if discountFromData:
+            discount = discountFromData
+
+        return discount
+
+
+    def _toSeconds(day):
+        return day * 24 * 60 * 60
+
     def getData(self):
         with open(self.dataFileUrl, "r") as file:
             return json.load(file)
 
-    def getDiscount(self, price, discount):
+    def _getDiscount(self, price, discount):
         factor = (100 - float(discount)) / 100
 
         return float(
@@ -85,7 +125,7 @@ class BotConstructor(object):
         return out
 
     def topPrices(self, num=3, category='', discountData={}, language=default_lang):
-        discount = self.getDiscontFromData(discountData, self.shopName)
+        discount = self._getDiscontFromData(discountData, self.shopName)
         allData = self.getData()
 
         if not allData:
@@ -99,7 +139,7 @@ class BotConstructor(object):
             for item in data:
                 itemPrice = item['price']
                 item['origin_price'] = itemPrice
-                item['price'] = self.getDiscount(itemPrice, discount)
+                item['price'] = self._getDiscount(itemPrice, discount)
 
         data = self._sortPrice(data)
         result = self.formateResult(
@@ -110,7 +150,7 @@ class BotConstructor(object):
             language
         )
 
-        url = self.getCategoryUrl(allData["url"][category])
+        url = self._getCategoryUrl(allData["url"][category])
 
         result.append("\n<a href='%s'>%s</a>" % (
             url,
@@ -189,7 +229,7 @@ class BotConstructor(object):
             ))
 
         if urls:
-            result.append("\n" + self.getAllUrl(urls, language))
+            result.append("\n" + self._getAllUrl(urls, language))
 
         return result
 
@@ -200,7 +240,7 @@ class BotConstructor(object):
         urls = {}
 
         for shopName in self.shopData:
-            discount = self.getDiscontFromData(discountData, shopName)
+            discount = self._getDiscontFromData(discountData, shopName)
             shop = data[shopName]
 
             with open(shop["data_file"], "r") as file:
@@ -235,43 +275,3 @@ class BotConstructor(object):
             language,
             urls
         )
-
-    def getKeyName(self, name):
-        separator = "_"
-
-        return name.replace(separator, " ")
-
-    def getCategoryUrl(self, url):
-        utmSeparator = '&' if "?" in url else '?'
-
-        return  url + utmSeparator + "utm_source=ammoBot"
-
-    def getAllUrl(self, urls, language):
-        urlsText = []
-        
-        for key, value in urls.iteritems():
-            url = self.getCategoryUrl(value)
-
-            urlsText.append("<a href='%s'>%s</a>" % (
-                url,
-                self.getString("link_tmp", language) % key
-            ))
-
-        return " - ".join(urlsText)
-
-    def getDiscontFromData(self, data, shopName):
-        discount = 0
-
-        if not data:
-            return discount
-
-        discountFromData = data.get(shopName.lower())
-
-        if discountFromData:
-            discount = discountFromData
-
-        return discount
-
-
-    def toSeconds(day):
-        return day * 24 * 60 * 60
