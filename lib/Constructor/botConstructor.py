@@ -44,7 +44,7 @@ class BotConstructor(object):
 
         return  url + utmSeparator + "utm_source=ammoBot"
 
-    def _getAllUrl(self, urls, language):
+    def getAllUrl(self, urls, language):
         urlsText = []
         
         for key, value in urls.iteritems():
@@ -57,7 +57,7 @@ class BotConstructor(object):
 
         return " - ".join(urlsText)
 
-    def _getDiscontFromData(self, data, shopName):
+    def getDiscontFromData(self, data, shopName):
         discount = 0
 
         if not data:
@@ -71,14 +71,14 @@ class BotConstructor(object):
         return discount
 
 
-    def _toSeconds(day):
+    def toSeconds(day):
         return day * 24 * 60 * 60
 
     def getData(self):
         with open(self.dataFileUrl, "r") as file:
             return json.load(file)
 
-    def _getDiscount(self, price, discount):
+    def getDiscount(self, price, discount):
         factor = (100 - float(discount)) / 100
 
         return float(
@@ -125,7 +125,7 @@ class BotConstructor(object):
         return out
 
     def topPrices(self, num=3, category='', discountData={}, language=default_lang):
-        discount = self._getDiscontFromData(discountData, self.shopName)
+        discount = self.getDiscontFromData(discountData, self.shopName)
         allData = self.getData()
 
         if not allData:
@@ -139,7 +139,7 @@ class BotConstructor(object):
             for item in data:
                 itemPrice = item['price']
                 item['origin_price'] = itemPrice
-                item['price'] = self._getDiscount(itemPrice, discount)
+                item['price'] = self.getDiscount(itemPrice, discount)
 
         data = self._sortPrice(data)
         result = self.formateResult(
@@ -229,7 +229,7 @@ class BotConstructor(object):
             ))
 
         if urls:
-            result.append("\n" + self._getAllUrl(urls, language))
+            result.append("\n" + self.getAllUrl(urls, language))
 
         return result
 
@@ -240,7 +240,7 @@ class BotConstructor(object):
         urls = {}
 
         for shopName in self.shopData:
-            discount = self._getDiscontFromData(discountData, shopName)
+            discount = self.getDiscontFromData(discountData, shopName)
             shop = data[shopName]
 
             with open(shop["data_file"], "r") as file:
